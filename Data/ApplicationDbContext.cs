@@ -10,5 +10,6 @@ namespace TransportMVC.Data
         }
 
         public DbSet<User> Users {  get; set; }
+        public DbSet<User_Manager> User_Manager {  get; set; }
     }
 }

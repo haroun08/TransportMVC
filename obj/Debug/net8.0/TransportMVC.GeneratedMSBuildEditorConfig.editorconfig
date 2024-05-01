@@ -1,55 +1,83 @@
 is_global = true
 build_property.TargetFramework = net8.0
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TransportMVC
 build_property.RootNamespace = TransportMVC
-build_property.ProjectDir = D:\C# .NET\TransportMVC\
+build_property.ProjectDir = C:\Users\LENOVO\Desktop\Projects\C#\TransportMVC\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = true
-build_property.MSBuildProjectDirectory = D:\C# .NET\TransportMVC
+build_property.MSBuildProjectDirectory = C:\Users\LENOVO\Desktop\Projects\C#\TransportMVC
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/C\# .NET/TransportMVC/Views/Home/Index.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Home/Privacy.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Shared/Error.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/User/Add.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Users/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Users/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Users/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Users/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Users/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/User/Add.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxBZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/User/UserAdd.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/User/UserAdd.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyQWRkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/_ViewImports.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/_ViewStart.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Shared/_Layout.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-3w45armdaz

@@ -18,19 +18,56 @@ namespace TransportMVC.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.4")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
             modelBuilder.Entity("User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid?>("User_ManagerId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("User_ManagerId");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("User_Manager", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User_Manager");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.HasOne("User_Manager", "User_Manager")
+                        .WithMany()
+                        .HasForeignKey("User_ManagerId");
+
+                    b.Navigation("User_Manager");
                 });
 #pragma warning restore 612, 618
         }
