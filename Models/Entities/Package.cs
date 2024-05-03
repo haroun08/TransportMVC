@@ -6,13 +6,14 @@ public class Package : Object
     {
     }
 
-    private string Destination;
-    private DateTime Start_Date;
-    private DateTime Duration;
-    private List<string> Services;
-    private string Transport_Option;
-    private string Transport_Company;
-    private Package_Manager package_Manager;
+    public Guid Id { get; set; }
+    public string Destination;
+    public DateTime Start_Date;
+    public DateTime Duration;
+    public List<string> Services;
+    public string Transport_Option;
+    public string Transport_Company;
+    public Package_Manager package_Manager;
 
     public string getDestination()
     {

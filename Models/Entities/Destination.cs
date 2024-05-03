@@ -12,8 +12,8 @@ public class Destination
     {
     }
 
-    private string Name;
-    private string Description;
+    public string Name;
+    public string Description;
 
     public string getName()
     {
