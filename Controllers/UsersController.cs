@@ -9,11 +9,11 @@ using TransportMVC.Data;
 
 namespace TransportMVC.Controllers
 {
-    public class UsersController : Controller
+    public class UserController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public UsersController(ApplicationDbContext context)
+        public UserController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -132,6 +132,23 @@ namespace TransportMVC.Controllers
             return View(user);
         }
 
+        // GET: UserManager/Delete/5
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user_Manager = await _context.User_Manager
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (user_Manager == null)
+            {
+                return NotFound();
+            }
+
+            return View(user_Manager);
+        }
 
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
