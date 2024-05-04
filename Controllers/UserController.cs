@@ -18,13 +18,13 @@ namespace TransportMVC.Controllers
             _context = context;
         }
 
-        // GET: Users
+        // GET: User
         public async Task<IActionResult> Index()
         {
             return View(await _context.Users.ToListAsync());
         }
 
-        // GET: Users/Details/5
+        // GET: User/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -42,7 +42,7 @@ namespace TransportMVC.Controllers
             return View(user);
         }
 
-        // GET: Users/Create
+        // GET: User/Create
         public IActionResult Create()
         {
             return View();
@@ -68,7 +68,7 @@ namespace TransportMVC.Controllers
         }
 
 
-        // GET: Users/Edit/5
+        // GET: User/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -84,7 +84,7 @@ namespace TransportMVC.Controllers
             return View(user);
         }
 
-        // POST: Users/Edit/5
+        // POST: User/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -132,7 +132,7 @@ namespace TransportMVC.Controllers
             return View(user);
         }
 
-        // GET: UserManager/Delete/5
+        // GET: User/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -140,17 +140,17 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var user_Manager = await _context.User_Manager
+            var user = await _context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user_Manager == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(user_Manager);
+            return View(user);
         }
 
-        // POST: Users/Delete/5
+        // POST: User/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
