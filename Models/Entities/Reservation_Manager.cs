@@ -7,7 +7,7 @@ using System.Text;
 public class Reservation_Manager : Manager
 {
 
-
+    public Guid Id { get; set; }
     private List<Reservation> Reservations;
 
     public Reservation_Manager()

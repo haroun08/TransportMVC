@@ -18,19 +18,218 @@ namespace TransportMVC.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.4")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("Coordinator", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Mail")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Coordinators");
+                });
+
+            modelBuilder.Entity("Destination", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Destinations");
+                });
+
+            modelBuilder.Entity("Package", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("DestinationId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("Duration")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Services")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("Start_Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Transport_Company")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Transport_Option")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid?>("package_ManagerId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DestinationId");
+
+                    b.HasIndex("package_ManagerId");
+
+                    b.ToTable("Packages");
+                });
+
+            modelBuilder.Entity("Package_Manager", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Package_Manager");
+                });
+
+            modelBuilder.Entity("Reservation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("Associated_PackageId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Benefiter_Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid?>("reservation_ManagerId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Associated_PackageId");
+
+                    b.HasIndex("reservation_ManagerId");
+
+                    b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("Reservation_Manager", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reservation_Manager");
+                });
 
             modelBuilder.Entity("User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid?>("User_ManagerId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("User_ManagerId");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("User_Manager", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User_Manager");
+                });
+
+            modelBuilder.Entity("Package", b =>
+                {
+                    b.HasOne("Destination", "Destination")
+                        .WithMany()
+                        .HasForeignKey("DestinationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Package_Manager", "package_Manager")
+                        .WithMany()
+                        .HasForeignKey("package_ManagerId");
+
+                    b.Navigation("Destination");
+
+                    b.Navigation("package_Manager");
+                });
+
+            modelBuilder.Entity("Reservation", b =>
+                {
+                    b.HasOne("Package", "Associated_Package")
+                        .WithMany()
+                        .HasForeignKey("Associated_PackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Reservation_Manager", "reservation_Manager")
+                        .WithMany()
+                        .HasForeignKey("reservation_ManagerId");
+
+                    b.Navigation("Associated_Package");
+
+                    b.Navigation("reservation_Manager");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.HasOne("User_Manager", "User_Manager")
+                        .WithMany()
+                        .HasForeignKey("User_ManagerId");
+
+                    b.Navigation("User_Manager");
                 });
 #pragma warning restore 612, 618
         }

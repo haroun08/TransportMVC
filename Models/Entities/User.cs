@@ -1,49 +1,15 @@
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
-public class User : Object
+public class User
 {
     public Guid Id { get; set; }
+    public string Username { get; set; }
 
-    private string Username;
-    private string Password;
-    private string Role;
-    private User_Manager user_Manager;
-
-    public User()
-    {
-    }
-
-    public string getUsername()
-    {
-        return Username;
-    }
-
-    public string getPassword()
-    {
-        return Password;
-    }
-
-    public string getRole()
-    {
-        return Role;
-    }
-
-    public void setUsername(string username)
-    {
-        this.Username = username;
-    }
-
-    public void setPassword(string password)
-    {
-        this.Password = password;
-    }
-
-    public void setRole(string role)
-    {
-        this.Role = role;
-    }
+    [Required(ErrorMessage = "Password is required")]
+    [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters long")]
+    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character")]
+    public string Password { get; set; }
+    public string Role { get; set; }
+    public User_Manager? User_Manager { get; set; }
 }

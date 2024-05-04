@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace TransportMVC.Data
 {
@@ -10,5 +10,10 @@ namespace TransportMVC.Data
         }
 
         public DbSet<User> Users {  get; set; }
+        public DbSet<Destination> Destinations { get; set; } = default!;
+        public DbSet<Package> Packages { get; set; } = default!;
+        public DbSet<Reservation> Reservations { get; set; } = default!;
+        public DbSet<Coordinator> Coordinators { get; set; } = default!;
+        
     }
 }

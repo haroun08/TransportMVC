@@ -6,20 +6,21 @@ public class Package : Object
     {
     }
 
-    private string Destination;
-    private DateTime Start_Date;
-    private DateTime Duration;
-    private List<string> Services;
-    private string Transport_Option;
-    private string Transport_Company;
-    private Package_Manager package_Manager;
+    public Guid Id { get; set; }
+    public Destination Destination { get; set; }
+    public DateTime Start_Date { get; set; }
+    public DateTime Duration { get; set; }
+    public List<string> Services { get; set; }
+    public string Transport_Option { get; set; }
+    public string Transport_Company { get; set; }
+    public Package_Manager? package_Manager { get; set; }
 
-    public string getDestination()
+    public Destination getDestination()
     {
         return Destination;
     }
 
-    public void setDestination(string destination)
+    public void setDestination(Destination destination)
     {
         this.Destination = destination;
     }
