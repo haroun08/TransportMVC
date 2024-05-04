@@ -7,20 +7,20 @@ public class Package : Object
     }
 
     public Guid Id { get; set; }
-    public string Destination;
-    public DateTime Start_Date;
-    public DateTime Duration;
-    public List<string> Services;
-    public string Transport_Option;
-    public string Transport_Company;
-    public Package_Manager package_Manager;
+    public Destination Destination { get; set; }
+    public DateTime Start_Date { get; set; }
+    public DateTime Duration { get; set; }
+    public List<string> Services { get; set; }
+    public string Transport_Option { get; set; }
+    public string Transport_Company { get; set; }
+    public Package_Manager? package_Manager { get; set; }
 
-    public string getDestination()
+    public Destination getDestination()
     {
         return Destination;
     }
 
-    public void setDestination(string destination)
+    public void setDestination(Destination destination)
     {
         this.Destination = destination;
     }

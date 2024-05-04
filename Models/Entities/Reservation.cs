@@ -8,9 +8,9 @@ public class Reservation : Object
 {
 
     public Guid Id { get; set; }
-    public Package Associated_Package;
-    public string Benefiter_Name;
-    public Reservation_Manager reservation_Manager;
+    public Package Associated_Package{ get; set; }
+    public string Benefiter_Name{ get; set; }
+    public Reservation_Manager? reservation_Manager{ get; set; }
 
     public Reservation()
     {

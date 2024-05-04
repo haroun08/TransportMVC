@@ -21,7 +21,7 @@ namespace TransportMVC.Controllers
         // GET: Package
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Package.ToListAsync());
+            return View(await _context.Packages.ToListAsync());
         }
 
         // GET: Package/Details/5
@@ -32,7 +32,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var package = await _context.Package
+            var package = await _context.Packages
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (package == null)
             {
@@ -53,7 +53,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Package package)
+        public async Task<IActionResult> Create([Bind("Id,Start_Date,Duration,Services,Transport_Option,Transport_Company")] Package package)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var package = await _context.Package.FindAsync(id);
+            var package = await _context.Packages.FindAsync(id);
             if (package == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id")] Package package)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Start_Date,Duration,Services,Transport_Option,Transport_Company")] Package package)
         {
             if (id != package.Id)
             {
@@ -124,7 +124,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var package = await _context.Package
+            var package = await _context.Packages
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (package == null)
             {
@@ -139,10 +139,10 @@ namespace TransportMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var package = await _context.Package.FindAsync(id);
+            var package = await _context.Packages.FindAsync(id);
             if (package != null)
             {
-                _context.Package.Remove(package);
+                _context.Packages.Remove(package);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace TransportMVC.Controllers
 
         private bool PackageExists(Guid id)
         {
-            return _context.Package.Any(e => e.Id == id);
+            return _context.Packages.Any(e => e.Id == id);
         }
     }
 }

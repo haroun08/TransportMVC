@@ -21,7 +21,7 @@ namespace TransportMVC.Controllers
         // GET: Reservation
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Reservation.ToListAsync());
+            return View(await _context.Reservations.ToListAsync());
         }
 
         // GET: Reservation/Details/5
@@ -32,7 +32,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservation
+            var reservation = await _context.Reservations
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reservation == null)
             {
@@ -53,7 +53,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Reservation reservation)
+        public async Task<IActionResult> Create([Bind("Id,Benefiter_Name")] Reservation reservation)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservation.FindAsync(id);
+            var reservation = await _context.Reservations.FindAsync(id);
             if (reservation == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id")] Reservation reservation)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Benefiter_Name")] Reservation reservation)
         {
             if (id != reservation.Id)
             {
@@ -124,7 +124,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservation
+            var reservation = await _context.Reservations
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reservation == null)
             {
@@ -139,10 +139,10 @@ namespace TransportMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var reservation = await _context.Reservation.FindAsync(id);
+            var reservation = await _context.Reservations.FindAsync(id);
             if (reservation != null)
             {
-                _context.Reservation.Remove(reservation);
+                _context.Reservations.Remove(reservation);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace TransportMVC.Controllers
 
         private bool ReservationExists(Guid id)
         {
-            return _context.Reservation.Any(e => e.Id == id);
+            return _context.Reservations.Any(e => e.Id == id);
         }
     }
 }

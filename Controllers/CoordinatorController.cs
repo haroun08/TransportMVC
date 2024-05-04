@@ -21,7 +21,7 @@ namespace TransportMVC.Controllers
         // GET: Coordinator
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Coordinator.ToListAsync());
+            return View(await _context.Coordinators.ToListAsync());
         }
 
         // GET: Coordinator/Details/5
@@ -32,7 +32,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var coordinator = await _context.Coordinator
+            var coordinator = await _context.Coordinators
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (coordinator == null)
             {
@@ -73,7 +73,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var coordinator = await _context.Coordinator.FindAsync(id);
+            var coordinator = await _context.Coordinators.FindAsync(id);
             if (coordinator == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var coordinator = await _context.Coordinator
+            var coordinator = await _context.Coordinators
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (coordinator == null)
             {
@@ -139,10 +139,10 @@ namespace TransportMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var coordinator = await _context.Coordinator.FindAsync(id);
+            var coordinator = await _context.Coordinators.FindAsync(id);
             if (coordinator != null)
             {
-                _context.Coordinator.Remove(coordinator);
+                _context.Coordinators.Remove(coordinator);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace TransportMVC.Controllers
 
         private bool CoordinatorExists(Guid id)
         {
-            return _context.Coordinator.Any(e => e.Id == id);
+            return _context.Coordinators.Any(e => e.Id == id);
         }
     }
 }

@@ -35,9 +35,9 @@ public class Package_Manager : Manager
     public override void modify(Object x)
     {
         Package package = x.getPackage();
-        Console.WriteLine("Give me the new destination \n");
-        string destination = Console.ReadLine();
-        x.getPackage().setDestination(destination);
+        //Console.WriteLine("Give me the new destination \n");
+        //Destination destination = Console.ReadLine();
+        //x.getPackage().setDestination(destination);
         Console.WriteLine("Give me the new Start Date using the following form DD/MM/YYYY \n");
         string start_date_str = Console.ReadLine();
         DateTime start_date = DateTime.Parse(start_date_str);

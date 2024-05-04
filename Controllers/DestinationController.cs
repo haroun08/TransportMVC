@@ -21,7 +21,7 @@ namespace TransportMVC.Controllers
         // GET: Destination
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Destination.ToListAsync());
+            return View(await _context.Destinations.ToListAsync());
         }
 
         // GET: Destination/Details/5
@@ -32,7 +32,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var destination = await _context.Destination
+            var destination = await _context.Destinations
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (destination == null)
             {
@@ -53,7 +53,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Destination destination)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Destination destination)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var destination = await _context.Destination.FindAsync(id);
+            var destination = await _context.Destinations.FindAsync(id);
             if (destination == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id")] Destination destination)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Description")] Destination destination)
         {
             if (id != destination.Id)
             {
@@ -124,7 +124,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var destination = await _context.Destination
+            var destination = await _context.Destinations
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (destination == null)
             {
@@ -139,10 +139,10 @@ namespace TransportMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var destination = await _context.Destination.FindAsync(id);
+            var destination = await _context.Destinations.FindAsync(id);
             if (destination != null)
             {
-                _context.Destination.Remove(destination);
+                _context.Destinations.Remove(destination);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace TransportMVC.Controllers
 
         private bool DestinationExists(Guid id)
         {
-            return _context.Destination.Any(e => e.Id == id);
+            return _context.Destinations.Any(e => e.Id == id);
         }
     }
 }
