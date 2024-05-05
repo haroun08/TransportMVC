@@ -6,9 +6,6 @@ public class WishForm
     [Key]
     public Guid Id { get; set; }
 
-    [Required]
-    public User User { get; set; }
-
     public string? Destination { get; set; }
 
     [DataType(DataType.Date)]
@@ -26,6 +23,10 @@ public class WishForm
 
     [Required]
     public DateTime SubmissionDate { get; set; }
+
+    public User? CreatedBy { get; set; }
+
+    
     public WishForm()
     {
         Id = Guid.NewGuid();

@@ -6,15 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Data;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace TransportMVC.Controllers
 {
     public class BookingController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public BookingController(ApplicationDbContext context)
+        public BookingController(UserManager<User> userManager, ApplicationDbContext context)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -33,7 +37,11 @@ namespace TransportMVC.Controllers
             }
 
             var booking = await _context.Bookings
+                .Include(d => d.CreatedBy) 
+                .Include(d => d.LastModifiedBy) 
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+
             if (booking == null)
             {
                 return NotFound();
@@ -53,11 +61,22 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,State,NumberOfTravellers,BookingDate,IsPaid,PaymentMethod,LastModifiedAt")] Booking booking)
+        public async Task<IActionResult> Create([Bind("NumberOfTravellers,PaymentMethod")] Booking booking)
         {
             if (ModelState.IsValid)
             {
-                booking.Id = Guid.NewGuid();
+                // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                // Ensure that the current user is not null
+                if (currentUser == null)
+                {
+                    // Handle the case where the current user is not found
+                    return RedirectToAction(nameof(Index));
+                }
+
+                booking.CreatedBy = currentUser;
+                booking.LastModifiedBy = currentUser;
+
                 _context.Add(booking);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +105,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,State,NumberOfTravellers,BookingDate,IsPaid,PaymentMethod,LastModifiedAt")] Booking booking)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,State,NumberOfTravellers,CreatedAt,IsPaid,PaymentMethod")] Booking booking)
         {
             if (id != booking.Id)
             {
@@ -96,7 +115,28 @@ namespace TransportMVC.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+                {   
+                    var originalBooking = await _context.Bookings.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+                    if (originalBooking == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                    var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                    if (currentUser == null)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                    // Preserve the original CreatedAt value
+                    booking.CreatedAt = originalBooking.CreatedAt;
+
+                    // Update the LastModifiedBy and LastModifiedAt properties
+                    booking.LastModifiedBy = currentUser;
+                    booking.LastModifiedAt = DateTime.UtcNow;
+
+
                     _context.Update(booking);
                     await _context.SaveChangesAsync();
                 }

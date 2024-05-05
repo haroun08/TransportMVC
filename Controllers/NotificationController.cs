@@ -6,15 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Data;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace TransportMVC.Controllers
 {
     public class NotificationController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public NotificationController(ApplicationDbContext context)
+        public NotificationController(UserManager<User> userManager, ApplicationDbContext context)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -33,6 +37,8 @@ namespace TransportMVC.Controllers
             }
 
             var notification = await _context.Notifications
+                .Include(d => d.CreatedBy) 
+                .Include(d => d.LastModifiedBy) 
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (notification == null)
             {
@@ -57,7 +63,18 @@ namespace TransportMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                notification.Id = Guid.NewGuid();
+                // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                // Ensure that the current user is not null
+                if (currentUser == null)
+                {
+                    // Handle the case where the current user is not found
+                    return RedirectToAction(nameof(Index));
+                }
+
+                notification.CreatedBy = currentUser;
+                notification.LastModifiedBy = currentUser;
+
                 _context.Add(notification);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -97,6 +114,26 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
+                    var originalNotification = await _context.Notifications.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+                    if (originalNotification == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                    var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                    if (currentUser == null)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                    // Preserve the original CreatedAt value
+                    notification.SentDate = originalNotification.SentDate;
+
+                    // Update the LastModifiedBy and LastModifiedAt properties
+                    notification.LastModifiedBy = currentUser;
+                    notification.LastModifiedAt = DateTime.UtcNow;
+
                     _context.Update(notification);
                     await _context.SaveChangesAsync();
                 }

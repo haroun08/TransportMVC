@@ -6,15 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Data;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace TransportMVC.Controllers
 {
     public class PackageController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public PackageController(ApplicationDbContext context)
+        public PackageController(UserManager<User> userManager, ApplicationDbContext context)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -33,6 +37,8 @@ namespace TransportMVC.Controllers
             }
 
             var package = await _context.Packages
+                .Include(d => d.CreatedBy) 
+                .Include(d => d.LastModifiedBy) 
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (package == null)
             {
@@ -57,7 +63,18 @@ namespace TransportMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                package.Id = Guid.NewGuid();
+                // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                // Ensure that the current user is not null
+                if (currentUser == null)
+                {
+                    // Handle the case where the current user is not found
+                    return RedirectToAction(nameof(Index));
+                }
+
+                package.CreatedBy = currentUser;
+                package.LastModifiedBy = currentUser;
+
                 _context.Add(package);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -97,6 +114,26 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
+                    var originalPackage = await _context.Packages.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+                    if (originalPackage == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                    var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                    if (currentUser == null)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                    // Preserve the original CreatedAt value
+                    package.CreatedAt = originalPackage.CreatedAt;
+
+                    // Update the LastModifiedBy and LastModifiedAt properties
+                    package.LastModifiedBy = currentUser;
+                    package.LastModifiedAt = DateTime.UtcNow;
+
                     _context.Update(package);
                     await _context.SaveChangesAsync();
                 }

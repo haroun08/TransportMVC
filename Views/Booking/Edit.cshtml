@@ -15,33 +15,35 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="State" class="control-label"></label>
-                <select asp-for="State" class="form-control"></select>
+                <select asp-for="State" class="form-control">
+                    @foreach (var state in Enum.GetValues(typeof(BookingState)))
+                    {
+                        <option value="@state">@state</option>
+                    }
+                </select>
                 <span asp-validation-for="State" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="NumberOfTravellers" class="control-label"></label>
                 <input asp-for="NumberOfTravellers" class="form-control" />
                 <span asp-validation-for="NumberOfTravellers" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BookingDate" class="control-label"></label>
-                <input asp-for="BookingDate" class="form-control" />
-                <span asp-validation-for="BookingDate" class="text-danger"></span>
+                <label asp-for="PaymentMethod" class="control-label"></label>
+                <select asp-for="PaymentMethod" class="form-control">
+                    <option value="">Select Payment Method</option>
+                    @foreach (var paymentMethod in Enum.GetValues(typeof(PaymentMethod)))
+                    {
+                        <option value="@paymentMethod">@paymentMethod</option>
+                    }
+                </select>
+                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsPaid" /> @Html.DisplayNameFor(model => model.IsPaid)
                 </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="PaymentMethod" class="control-label"></label>
-                <input asp-for="PaymentMethod" class="form-control" />
-                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastModifiedAt" class="control-label"></label>
-                <input asp-for="LastModifiedAt" class="form-control" />
-                <span asp-validation-for="LastModifiedAt" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

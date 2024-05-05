@@ -9,8 +9,9 @@ public class Review
     [Required(ErrorMessage = "Associated Package is required")]
     public Package AssociatedPackage { get; set; }
 
-    [Required]
-    public User User { get; set; }
+    public User CreatedBy { get; set; }
+
+    public User LastModifiedBy { get; set; }
 
     [MaxLength(1000, ErrorMessage = "Text cannot exceed 1000 characters")]
     public string? Text { get; set; }
@@ -21,9 +22,13 @@ public class Review
     [Required]
     public DateTime Date { get; set; }
 
+    [Required]
+    public DateTime LastModifiedAt { get; set; }
+
     public Review()
     {
         Id = Guid.NewGuid();
         Date = DateTime.UtcNow;
+        LastModifiedAt = Date;
     }
 }

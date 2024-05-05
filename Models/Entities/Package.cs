@@ -6,8 +6,7 @@ public enum TransportOption
     Train,
     Bus,
     Car,
-    Ship,
-    Other
+    Ship
 }
 
 public class Package
@@ -41,13 +40,13 @@ public class Package
     [Required(ErrorMessage = "Category is required")]
     public string Category { get; set; }
     
-    [Required]
+    
     public User CreatedBy { get; set; }
     
     [Required]
     public DateTime CreatedAt { get; set; }
     
-    [Required]
+    
     public User LastModifiedBy { get; set; }
     
     [Required]

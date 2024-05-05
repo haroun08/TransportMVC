@@ -6,15 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Data;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace TransportMVC.Controllers
 {
     public class WishFormController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public WishFormController(ApplicationDbContext context)
+        public WishFormController(UserManager<User> userManager, ApplicationDbContext context)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -33,6 +37,7 @@ namespace TransportMVC.Controllers
             }
 
             var wishForm = await _context.WishForms
+                .Include(d => d.CreatedBy) 
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (wishForm == null)
             {
@@ -55,9 +60,20 @@ namespace TransportMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Destination,DepartureDate,Duration,Budget,Interests,AdditionalNotes,SubmissionDate")] WishForm wishForm)
         {
+            
             if (ModelState.IsValid)
             {
-                wishForm.Id = Guid.NewGuid();
+                // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                // Ensure that the current user is not null
+                if (currentUser == null)
+                {
+                    // Handle the case where the current user is not found
+                    return RedirectToAction(nameof(Index));
+                }
+
+                wishForm.CreatedBy = currentUser;
+
                 _context.Add(wishForm);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -6,17 +6,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Data;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace TransportMVC.Controllers
 {
     public class CouponController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public CouponController(ApplicationDbContext context)
+        public CouponController(UserManager<User> userManager, ApplicationDbContext context)
         {
+            _userManager = userManager;
             _context = context;
         }
+
 
         // GET: Coupon
         public async Task<IActionResult> Index()
@@ -33,6 +38,8 @@ namespace TransportMVC.Controllers
             }
 
             var coupon = await _context.Coupons
+                .Include(d => d.CreatedBy) 
+                .Include(d => d.LastModifiedBy) 
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (coupon == null)
             {
@@ -53,11 +60,22 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Code,DiscountAmount,ExpirationDate,CreatedAt")] Coupon coupon)
+        public async Task<IActionResult> Create([Bind("Id,Code,DiscountAmount,ExpirationDate")] Coupon coupon)
         {
             if (ModelState.IsValid)
             {
-                coupon.Id = Guid.NewGuid();
+                // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                // Ensure that the current user is not null
+                if (currentUser == null)
+                {
+                    // Handle the case where the current user is not found
+                    return RedirectToAction(nameof(Index));
+                }
+
+                coupon.CreatedBy = currentUser;
+                coupon.LastModifiedBy = currentUser;
+
                 _context.Add(coupon);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +104,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Code,DiscountAmount,ExpirationDate,CreatedAt")] Coupon coupon)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Code,DiscountAmount,ExpirationDate")] Coupon coupon)
         {
             if (id != coupon.Id)
             {
@@ -97,6 +115,26 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
+                    var originalCoupon = await _context.Coupons.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+                    if (originalCoupon == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                    var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                    if (currentUser == null)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                    // Preserve the original CreatedAt value
+                    coupon.CreatedAt = originalCoupon.CreatedAt;
+
+                    // Update the LastModifiedBy and LastModifiedAt properties
+                    coupon.LastModifiedBy = currentUser;
+                    coupon.LastModifiedAt = DateTime.UtcNow;
+
                     _context.Update(coupon);
                     await _context.SaveChangesAsync();
                 }

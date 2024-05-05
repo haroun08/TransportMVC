@@ -7,15 +7,15 @@ namespace TransportMVC.Controllers
     public class AccountController : Controller
     {
         //userManager will hold the UserManager instance
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<User> userManager;
 
         //signInManager will hold the SignInManager instance
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly SignInManager<User> signInManager;
 
         //Both UserManager and SignInManager services are injected into the AccountController
         //using constructor injection
-        public AccountController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -33,9 +33,9 @@ namespace TransportMVC.Controllers
             if (ModelState.IsValid)
             {
                 // Copy data from RegisterViewModel to IdentityUser
-                var user = new IdentityUser
+                var user = new User
                 {
-                    UserName = model.Email,
+                    UserName = model.UserName,
                     Email = model.Email
                 };
 

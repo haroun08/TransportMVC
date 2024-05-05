@@ -6,15 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Data;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace TransportMVC.Controllers
 {
     public class ReviewController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public ReviewController(ApplicationDbContext context)
+        public ReviewController(UserManager<User> userManager, ApplicationDbContext context)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -32,7 +36,9 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var review = await _context.Reviews
+            var review = await _context.Packages
+                .Include(d => d.CreatedBy) 
+                .Include(d => d.LastModifiedBy) 
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (review == null)
             {
@@ -57,7 +63,18 @@ namespace TransportMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                review.Id = Guid.NewGuid();
+                // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                // Ensure that the current user is not null
+                if (currentUser == null)
+                {
+                    // Handle the case where the current user is not found
+                    return RedirectToAction(nameof(Index));
+                }
+
+                review.CreatedBy = currentUser;
+                review.LastModifiedBy = currentUser;
+
                 _context.Add(review);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -97,6 +114,26 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
+                    var originalReview = await _context.Reviews.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+                    if (originalReview == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                    var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                    if (currentUser == null)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                    // Preserve the original CreatedAt value
+                    review.Date = originalReview.Date;
+
+                    // Update the LastModifiedBy and LastModifiedAt properties
+                    review.LastModifiedBy = currentUser;
+                    review.LastModifiedAt = DateTime.UtcNow;
+
                     _context.Update(review);
                     await _context.SaveChangesAsync();
                 }

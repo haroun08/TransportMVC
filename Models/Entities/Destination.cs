@@ -16,11 +16,13 @@ public class Destination
     [Required]
     public DateTime CreatedAt { get; set; }
 
-    [Required]
-    public User LastModifiedBy { get; set; }
+    public User? CreatedBy { get; set; }
+
+    public User? LastModifiedBy { get; set; }
 
     [Required]
     public DateTime LastModifiedAt { get; set; }
+
 
     public Destination()
     {
@@ -28,4 +30,5 @@ public class Destination
         CreatedAt = DateTime.UtcNow;
         LastModifiedAt = CreatedAt;
     }
+    
 }

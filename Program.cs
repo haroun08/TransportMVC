@@ -22,8 +22,15 @@ namespace TransportMVC
                 options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
                     new MySqlServerVersion(new Version(8, 0, 0)))); // Adjust MySQL server version as needed
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            builder.Services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // Configure the Application Cookie settings
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                // If the LoginPath isn't set, ASP.NET Core defaults the path to /Account/Login.
+                options.LoginPath = "/Account/Login"; 
+            });
 
             var app = builder.Build();
 
@@ -40,9 +47,10 @@ namespace TransportMVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            
             app.UseAuthorization();
 
-            app.UseAuthentication();
 
             app.MapControllerRoute(
                 name: "default",
