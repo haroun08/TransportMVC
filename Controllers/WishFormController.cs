@@ -9,22 +9,22 @@ using TransportMVC.Data;
 
 namespace TransportMVC.Controllers
 {
-    public class ReservationController : Controller
+    public class WishFormController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ReservationController(ApplicationDbContext context)
+        public WishFormController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Reservation
+        // GET: WishForm
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Reservations.ToListAsync());
+            return View(await _context.WishForms.ToListAsync());
         }
 
-        // GET: Reservation/Details/5
+        // GET: WishForm/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -32,40 +32,40 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservations
+            var wishForm = await _context.WishForms
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (reservation == null)
+            if (wishForm == null)
             {
                 return NotFound();
             }
 
-            return View(reservation);
+            return View(wishForm);
         }
 
-        // GET: Reservation/Create
+        // GET: WishForm/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Reservation/Create
+        // POST: WishForm/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Benefiter_Name")] Reservation reservation)
+        public async Task<IActionResult> Create([Bind("Id,Destination,DepartureDate,Duration,Budget,Interests,AdditionalNotes,SubmissionDate")] WishForm wishForm)
         {
             if (ModelState.IsValid)
             {
-                reservation.Id = Guid.NewGuid();
-                _context.Add(reservation);
+                wishForm.Id = Guid.NewGuid();
+                _context.Add(wishForm);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(reservation);
+            return View(wishForm);
         }
 
-        // GET: Reservation/Edit/5
+        // GET: WishForm/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservations.FindAsync(id);
-            if (reservation == null)
+            var wishForm = await _context.WishForms.FindAsync(id);
+            if (wishForm == null)
             {
                 return NotFound();
             }
-            return View(reservation);
+            return View(wishForm);
         }
 
-        // POST: Reservation/Edit/5
+        // POST: WishForm/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Benefiter_Name")] Reservation reservation)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Destination,DepartureDate,Duration,Budget,Interests,AdditionalNotes,SubmissionDate")] WishForm wishForm)
         {
-            if (id != reservation.Id)
+            if (id != wishForm.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
-                    _context.Update(reservation);
+                    _context.Update(wishForm);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReservationExists(reservation.Id))
+                    if (!WishFormExists(wishForm.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace TransportMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(reservation);
+            return View(wishForm);
         }
 
-        // GET: Reservation/Delete/5
+        // GET: WishForm/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservations
+            var wishForm = await _context.WishForms
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (reservation == null)
+            if (wishForm == null)
             {
                 return NotFound();
             }
 
-            return View(reservation);
+            return View(wishForm);
         }
 
-        // POST: Reservation/Delete/5
+        // POST: WishForm/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var reservation = await _context.Reservations.FindAsync(id);
-            if (reservation != null)
+            var wishForm = await _context.WishForms.FindAsync(id);
+            if (wishForm != null)
             {
-                _context.Reservations.Remove(reservation);
+                _context.WishForms.Remove(wishForm);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ReservationExists(Guid id)
+        private bool WishFormExists(Guid id)
         {
-            return _context.Reservations.Any(e => e.Id == id);
+            return _context.WishForms.Any(e => e.Id == id);
         }
     }
 }

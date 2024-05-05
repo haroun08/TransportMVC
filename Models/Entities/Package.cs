@@ -1,105 +1,62 @@
-public class Package : Object
-{
+using System.ComponentModel.DataAnnotations;
 
+public enum TransportOption
+{
+    Airplane,
+    Train,
+    Bus,
+    Car,
+    Ship,
+    Other
+}
+
+public class Package
+{
+    [Key]
+    public Guid Id { get; set; }
+    
+    [Required(ErrorMessage = "Destination is required")]
+    public Destination Destination { get; set; }
+    
+    [Required(ErrorMessage = "Start Date is required")]
+    [DataType(DataType.Date)]
+    public DateTime StartDate { get; set; }
+    
+    [Required(ErrorMessage = "Budget is required")]
+    public decimal Budget { get; set; }
+    
+    [Required(ErrorMessage = "Duration is required")]
+    [RegularExpression(@"^\d+\s+(month(s)?|day(s)?)$", ErrorMessage = "Duration must start with digits followed by 'month(s)' or 'day(s)'")]
+    [MaxLength(50)]
+    public string Duration { get; set; }
+    
+    public List<string>? Services { get; set; }
+    
+    [Required(ErrorMessage = "Transport option is required")]
+    public TransportOption TransportOption { get; set; }
+    
+    [Required(ErrorMessage = "Transport company is required")]
+    public string TransportCompany { get; set; }
+    
+    [Required(ErrorMessage = "Category is required")]
+    public string Category { get; set; }
+    
+    [Required]
+    public User CreatedBy { get; set; }
+    
+    [Required]
+    public DateTime CreatedAt { get; set; }
+    
+    [Required]
+    public User LastModifiedBy { get; set; }
+    
+    [Required]
+    public DateTime LastModifiedAt { get; set; }
 
     public Package()
     {
-    }
-
-    public Guid Id { get; set; }
-    public Destination Destination { get; set; }
-    public DateTime Start_Date { get; set; }
-    public DateTime Duration { get; set; }
-    public List<string> Services { get; set; }
-    public string Transport_Option { get; set; }
-    public string Transport_Company { get; set; }
-    public Package_Manager? package_Manager { get; set; }
-
-    public Destination getDestination()
-    {
-        return Destination;
-    }
-
-    public void setDestination(Destination destination)
-    {
-        this.Destination = destination;
-    }
-
-    public DateTime getStart_Date()
-    {
-        return Start_Date;
-    }
-
-    public void setStart_Date(DateTime start_date)
-    {
-        this.Start_Date = start_date;
-    }
-
-    public DateTime getDuration()
-    {
-        return Duration;
-    }
-
-    public void setDuration(DateTime duration)
-    {
-        this.Duration = duration;
-    }
-
-    public List<string> getServices()
-    {
-        return Services;
-    }
-
-    public void setServices(List<string> services)
-    {
-        this.Services = services;
-    }
-
-    public string getTransport_Option()
-    {
-        return Transport_Option;
-    }
-
-    public void setTransport_Option(string transport_option)
-    {
-        this.Transport_Option = transport_option;
-    }
-
-    public string getTransport_Company()
-    {
-        return Transport_Company;
-    }
-
-    public void setTransport_Company(string transport_company)
-    {
-        this.Transport_Company = transport_company;
-    }
-
-    public Package_Manager getPackage_Manager()
-    {
-        return package_Manager;
-    }
-
-    public static bool operator ==(Package p1, Package p2)
-    {
-        if (p1.Destination != p2.Destination)
-            return false;
-        else if (p1.Start_Date != p2.Start_Date)
-            return false;
-        else if (p1.Duration != p2.Duration)
-            return false;
-        else if (p1.Services != p2.Services)
-            return false;
-        else if (p1.Transport_Option != p2.Transport_Option)
-            return false;
-        else if (p1.Transport_Company != p2.Transport_Company)
-            return false;
-        else
-            return true;
-    }
-
-    public static bool operator !=(Package p1, Package p2)
-    {
-        return !(p1 == p2);
+        Id = Guid.NewGuid();
+        CreatedAt = DateTime.UtcNow;
+        LastModifiedAt = CreatedAt;
     }
 }
