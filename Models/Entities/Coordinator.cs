@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 public class Coordinator
 {
     public Guid Id { get; set; }

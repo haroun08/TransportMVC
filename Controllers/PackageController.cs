@@ -53,7 +53,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Start_Date,Duration,Services,Transport_Option,Transport_Company")] Package package)
+        public async Task<IActionResult> Create([Bind("Id,StartDate,Budget,Duration,Services,TransportOption,TransportCompany,Category,CreatedAt,LastModifiedAt")] Package package)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Start_Date,Duration,Services,Transport_Option,Transport_Company")] Package package)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,StartDate,Budget,Duration,Services,TransportOption,TransportCompany,Category,CreatedAt,LastModifiedAt")] Package package)
         {
             if (id != package.Id)
             {

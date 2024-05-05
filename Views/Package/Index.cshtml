@@ -13,7 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Start_Date)
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Budget)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Duration)
@@ -22,10 +25,19 @@
                 @Html.DisplayNameFor(model => model.Services)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Transport_Option)
+                @Html.DisplayNameFor(model => model.TransportOption)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Transport_Company)
+                @Html.DisplayNameFor(model => model.TransportCompany)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastModifiedAt)
             </th>
             <th></th>
         </tr>
@@ -34,7 +46,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Start_Date)
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Budget)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Duration)
@@ -43,10 +58,19 @@
                 @Html.DisplayFor(modelItem => item.Services)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Transport_Option)
+                @Html.DisplayFor(modelItem => item.TransportOption)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Transport_Company)
+                @Html.DisplayFor(modelItem => item.TransportCompany)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastModifiedAt)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

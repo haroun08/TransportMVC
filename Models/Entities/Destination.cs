@@ -1,37 +1,31 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 public class Destination
 {
-
+    [Key]
     public Guid Id { get; set; }
+
+    [Required(ErrorMessage = "Name is required")]
+    [MaxLength(100, ErrorMessage = "Name cannot exceed 100 characters")]
+    public string Name { get; set; }
+
+    [MaxLength(1000, ErrorMessage = "Description cannot exceed 1000 characters")]
+    public string Description { get; set; }
+
+    [Required]
+    public DateTime CreatedAt { get; set; }
+
+    [Required]
+    public User LastModifiedBy { get; set; }
+
+    [Required]
+    public DateTime LastModifiedAt { get; set; }
 
     public Destination()
     {
-    }
-
-    public string Name{ get; set; }
-    public string Description{ get; set; }
-
-    public string getName()
-    {
-        return Name;
-    }
-
-    public void setName(string name)
-    {
-        this.Name = name;
-    }
-
-    public string getDescription()
-    {
-        return Description;
-    }
-
-    public void setDescription(string description)
-    {
-        this.Description = description;
+        Id = Guid.NewGuid();
+        CreatedAt = DateTime.UtcNow;
+        LastModifiedAt = CreatedAt;
     }
 }

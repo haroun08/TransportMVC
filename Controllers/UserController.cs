@@ -48,25 +48,22 @@ namespace TransportMVC.Controllers
             return View();
         }
 
-        // POST: Users/Create
+        // POST: User/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Username,Password,Role")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Username,Password,Email,Phone,Role,CreatedAt,LastModifiedAt")] User user)
         {
             if (ModelState.IsValid)
             {
-                User_Manager UserManager = new User_Manager();
-                user.User_Manager = UserManager;
-                user.Id = Guid.NewGuid(); // Generate a new unique ID
-                _context.Add(user); // Add the user object to the context
-                await _context.SaveChangesAsync(); // Save changes to the database
-                return RedirectToAction(nameof(Index)); // Redirect to the index action
+                user.Id = Guid.NewGuid();
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            return View(user); // If model state is not valid, return to the create view with the user object
+            return View(user);
         }
-
 
         // GET: User/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
@@ -89,7 +86,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Username,Password,Role")] User user)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Username,Password,Email,Phone,Role,CreatedAt,LastModifiedAt")] User user)
         {
             if (id != user.Id)
             {
@@ -100,20 +97,7 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
-                    // Retrieve the existing user from the database
-                    var existingUser = await _context.Users.FindAsync(id);
-                    if (existingUser == null)
-                    {
-                        return NotFound();
-                    }
-                    
-                    // Update the properties of the existing user with the values from the edited user
-                    existingUser.Username = user.Username;
-                    existingUser.Password = user.Password;
-                    existingUser.Role = user.Role;
-
-                    // Update the user in the database
-                    _context.Update(existingUser);
+                    _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

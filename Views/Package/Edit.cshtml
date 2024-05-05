@@ -14,9 +14,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Start_Date" class="control-label"></label>
-                <input asp-for="Start_Date" class="form-control" />
-                <span asp-validation-for="Start_Date" class="text-danger"></span>
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Budget" class="control-label"></label>
+                <input asp-for="Budget" class="form-control" />
+                <span asp-validation-for="Budget" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Duration" class="control-label"></label>
@@ -29,14 +34,29 @@
                 <span asp-validation-for="Services" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Transport_Option" class="control-label"></label>
-                <input asp-for="Transport_Option" class="form-control" />
-                <span asp-validation-for="Transport_Option" class="text-danger"></span>
+                <label asp-for="TransportOption" class="control-label"></label>
+                <select asp-for="TransportOption" class="form-control"></select>
+                <span asp-validation-for="TransportOption" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Transport_Company" class="control-label"></label>
-                <input asp-for="Transport_Company" class="form-control" />
-                <span asp-validation-for="Transport_Company" class="text-danger"></span>
+                <label asp-for="TransportCompany" class="control-label"></label>
+                <input asp-for="TransportCompany" class="form-control" />
+                <span asp-validation-for="TransportCompany" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedAt" class="control-label"></label>
+                <input asp-for="CreatedAt" class="form-control" />
+                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastModifiedAt" class="control-label"></label>
+                <input asp-for="LastModifiedAt" class="form-control" />
+                <span asp-validation-for="LastModifiedAt" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
