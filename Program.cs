@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Data;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace TransportMVC
 {
@@ -19,6 +21,9 @@ namespace TransportMVC
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
                     new MySqlServerVersion(new Version(8, 0, 0)))); // Adjust MySQL server version as needed
+
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             var app = builder.Build();
 
@@ -36,6 +41,8 @@ namespace TransportMVC
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseAuthentication();
 
             app.MapControllerRoute(
                 name: "default",

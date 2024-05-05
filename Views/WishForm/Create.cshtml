@@ -14,38 +14,33 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Destination" class="control-label"></label>
-                <input asp-for="Destination" class="form-control" />
+                <input asp-for="Destination" class="form-control" placeholder="Enter destination" />
                 <span asp-validation-for="Destination" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DepartureDate" class="control-label"></label>
-                <input asp-for="DepartureDate" class="form-control" />
+                <input asp-for="DepartureDate" type="date" class="form-control" />
                 <span asp-validation-for="DepartureDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Duration" class="control-label"></label>
-                <input asp-for="Duration" class="form-control" />
+                <input asp-for="Duration"  class="form-control" placeholder="Enter duration in days" />
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Budget" class="control-label"></label>
-                <input asp-for="Budget" class="form-control" />
+                <input asp-for="Budget" type="number" class="form-control" placeholder="Enter budget ($)" />
                 <span asp-validation-for="Budget" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Interests" class="control-label"></label>
-                <input asp-for="Interests" class="form-control" />
+                <input asp-for="Interests" class="form-control" placeholder="Enter interests" />
                 <span asp-validation-for="Interests" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AdditionalNotes" class="control-label"></label>
-                <input asp-for="AdditionalNotes" class="form-control" />
+                <textarea asp-for="AdditionalNotes" class="form-control" placeholder="Enter additional notes" rows="4"></textarea>
                 <span asp-validation-for="AdditionalNotes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SubmissionDate" class="control-label"></label>
-                <input asp-for="SubmissionDate" class="form-control" />
-                <span asp-validation-for="SubmissionDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
