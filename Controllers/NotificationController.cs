@@ -103,7 +103,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Content,SentDate")] Notification notification)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Content")] Notification notification)
         {
             if (id != notification.Id)
             {
@@ -114,13 +114,12 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
-                    var originalNotification = await _context.Notifications.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+                    var originalNotification = await _context.Notifications.FindAsync(id);
                     if (originalNotification == null)
                     {
                         return NotFound();
                     }
 
-                    // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
                     var currentUser = await _userManager.GetUserAsync(HttpContext.User);
                     if (currentUser == null)
                     {
@@ -134,24 +133,24 @@ namespace TransportMVC.Controllers
                     notification.LastModifiedBy = currentUser;
                     notification.LastModifiedAt = DateTime.UtcNow;
 
-                    _context.Update(notification);
+                    // Update the properties of the originalNotification with values from the notification object
+                    originalNotification.Content = notification.Content;
+
+                    _context.Update(originalNotification);
                     await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index)); // Redirect to notification index or other relevant page
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NotificationExists(notification.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    ModelState.AddModelError(string.Empty, "Concurrency conflict occurred. Please try again.");
+                    // Log the exception for further investigation
+                    return View(notification); // Return the view with error message
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(notification);
+            return View(notification); // Return the view with validation errors
         }
+
 
         // GET: Notification/Delete/5
         public async Task<IActionResult> Delete(Guid? id)

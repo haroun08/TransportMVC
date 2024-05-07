@@ -23,12 +23,23 @@ public class Destination
     [Required]
     public DateTime LastModifiedAt { get; set; }
 
+    public string ImageUrl { get; set; }
+
+     public List<Package>? Packages { get; set; }
+
+
 
     public Destination()
     {
         Id = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
         LastModifiedAt = CreatedAt;
+        // Generate a random number between 64 and 166
+        Random random = new Random();
+        int randomNumber = random.Next(64, 166);
+        // Construct the image URL with the random number
+       ImageUrl = $"https://picsum.photos/id/{randomNumber}/450/550";
+
     }
     
 }

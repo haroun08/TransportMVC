@@ -22,8 +22,10 @@ public class Booking
     [Key]
     public Guid Id { get; set; }
 
+    public Package? AssociatedPackage { get; set; }
+
     [Required(ErrorMessage = "Associated package is required")]
-    public Package AssociatedPackage { get; set; }
+    public Guid AssociatedPackageId { get; set; }
 
     [Required(ErrorMessage = "State is required")]
     public BookingState State { get; set; }
@@ -41,12 +43,12 @@ public class Booking
     [Required(ErrorMessage = "Payment method is required")]
     public PaymentMethod PaymentMethod { get; set; }
 
-    public User CreatedBy { get; set; }
-
-    public User LastModifiedBy { get; set; }
-
     [Required]
     public DateTime LastModifiedAt { get; set; }
+
+    public User? CreatedBy { get; set; }
+
+    public User? LastModifiedBy { get; set; }
 
     public Booking()
     {

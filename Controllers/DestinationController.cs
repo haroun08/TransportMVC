@@ -119,27 +119,26 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
-                    var originalDestination = await _context.Destinations.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+                    var originalDestination = await _context.Destinations.FindAsync(id);
                     if (originalDestination == null)
                     {
                         return NotFound();
                     }
 
-                    // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                    // Set the modified properties
+                    originalDestination.Name = destination.Name;
+                    originalDestination.Description = destination.Description;
+
+                    // Set the LastModifiedBy and LastModifiedAt properties
                     var currentUser = await _userManager.GetUserAsync(HttpContext.User);
                     if (currentUser == null)
                     {
                         return RedirectToAction(nameof(Index));
                     }
+                    originalDestination.LastModifiedBy = currentUser;
+                    originalDestination.LastModifiedAt = DateTime.UtcNow;
 
-                    // Preserve the original CreatedAt value
-                    destination.CreatedAt = originalDestination.CreatedAt;
-
-                    // Update the LastModifiedBy and LastModifiedAt properties
-                    destination.LastModifiedBy = currentUser;
-                    destination.LastModifiedAt = DateTime.UtcNow;
-
-                    _context.Update(destination);
+                    _context.Update(originalDestination);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -154,10 +153,10 @@ namespace TransportMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(destination);
         }
+
 
         // GET: Destination/Delete/5
         public async Task<IActionResult> Delete(Guid? id)

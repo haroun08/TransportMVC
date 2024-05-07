@@ -115,27 +115,27 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
-                    var originalCoupon = await _context.Coupons.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+                    var originalCoupon = await _context.Coupons.FindAsync(id);
                     if (originalCoupon == null)
                     {
                         return NotFound();
                     }
 
-                    // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                    // Set the modified properties
+                    originalCoupon.Code = coupon.Code;
+                    originalCoupon.DiscountAmount = coupon.DiscountAmount;
+                    originalCoupon.ExpirationDate = coupon.ExpirationDate;
+
+                    // Set the LastModifiedBy and LastModifiedAt properties
                     var currentUser = await _userManager.GetUserAsync(HttpContext.User);
                     if (currentUser == null)
                     {
                         return RedirectToAction(nameof(Index));
                     }
+                    originalCoupon.LastModifiedBy = currentUser;
+                    originalCoupon.LastModifiedAt = DateTime.UtcNow;
 
-                    // Preserve the original CreatedAt value
-                    coupon.CreatedAt = originalCoupon.CreatedAt;
-
-                    // Update the LastModifiedBy and LastModifiedAt properties
-                    coupon.LastModifiedBy = currentUser;
-                    coupon.LastModifiedAt = DateTime.UtcNow;
-
-                    _context.Update(coupon);
+                    _context.Update(originalCoupon);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -153,6 +153,7 @@ namespace TransportMVC.Controllers
             }
             return View(coupon);
         }
+
 
         // GET: Coupon/Delete/5
         public async Task<IActionResult> Delete(Guid? id)

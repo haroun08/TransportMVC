@@ -1,5 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 
+public enum Category {
+    BEACH,
+    CITY,
+    ADVENTURE,
+    ROMANTIC,
+    FAMILY,
+    LUXURY,
+    CRUISE
+};
+
 public enum TransportOption
 {
     Airplane,
@@ -13,9 +23,10 @@ public class Package
 {
     [Key]
     public Guid Id { get; set; }
-    
-    [Required(ErrorMessage = "Destination is required")]
-    public Destination Destination { get; set; }
+
+    [Required(ErrorMessage = "Name is required")]
+    [MaxLength(100, ErrorMessage = "Name cannot exceed 100 characters")]
+    public string Name { get; set; }
     
     [Required(ErrorMessage = "Start Date is required")]
     [DataType(DataType.Date)]
@@ -38,19 +49,29 @@ public class Package
     public string TransportCompany { get; set; }
     
     [Required(ErrorMessage = "Category is required")]
-    public string Category { get; set; }
-    
-    
-    public User CreatedBy { get; set; }
+    public Category Category { get; set; }
     
     [Required]
     public DateTime CreatedAt { get; set; }
     
     
-    public User LastModifiedBy { get; set; }
-    
     [Required]
     public DateTime LastModifiedAt { get; set; }
+
+    public List<Booking>? Bookings { get; set; }
+
+    public List<Review>? Reviews { get; set; }
+
+
+    public User? LastModifiedBy { get; set; }
+
+
+    public User? CreatedBy { get; set; }
+    
+    public Guid DestinationId  { get; set; }
+
+    public Destination? Destination { get; set; }
+    
 
     public Package()
     {

@@ -12,8 +12,8 @@ using TransportMVC.Data;
 namespace TransportMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240505180149_addIdentity")]
-    partial class addIdentity
+    [Migration("20240507122118_FixedPackage")]
+    partial class FixedPackage
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,7 @@ namespace TransportMVC.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatedById")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<bool>("IsPaid")
@@ -47,6 +48,7 @@ namespace TransportMVC.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedById")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("NumberOfTravellers")
@@ -105,6 +107,7 @@ namespace TransportMVC.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatedById")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<decimal>("DiscountAmount")
@@ -117,6 +120,7 @@ namespace TransportMVC.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedById")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
@@ -144,6 +148,10 @@ namespace TransportMVC.Migrations
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("LastModifiedAt")
                         .HasColumnType("datetime(6)");
@@ -309,12 +317,14 @@ namespace TransportMVC.Migrations
                         .HasColumnType("varchar(250)");
 
                     b.Property<string>("CreatedById")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("LastModifiedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedById")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("ReceiverId")
@@ -344,9 +354,8 @@ namespace TransportMVC.Migrations
                     b.Property<decimal>("Budget")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("CouponId")
                         .HasColumnType("char(36)");
@@ -370,6 +379,11 @@ namespace TransportMVC.Migrations
 
                     b.Property<string>("LastModifiedById")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Services")
                         .HasColumnType("longtext");
@@ -407,6 +421,7 @@ namespace TransportMVC.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedById")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("Date")
@@ -416,6 +431,7 @@ namespace TransportMVC.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedById")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("Rating")
@@ -519,8 +535,10 @@ namespace TransportMVC.Migrations
                     b.Property<decimal?>("Budget")
                         .HasColumnType("decimal(65,30)");
 
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreatedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DepartureDate")
@@ -549,18 +567,22 @@ namespace TransportMVC.Migrations
             modelBuilder.Entity("Booking", b =>
                 {
                     b.HasOne("Package", "AssociatedPackage")
-                        .WithMany()
+                        .WithMany("Bookings")
                         .HasForeignKey("AssociatedPackageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
+                        .WithMany("Bookings")
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("User", "LastModifiedBy")
-                        .WithMany()
-                        .HasForeignKey("LastModifiedById");
+                        .WithMany("ModifiedBookings")
+                        .HasForeignKey("LastModifiedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AssociatedPackage");
 
@@ -572,12 +594,16 @@ namespace TransportMVC.Migrations
             modelBuilder.Entity("Coupon", b =>
                 {
                     b.HasOne("User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
+                        .WithMany("Coupons")
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("User", "LastModifiedBy")
-                        .WithMany()
-                        .HasForeignKey("LastModifiedById");
+                        .WithMany("ModifiedCoupons")
+                        .HasForeignKey("LastModifiedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
 
@@ -587,11 +613,11 @@ namespace TransportMVC.Migrations
             modelBuilder.Entity("Destination", b =>
                 {
                     b.HasOne("User", "CreatedBy")
-                        .WithMany()
+                        .WithMany("Destinations")
                         .HasForeignKey("CreatedById");
 
                     b.HasOne("User", "LastModifiedBy")
-                        .WithMany()
+                        .WithMany("ModifiedDestinations")
                         .HasForeignKey("LastModifiedById");
 
                     b.Navigation("CreatedBy");
@@ -653,15 +679,19 @@ namespace TransportMVC.Migrations
             modelBuilder.Entity("Notification", b =>
                 {
                     b.HasOne("User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
+                        .WithMany("SentNotifications")
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("User", "LastModifiedBy")
-                        .WithMany()
-                        .HasForeignKey("LastModifiedById");
+                        .WithMany("ModifiedNotifications")
+                        .HasForeignKey("LastModifiedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("User", "Receiver")
-                        .WithMany()
+                        .WithMany("ReceivedNotifications")
                         .HasForeignKey("ReceiverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -680,17 +710,17 @@ namespace TransportMVC.Migrations
                         .HasForeignKey("CouponId");
 
                     b.HasOne("User", "CreatedBy")
-                        .WithMany()
+                        .WithMany("Packages")
                         .HasForeignKey("CreatedById");
 
                     b.HasOne("Destination", "Destination")
-                        .WithMany()
+                        .WithMany("Packages")
                         .HasForeignKey("DestinationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("User", "LastModifiedBy")
-                        .WithMany()
+                        .WithMany("ModifiedPackages")
                         .HasForeignKey("LastModifiedById");
 
                     b.Navigation("CreatedBy");
@@ -703,18 +733,22 @@ namespace TransportMVC.Migrations
             modelBuilder.Entity("Review", b =>
                 {
                     b.HasOne("Package", "AssociatedPackage")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("AssociatedPackageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
+                        .WithMany("Reviews")
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("User", "LastModifiedBy")
-                        .WithMany()
-                        .HasForeignKey("LastModifiedById");
+                        .WithMany("ModifiedReviews")
+                        .HasForeignKey("LastModifiedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AssociatedPackage");
 
@@ -727,9 +761,7 @@ namespace TransportMVC.Migrations
                 {
                     b.HasOne("User", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedById");
 
                     b.Navigation("CreatedBy");
                 });
@@ -737,6 +769,47 @@ namespace TransportMVC.Migrations
             modelBuilder.Entity("Coupon", b =>
                 {
                     b.Navigation("ApplicablePackages");
+                });
+
+            modelBuilder.Entity("Destination", b =>
+                {
+                    b.Navigation("Packages");
+                });
+
+            modelBuilder.Entity("Package", b =>
+                {
+                    b.Navigation("Bookings");
+
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.Navigation("Bookings");
+
+                    b.Navigation("Coupons");
+
+                    b.Navigation("Destinations");
+
+                    b.Navigation("ModifiedBookings");
+
+                    b.Navigation("ModifiedCoupons");
+
+                    b.Navigation("ModifiedDestinations");
+
+                    b.Navigation("ModifiedNotifications");
+
+                    b.Navigation("ModifiedPackages");
+
+                    b.Navigation("ModifiedReviews");
+
+                    b.Navigation("Packages");
+
+                    b.Navigation("ReceivedNotifications");
+
+                    b.Navigation("Reviews");
+
+                    b.Navigation("SentNotifications");
                 });
 #pragma warning restore 612, 618
         }

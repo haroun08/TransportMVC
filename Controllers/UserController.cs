@@ -96,21 +96,29 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.Id))
+                    var existingUser = await _context.Users.FindAsync(id);
+                    if (existingUser == null)
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+
+                    // Only update the editable properties
+                    existingUser.Email = user.Email;
+                    existingUser.PhoneNumber = user.PhoneNumber;
+                    existingUser.LockoutEnd = user.LockoutEnd;
+                    existingUser.TwoFactorEnabled = user.TwoFactorEnabled;
+
+                    _context.Update(existingUser);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index)); // Redirect to appropriate page
                 }
-                return RedirectToAction(nameof(Index));
+                catch (DbUpdateConcurrencyException)
+                {
+                    ModelState.AddModelError(string.Empty, "Concurrency conflict occurred. Please try again.");
+                    // You might want to log this exception for further investigation
+                    return View(user); // Return the view with error message
+                }
             }
             return View(user);
         }

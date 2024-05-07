@@ -13,6 +13,27 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DestinationId" class="control-label"></label>
+                <select asp-for="DestinationId" class="form-control">
+                    <option value="">Select a destination</option>
+                    @if (ViewBag.Destinations != null)
+                    {
+                        foreach (var destination in ViewBag.Destinations)
+                        {
+                            <option value="@destination.Id">@destination.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="DestinationId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
                 <label asp-for="StartDate" class="control-label"></label>
                 <input asp-for="StartDate" class="form-control" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
@@ -34,7 +55,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="TransportOption" class="control-label"></label>
-                <select asp-for="TransportOption" class="form-control"></select>
+                <select asp-for="TransportOption" class="form-control">
+                    <option value="">Select a transport option</option>
+                    @foreach (var option in Enum.GetValues(typeof(TransportOption)))
+                    {
+                        <option value="@option">@option</option>
+                    }
+                </select>
                 <span asp-validation-for="TransportOption" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -44,19 +71,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
+                <select asp-for="Category" class="form-control">
+                    <option value="">Select a category</option>
+                    @foreach (var category in Enum.GetValues(typeof(Category)))
+                    {
+                        <option value="@category">@category</option>
+                    }
+                </select>
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastModifiedAt" class="control-label"></label>
-                <input asp-for="LastModifiedAt" class="form-control" />
-                <span asp-validation-for="LastModifiedAt" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

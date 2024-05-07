@@ -49,8 +49,14 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Package/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            // Fetch the list of destinations from the database
+            var destinations = await _context.Destinations.ToListAsync();
+            
+            // Convert to SelectList to be used in the view
+            ViewBag.Destinations = destinations;
+
             return View();
         }
 
@@ -59,28 +65,52 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,StartDate,Budget,Duration,Services,TransportOption,TransportCompany,Category,CreatedAt,LastModifiedAt")] Package package)
+        public async Task<IActionResult> Create([Bind("Id,Name,StartDate,Budget,Duration,Services,TransportOption,TransportCompany,Category,CreatedAt,LastModifiedAt,DestinationId")] Package package)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
-                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
-                // Ensure that the current user is not null
-                if (currentUser == null)
+                // Print validation errors to the console
+                foreach (var state in ModelState.Values)
                 {
-                    // Handle the case where the current user is not found
-                    return RedirectToAction(nameof(Index));
+                    foreach (var error in state.Errors)
+                    {
+                        var errorMessage = error.ErrorMessage;
+                        Console.WriteLine(errorMessage);
+                    }
                 }
+                
+                return View(package);
+            }
 
-                package.CreatedBy = currentUser;
-                package.LastModifiedBy = currentUser;
-
-                _context.Add(package);
-                await _context.SaveChangesAsync();
+            // Retrieve the currently logged-in user
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            if (currentUser == null)
+            {
                 return RedirectToAction(nameof(Index));
             }
-            return View(package);
+
+            // Set the CreatedBy and LastModifiedBy properties
+            package.CreatedBy = currentUser;
+            package.LastModifiedBy = currentUser;
+
+            // Fetch the selected destination from the database
+            package.Destination = await _context.Destinations.FindAsync(package.DestinationId);
+
+            // Check if the destination was found
+            if (package.Destination == null)
+            {
+                // Destination not found, handle the error (e.g., display an error message)
+                ModelState.AddModelError("Destination", "Selected destination not found.");
+                return View(package);
+            }
+
+            // Add the package to the context and save changes
+            _context.Add(package);
+            await _context.SaveChangesAsync();
+            
+            return RedirectToAction(nameof(Index));
         }
+
 
         // GET: Package/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
@@ -95,6 +125,12 @@ namespace TransportMVC.Controllers
             {
                 return NotFound();
             }
+            // Fetch the list of destinations from the database
+            var destinations = await _context.Destinations.ToListAsync();
+            
+            // Convert to SelectList to be used in the view
+            ViewBag.Destinations = destinations;
+
             return View(package);
         }
 
@@ -103,7 +139,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,StartDate,Budget,Duration,Services,TransportOption,TransportCompany,Category,CreatedAt,LastModifiedAt")] Package package)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,StartDate,Budget,Duration,Services,TransportOption,TransportCompany,Category")] Package package)
         {
             if (id != package.Id)
             {
@@ -114,27 +150,32 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
-                    var originalPackage = await _context.Packages.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+                    var originalPackage = await _context.Packages.FindAsync(id);
                     if (originalPackage == null)
                     {
                         return NotFound();
                     }
 
-                    // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+                    // Set the modified properties
+                    originalPackage.Name = package.Name;
+                    originalPackage.StartDate = package.StartDate;
+                    originalPackage.Budget = package.Budget;
+                    originalPackage.Duration = package.Duration;
+                    originalPackage.Services = package.Services;
+                    originalPackage.TransportOption = package.TransportOption;
+                    originalPackage.TransportCompany = package.TransportCompany;
+                    originalPackage.Category = package.Category;
+
+                    // Set the LastModifiedBy and LastModifiedAt properties
                     var currentUser = await _userManager.GetUserAsync(HttpContext.User);
                     if (currentUser == null)
                     {
                         return RedirectToAction(nameof(Index));
                     }
+                    originalPackage.LastModifiedBy = currentUser;
+                    originalPackage.LastModifiedAt = DateTime.UtcNow;
 
-                    // Preserve the original CreatedAt value
-                    package.CreatedAt = originalPackage.CreatedAt;
-
-                    // Update the LastModifiedBy and LastModifiedAt properties
-                    package.LastModifiedBy = currentUser;
-                    package.LastModifiedAt = DateTime.UtcNow;
-
-                    _context.Update(package);
+                    _context.Update(originalPackage);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -152,6 +193,7 @@ namespace TransportMVC.Controllers
             }
             return View(package);
         }
+
 
         // GET: Package/Delete/5
         public async Task<IActionResult> Delete(Guid? id)

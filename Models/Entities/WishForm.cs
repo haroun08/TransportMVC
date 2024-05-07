@@ -24,6 +24,9 @@ public class WishForm
     [Required]
     public DateTime SubmissionDate { get; set; }
 
+    [Required(ErrorMessage = "Category is required")]
+    public Category Category { get; set; }
+
     public User? CreatedBy { get; set; }
 
     

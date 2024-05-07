@@ -113,8 +113,24 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
-                    _context.Update(wishForm);
+                    var existingWishForm = await _context.WishForms.FindAsync(id);
+                    if (existingWishForm == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Only update the editable properties
+                    existingWishForm.Destination = wishForm.Destination;
+                    existingWishForm.DepartureDate = wishForm.DepartureDate;
+                    existingWishForm.Duration = wishForm.Duration;
+                    existingWishForm.Budget = wishForm.Budget;
+                    existingWishForm.Interests = wishForm.Interests;
+                    existingWishForm.AdditionalNotes = wishForm.AdditionalNotes;
+
+                    _context.Update(existingWishForm);
                     await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -127,7 +143,6 @@ namespace TransportMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(wishForm);
         }
@@ -142,6 +157,7 @@ namespace TransportMVC.Controllers
 
             var wishForm = await _context.WishForms
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (wishForm == null)
             {
                 return NotFound();

@@ -103,7 +103,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Text,Rating,Date")] Review review)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Text,Rating")] Review review)
         {
             if (id != review.Id)
             {
@@ -127,14 +127,14 @@ namespace TransportMVC.Controllers
                         return RedirectToAction(nameof(Index));
                     }
 
-                    // Preserve the original CreatedAt value
-                    review.Date = originalReview.Date;
 
                     // Update the LastModifiedBy and LastModifiedAt properties
-                    review.LastModifiedBy = currentUser;
-                    review.LastModifiedAt = DateTime.UtcNow;
+                    originalReview.LastModifiedBy = currentUser;
+                    originalReview.LastModifiedAt = DateTime.UtcNow;
+                    originalReview.Text = review.Text;
+                    originalReview.Rating = review.Rating;
 
-                    _context.Update(review);
+                    _context.Update(originalReview);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
