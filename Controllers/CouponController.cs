@@ -40,6 +40,7 @@ namespace TransportMVC.Controllers
             var coupon = await _context.Coupons
                 .Include(d => d.CreatedBy) 
                 .Include(d => d.LastModifiedBy) 
+                .Include(d => d.Packages)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (coupon == null)
             {
@@ -120,6 +121,11 @@ namespace TransportMVC.Controllers
             }
 
             var coupon = await _context.Coupons.FindAsync(id);
+
+            var packages = await _context.Packages.ToListAsync();
+            
+            ViewBag.Packages = packages;
+
             if (coupon == null)
             {
                 return NotFound();
@@ -143,18 +149,18 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
-                    var originalCoupon = await _context.Coupons.FindAsync(id);
+                    var originalCoupon = await _context.Coupons.Include(c => c.Packages).FirstOrDefaultAsync(c => c.Id == id);
                     if (originalCoupon == null)
                     {
                         return NotFound();
                     }
 
-                    // Set the modified properties
+                    // Update coupon properties
                     originalCoupon.Code = coupon.Code;
                     originalCoupon.DiscountAmount = coupon.DiscountAmount;
                     originalCoupon.ExpirationDate = coupon.ExpirationDate;
 
-                    // Set the LastModifiedBy and LastModifiedAt properties
+                    // Set LastModifiedBy and LastModifiedAt properties
                     var currentUser = await _userManager.GetUserAsync(HttpContext.User);
                     if (currentUser == null)
                     {
@@ -163,8 +169,32 @@ namespace TransportMVC.Controllers
                     originalCoupon.LastModifiedBy = currentUser;
                     originalCoupon.LastModifiedAt = DateTime.UtcNow;
 
+                    // Retrieve selected package IDs from the form
+                    if (Request.Form["Packages"].Count > 0)
+                    {
+                        var selectedPackageIds = Request.Form["Packages"].Select(Guid.Parse).ToList();
+
+                        // Clear existing packages associated with the coupon
+                        originalCoupon.Packages.Clear();
+
+                        // Add selected packages to the coupon
+                        foreach (var packageId in selectedPackageIds)
+                        {
+                            var package = await _context.Packages.FindAsync(packageId);
+                            if (package != null)
+                            {
+                                originalCoupon.Packages.Add(package);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        originalCoupon.Packages.Clear();
+                    }
+
                     _context.Update(originalCoupon);
                     await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {

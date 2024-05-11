@@ -34,6 +34,6 @@ public class Coupon
         Id = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
         LastModifiedAt = CreatedAt;
-        Packages = new List<Package>(); // Initialize the list
+        Packages = new List<Package>(); 
     }
 }

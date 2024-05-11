@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 public enum Category {
@@ -70,13 +71,18 @@ public class Package
 
     public Destination? Destination { get; set; }
 
-    public List<Coupon> Coupons { get; set; } // Navigation property for many-to-many relationship
+    public List<Coupon> Coupons { get; set; } 
+
+    public Coordinator? Coordinator { get; set; }
+
+    [ForeignKey("ReceiverId")]
+    public Guid? CoordinatorId { get; set; }
 
     public Package()
     {
         Id = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
         LastModifiedAt = CreatedAt;
-        Coupons = new List<Coupon>(); // Initialize the list
+        Coupons = new List<Coupon>(); 
     }
 }

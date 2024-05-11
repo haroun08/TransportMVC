@@ -141,6 +141,9 @@ namespace TransportMVC.Controllers
             {
                 return NotFound();
             }
+            var users = await _context.Users.ToListAsync();
+            
+            ViewBag.Users = users;
 
             var notification = await _context.Notifications.FindAsync(id);
             if (notification == null)
@@ -155,7 +158,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Content")] Notification notification)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Content,ReceiverId")] Notification notification)
         {
             if (id != notification.Id)
             {
@@ -166,7 +169,7 @@ namespace TransportMVC.Controllers
             {
                 try
                 {
-                    var originalNotification = await _context.Notifications.FindAsync(id);
+                    var originalNotification = await _context.Notifications.Include(c => c.Receiver).FirstOrDefaultAsync(c => c.Id == id);
                     if (originalNotification == null)
                     {
                         return NotFound();
@@ -187,6 +190,18 @@ namespace TransportMVC.Controllers
 
                     // Update the properties of the originalNotification with values from the notification object
                     originalNotification.Content = notification.Content;
+
+                    // Retrieve the receiver from the database using ReceiverId
+                    var receiver = await _userManager.FindByIdAsync(notification.ReceiverId);
+                    if (receiver == null)
+                    {
+                        // Handle the case where the receiver is not found
+                        ModelState.AddModelError("ReceiverId", "Invalid receiver selected.");
+                        return View(notification);
+                    }
+
+                    // Set the Receiver property
+                    originalNotification.Receiver = receiver;
 
                     _context.Update(originalNotification);
                     await _context.SaveChangesAsync();

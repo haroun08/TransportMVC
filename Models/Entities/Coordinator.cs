@@ -13,6 +13,9 @@ public class Coordinator
     [Required(ErrorMessage = "Mail is required")]
     public string Mail { get; set; }
 
+    public List<Package>? Packages { get; set; } = [];
+
+
     public Coordinator()
     {
         Id = Guid.NewGuid();

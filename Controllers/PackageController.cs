@@ -41,6 +41,7 @@ namespace TransportMVC.Controllers
                 .Include(d => d.LastModifiedBy) 
                 .Include(d => d.Coupons)
                 .Include(d => d.Reviews)
+                .Include(d => d.Coordinator)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (package == null)
             {
@@ -59,6 +60,11 @@ namespace TransportMVC.Controllers
             // Convert to SelectList to be used in the view
             ViewBag.Destinations = destinations;
 
+            var coordinators = await _context.Coordinators.ToListAsync();
+            
+            // Convert to SelectList to be used in the view
+            ViewBag.Coordinators = coordinators;
+
             return View();
         }
 
@@ -67,7 +73,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,StartDate,Budget,Duration,Services,TransportOption,TransportCompany,Category,CreatedAt,LastModifiedAt,DestinationId")] Package package)
+        public async Task<IActionResult> Create([Bind("Name,Budget,Duration,Services,TransportOption,TransportCompany,Category,DestinationId,CoordinatorId")] Package package)
         {
             if (!ModelState.IsValid)
             {
@@ -106,6 +112,14 @@ namespace TransportMVC.Controllers
                 return View(package);
             }
 
+            package.Coordinator = await _context.Coordinators.FindAsync(package.CoordinatorId);
+
+            if (package.Coordinator == null)
+            {
+                ModelState.AddModelError("Coordinator", "Selected coordinator not found.");
+                return View(package);
+            }
+
             // Add the package to the context and save changes
             _context.Add(package);
             await _context.SaveChangesAsync();
@@ -133,6 +147,11 @@ namespace TransportMVC.Controllers
             // Convert to SelectList to be used in the view
             ViewBag.Destinations = destinations;
 
+            var coordinators = await _context.Coordinators.ToListAsync();
+            
+            // Convert to SelectList to be used in the view
+            ViewBag.Coordinators = coordinators;
+
             return View(package);
         }
 
@@ -141,7 +160,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,StartDate,Budget,Duration,Services,TransportOption,TransportCompany,Category")] Package package)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Budget,Duration,Services,TransportOption,TransportCompany,Category,DestinationId,CoordinatorId")] Package package)
         {
             if (id != package.Id)
             {
@@ -176,6 +195,24 @@ namespace TransportMVC.Controllers
                     }
                     originalPackage.LastModifiedBy = currentUser;
                     originalPackage.LastModifiedAt = DateTime.UtcNow;
+
+                    originalPackage.Destination = await _context.Destinations.FindAsync(package.DestinationId);
+
+                    // Check if the destination was found
+                    if (originalPackage.Destination == null)
+                    {
+                        // Destination not found, handle the error (e.g., display an error message)
+                        ModelState.AddModelError("Destination", "Selected destination not found.");
+                        return View(package);
+                    }
+
+                    originalPackage.Coordinator = await _context.Coordinators.FindAsync(package.CoordinatorId);
+
+                    if (originalPackage.Coordinator == null)
+                    {
+                        ModelState.AddModelError("Coordinator", "Selected coordinator not found.");
+                        return View(package);
+                    }
 
                     _context.Update(originalPackage);
                     await _context.SaveChangesAsync();

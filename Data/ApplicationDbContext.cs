@@ -84,7 +84,16 @@ namespace TransportMVC.Data
             .HasOne(p => p.Destination)                    
             .WithMany(u => u.Packages);
 
-         modelBuilder.Entity<Package>()
+        modelBuilder.Entity<Package>()
+            .HasIndex(e => e.Name)
+            .IsUnique();
+
+        modelBuilder.Entity<Package>()
+            .HasOne(p => p.Coordinator)                    
+            .WithMany(u => u.Packages)
+            .HasForeignKey(n => n.CoordinatorId);
+
+        modelBuilder.Entity<Coordinator>()
             .HasIndex(e => e.Name)
             .IsUnique();
 

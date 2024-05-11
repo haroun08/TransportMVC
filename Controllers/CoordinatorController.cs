@@ -33,6 +33,7 @@ namespace TransportMVC.Controllers
             }
 
             var coordinator = await _context.Coordinators
+                .Include(d => d.Packages)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (coordinator == null)
             {
@@ -57,7 +58,6 @@ namespace TransportMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                coordinator.Id = Guid.NewGuid();
                 _context.Add(coordinator);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
