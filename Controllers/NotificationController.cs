@@ -185,8 +185,8 @@ namespace TransportMVC.Controllers
                     notification.SentDate = originalNotification.SentDate;
 
                     // Update the LastModifiedBy and LastModifiedAt properties
-                    notification.LastModifiedBy = currentUser;
-                    notification.LastModifiedAt = DateTime.UtcNow;
+                    originalNotification.LastModifiedBy = currentUser;
+                    originalNotification.LastModifiedAt = DateTime.UtcNow;
 
                     // Update the properties of the originalNotification with values from the notification object
                     originalNotification.Content = notification.Content;
