@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TransportMVC.Migrations
 {
     /// <inheritdoc />
-    public partial class FixedPackage : Migration
+    public partial class PackageCoupon : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -225,10 +225,10 @@ namespace TransportMVC.Migrations
                     DiscountAmount = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedById = table.Column<string>(type: "varchar(255)", nullable: false)
+                    CreatedById = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    LastModifiedById = table.Column<string>(type: "varchar(255)", nullable: false)
+                    LastModifiedById = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -238,14 +238,12 @@ namespace TransportMVC.Migrations
                         name: "FK_Coupons_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Coupons_AspNetUsers_LastModifiedById",
                         column: x => x.LastModifiedById,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -377,8 +375,7 @@ namespace TransportMVC.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedById = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    DestinationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CouponId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                    DestinationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -392,11 +389,6 @@ namespace TransportMVC.Migrations
                         name: "FK_Packages_AspNetUsers_LastModifiedById",
                         column: x => x.LastModifiedById,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Packages_Coupons_CouponId",
-                        column: x => x.CouponId,
-                        principalTable: "Coupons",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Packages_Destinations_DestinationId",
@@ -418,11 +410,14 @@ namespace TransportMVC.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsPaid = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     PaymentMethod = table.Column<int>(type: "int", nullable: false),
-                    CreatedById = table.Column<string>(type: "varchar(255)", nullable: false)
+                    LastModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedById = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastModifiedById = table.Column<string>(type: "varchar(255)", nullable: false)
+                    LastModifiedById = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    CouponCode = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TotalAmount = table.Column<decimal>(type: "decimal(65,30)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -431,17 +426,40 @@ namespace TransportMVC.Migrations
                         name: "FK_Bookings_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Bookings_AspNetUsers_LastModifiedById",
                         column: x => x.LastModifiedById,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Bookings_Packages_AssociatedPackageId",
                         column: x => x.AssociatedPackageId,
+                        principalTable: "Packages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "CouponPackage",
+                columns: table => new
+                {
+                    CouponsId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    PackagesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CouponPackage", x => new { x.CouponsId, x.PackagesId });
+                    table.ForeignKey(
+                        name: "FK_CouponPackage_Coupons_CouponsId",
+                        column: x => x.CouponsId,
+                        principalTable: "Coupons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CouponPackage_Packages_PackagesId",
+                        column: x => x.PackagesId,
                         principalTable: "Packages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -541,6 +559,11 @@ namespace TransportMVC.Migrations
                 column: "LastModifiedById");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CouponPackage_PackagesId",
+                table: "CouponPackage",
+                column: "PackagesId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Coupons_CreatedById",
                 table: "Coupons",
                 column: "CreatedById");
@@ -576,11 +599,6 @@ namespace TransportMVC.Migrations
                 column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Packages_CouponId",
-                table: "Packages",
-                column: "CouponId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Packages_CreatedById",
                 table: "Packages",
                 column: "CreatedById");
@@ -594,6 +612,12 @@ namespace TransportMVC.Migrations
                 name: "IX_Packages_LastModifiedById",
                 table: "Packages",
                 column: "LastModifiedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Packages_Name",
+                table: "Packages",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_AssociatedPackageId",
@@ -641,6 +665,9 @@ namespace TransportMVC.Migrations
                 name: "Coordinators");
 
             migrationBuilder.DropTable(
+                name: "CouponPackage");
+
+            migrationBuilder.DropTable(
                 name: "Notifications");
 
             migrationBuilder.DropTable(
@@ -653,10 +680,10 @@ namespace TransportMVC.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Packages");
+                name: "Coupons");
 
             migrationBuilder.DropTable(
-                name: "Coupons");
+                name: "Packages");
 
             migrationBuilder.DropTable(
                 name: "Destinations");

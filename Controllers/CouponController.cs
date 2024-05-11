@@ -50,8 +50,13 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Coupon/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            // Fetch the list of packages from the database
+            var packages = await _context.Packages.ToListAsync();
+            
+            ViewBag.Packages = packages;
+
             return View();
         }
 
@@ -60,13 +65,25 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Code,DiscountAmount,ExpirationDate")] Coupon coupon)
+        public async Task<IActionResult> Create(Coupon coupon)
         {
+            if (!ModelState.IsValid)
+            {
+                // Print validation errors to the console
+                foreach (var state in ModelState.Values)
+                {
+                    foreach (var error in state.Errors)
+                    {
+                        var errorMessage = error.ErrorMessage;
+                        Console.WriteLine(errorMessage);
+                    }
+                }
+                
+                return View(coupon);
+            }
             if (ModelState.IsValid)
             {
-                // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
                 var currentUser = await _userManager.GetUserAsync(HttpContext.User);
-                // Ensure that the current user is not null
                 if (currentUser == null)
                 {
                     // Handle the case where the current user is not found
@@ -76,8 +93,19 @@ namespace TransportMVC.Controllers
                 coupon.CreatedBy = currentUser;
                 coupon.LastModifiedBy = currentUser;
 
+                // Retrieve the selected packages and associate them with the coupon
+                if (Request.Form["Packages"].Count > 0)
+                {
+                    var selectedPackageIds = Request.Form["Packages"].Select(Guid.Parse).ToList();
+                    coupon.Packages = await _context.Packages.Where(p => selectedPackageIds.Contains(p.Id)).ToListAsync();
+                }
+
+                // Add the coupon to the database
                 _context.Add(coupon);
+
+                // Save changes to the database
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(coupon);

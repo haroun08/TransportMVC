@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class Coupon
 {
@@ -14,25 +15,25 @@ public class Coupon
 
     [Required(ErrorMessage = "Expiration date is required")]
     [DataType(DataType.Date)]
-
     public DateTime ExpirationDate { get; set; }
 
-    public List<Package>? ApplicablePackages { get; set; }
+    public List<Package> Packages { get; set; } 
 
-    [Required]        
+    [Required]
     public DateTime CreatedAt { get; set; }
 
-    public User CreatedBy { get; set; }
+    public User? CreatedBy { get; set; }
 
-    [Required]        
+    [Required]
     public DateTime LastModifiedAt { get; set; }
 
-    public User LastModifiedBy { get; set; }
+    public User? LastModifiedBy { get; set; }
 
     public Coupon()
     {
         Id = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
         LastModifiedAt = CreatedAt;
+        Packages = new List<Package>(); // Initialize the list
     }
 }

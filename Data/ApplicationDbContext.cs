@@ -33,6 +33,7 @@ namespace TransportMVC.Data
         modelBuilder.Entity<Notification>()
             .HasOne(n => n.Receiver)
             .WithMany(u => u.ReceivedNotifications)
+            .HasForeignKey(n => n.ReceiverId)
             .IsRequired();
 
         modelBuilder.Entity<Notification>()
@@ -60,24 +61,32 @@ namespace TransportMVC.Data
 
         // Coupon configurations
          modelBuilder.Entity<Coupon>()
-        .HasOne(c => c.CreatedBy)                     
-        .WithMany(u => u.Coupons); 
+            .HasOne(c => c.CreatedBy)                     
+            .WithMany(u => u.Coupons);
+
+         modelBuilder.Entity<Coupon>()
+            .HasMany(c => c.Packages)                     
+            .WithMany(u => u.Coupons);  
 
         // Destination configurations
         modelBuilder.Entity<Destination>()
-        .HasOne(d => d.CreatedBy)                     
-        .WithMany(u => u.Destinations);
+            .HasOne(d => d.CreatedBy)                     
+            .WithMany(u => u.Destinations);
 
 
 
         // Package configurations
         modelBuilder.Entity<Package>()
-        .HasOne(p => p.CreatedBy)                    
-        .WithMany(u => u.Packages); 
+            .HasOne(p => p.CreatedBy)                    
+            .WithMany(u => u.Packages); 
 
         modelBuilder.Entity<Package>()
-        .HasOne(p => p.Destination)                    
-        .WithMany(u => u.Packages);
+            .HasOne(p => p.Destination)                    
+            .WithMany(u => u.Packages);
+
+         modelBuilder.Entity<Package>()
+            .HasIndex(e => e.Name)
+            .IsUnique();
 
     }
 

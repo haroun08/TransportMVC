@@ -39,6 +39,8 @@ namespace TransportMVC.Controllers
             var package = await _context.Packages
                 .Include(d => d.CreatedBy) 
                 .Include(d => d.LastModifiedBy) 
+                .Include(d => d.Coupons)
+                .Include(d => d.Reviews)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (package == null)
             {

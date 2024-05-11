@@ -66,8 +66,12 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NumberOfTravellers,PaymentMethod,AssociatedPackageId")] Booking booking)
+        public async Task<IActionResult> Create([Bind("NumberOfTravellers,PaymentMethod,AssociatedPackageId,CouponCode")] Booking booking)
         {
+            var packages = await _context.Packages.ToListAsync();
+            
+            ViewBag.Packages = packages;
+
             if (!ModelState.IsValid)
             {
                 // Print validation errors to the console
@@ -84,6 +88,7 @@ namespace TransportMVC.Controllers
             }
             if (ModelState.IsValid)
             {
+
                 // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
                 var currentUser = await _userManager.GetUserAsync(HttpContext.User);
                 // Ensure that the current user is not null
@@ -96,15 +101,50 @@ namespace TransportMVC.Controllers
                 booking.CreatedBy = currentUser;
                 booking.LastModifiedBy = currentUser;
 
-                booking.AssociatedPackage = await _context.Packages.FindAsync(booking.AssociatedPackageId);
+                var associatedPackage = await _context.Packages
+                    .Include(p => p.Coupons)
+                    .FirstOrDefaultAsync(p => p.Id == booking.AssociatedPackageId);
 
-                // Check if the destination was found
+                if (associatedPackage != null)
+                {
+                    booking.AssociatedPackage = associatedPackage;
+                }
+            
+
                 if (booking.AssociatedPackage == null)
                 {
-                    // Destination not found, handle the error (e.g., display an error message)
                     ModelState.AddModelError("Package", "Selected package not found.");
                     return View(booking);
                 }
+                booking.TotalAmount =  booking.AssociatedPackage.Budget * booking.NumberOfTravellers;
+                
+                if (booking.CouponCode != null)
+                {
+                    List<Coupon> ListOfCoupons = booking.AssociatedPackage.Coupons;
+                    Coupon coupon = await _context.Coupons.FirstOrDefaultAsync(c => c.Code == booking.CouponCode);
+
+                    if (coupon != null)
+                    {
+                        if (ListOfCoupons != null && ListOfCoupons.Contains(coupon) && coupon.ExpirationDate.Date < DateTime.UtcNow.Date)
+                        {
+                            booking.TotalAmount -= coupon.DiscountAmount;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Coupon", "Coupon not valid for the selected package.");
+                            ViewBag.Message = "Coupon not valid for the selected package";
+                            return View(booking);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Coupon", "Coupon not found.");
+                        ViewBag.Message = "Coupon not found";
+                        return View(booking);
+                    }
+                }
+
+
                 _context.Add(booking);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -119,6 +159,9 @@ namespace TransportMVC.Controllers
             {
                 return NotFound();
             }
+            var packages = await _context.Packages.ToListAsync();
+            
+            ViewBag.Packages = packages;
 
             var booking = await _context.Bookings.FindAsync(id);
             if (booking == null)

@@ -50,6 +50,10 @@ public class Booking
 
     public User? LastModifiedBy { get; set; }
 
+    public string? CouponCode { get; set; }
+
+    public decimal? TotalAmount { get; set; } 
+
     public Booking()
     {
         Id = Guid.NewGuid();

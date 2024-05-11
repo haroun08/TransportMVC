@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportMVC.Data;
 
@@ -11,9 +12,11 @@ using TransportMVC.Data;
 namespace TransportMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240511164533_Package+CouponV2")]
+    partial class PackageCouponV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -433,6 +436,7 @@ namespace TransportMVC.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedById")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("Date")
@@ -442,6 +446,7 @@ namespace TransportMVC.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedById")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("Rating")
@@ -753,11 +758,15 @@ namespace TransportMVC.Migrations
 
                     b.HasOne("User", "CreatedBy")
                         .WithMany("Reviews")
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("User", "LastModifiedBy")
                         .WithMany("ModifiedReviews")
-                        .HasForeignKey("LastModifiedById");
+                        .HasForeignKey("LastModifiedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AssociatedPackage");
 

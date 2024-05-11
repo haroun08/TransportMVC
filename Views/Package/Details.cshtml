@@ -67,6 +67,74 @@
     </dl>
 </div>
 <div>
+    <h4>Coupons</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Discount Amount</th>
+                <th>Expiration Date</th>
+                <!-- Add more columns if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Coupons != null && Model.Coupons.Any())
+            {
+                foreach (var coupon in Model.Coupons)
+                {
+                    <tr>
+                        <td>@coupon.Code</td>
+                        <td>@coupon.DiscountAmount</td>
+                        <td>@coupon.ExpirationDate</td>
+                        <!-- Add more columns if needed -->
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3">No coupons available for this package.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <h4>Reviews</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Text</th>
+                <th>Rating</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Reviews != null && Model.Reviews.Any())
+            {
+                foreach (var review in Model.Reviews)
+                {
+                    <tr>
+                        <td>@review.CreatedBy?.UserName</td>
+                        <td>@review.Text</td>
+                        <td>@review.Rating</td>
+                        <td>@review.Date</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3">No Reviews available for this package.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

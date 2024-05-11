@@ -12,8 +12,8 @@ using TransportMVC.Data;
 namespace TransportMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240507122118_FixedPackage")]
-    partial class FixedPackage
+    [Migration("20240511170454_Review")]
+    partial class Review
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,11 +34,13 @@ namespace TransportMVC.Migrations
                     b.Property<Guid>("AssociatedPackageId")
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("CouponCode")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<bool>("IsPaid")
@@ -48,7 +50,6 @@ namespace TransportMVC.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("NumberOfTravellers")
@@ -59,6 +60,9 @@ namespace TransportMVC.Migrations
 
                     b.Property<int>("State")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("TotalAmount")
+                        .HasColumnType("decimal(65,30)");
 
                     b.HasKey("Id");
 
@@ -107,7 +111,6 @@ namespace TransportMVC.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<decimal>("DiscountAmount")
@@ -120,7 +123,6 @@ namespace TransportMVC.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
@@ -130,6 +132,21 @@ namespace TransportMVC.Migrations
                     b.HasIndex("LastModifiedById");
 
                     b.ToTable("Coupons");
+                });
+
+            modelBuilder.Entity("CouponPackage", b =>
+                {
+                    b.Property<Guid>("CouponsId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("PackagesId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("CouponsId", "PackagesId");
+
+                    b.HasIndex("PackagesId");
+
+                    b.ToTable("CouponPackage");
                 });
 
             modelBuilder.Entity("Destination", b =>
@@ -357,9 +374,6 @@ namespace TransportMVC.Migrations
                     b.Property<int>("Category")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("CouponId")
-                        .HasColumnType("char(36)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -400,13 +414,14 @@ namespace TransportMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CouponId");
-
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("DestinationId");
 
                     b.HasIndex("LastModifiedById");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Packages");
                 });
@@ -574,15 +589,11 @@ namespace TransportMVC.Migrations
 
                     b.HasOne("User", "CreatedBy")
                         .WithMany("Bookings")
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedById");
 
                     b.HasOne("User", "LastModifiedBy")
                         .WithMany("ModifiedBookings")
-                        .HasForeignKey("LastModifiedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LastModifiedById");
 
                     b.Navigation("AssociatedPackage");
 
@@ -595,19 +606,30 @@ namespace TransportMVC.Migrations
                 {
                     b.HasOne("User", "CreatedBy")
                         .WithMany("Coupons")
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedById");
 
                     b.HasOne("User", "LastModifiedBy")
                         .WithMany("ModifiedCoupons")
-                        .HasForeignKey("LastModifiedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LastModifiedById");
 
                     b.Navigation("CreatedBy");
 
                     b.Navigation("LastModifiedBy");
+                });
+
+            modelBuilder.Entity("CouponPackage", b =>
+                {
+                    b.HasOne("Coupon", null)
+                        .WithMany()
+                        .HasForeignKey("CouponsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Package", null)
+                        .WithMany()
+                        .HasForeignKey("PackagesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Destination", b =>
@@ -705,10 +727,6 @@ namespace TransportMVC.Migrations
 
             modelBuilder.Entity("Package", b =>
                 {
-                    b.HasOne("Coupon", null)
-                        .WithMany("ApplicablePackages")
-                        .HasForeignKey("CouponId");
-
                     b.HasOne("User", "CreatedBy")
                         .WithMany("Packages")
                         .HasForeignKey("CreatedById");
@@ -764,11 +782,6 @@ namespace TransportMVC.Migrations
                         .HasForeignKey("CreatedById");
 
                     b.Navigation("CreatedBy");
-                });
-
-            modelBuilder.Entity("Coupon", b =>
-                {
-                    b.Navigation("ApplicablePackages");
                 });
 
             modelBuilder.Entity("Destination", b =>

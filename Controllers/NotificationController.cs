@@ -37,7 +37,8 @@ namespace TransportMVC.Controllers
             }
 
             var notification = await _context.Notifications
-                .Include(d => d.CreatedBy) 
+                .Include(d => d.CreatedBy)
+                .Include(d => d.Receiver)  
                 .Include(d => d.LastModifiedBy) 
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (notification == null)
@@ -49,18 +50,47 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Notification/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            // Fetch the list of users from the database
+            var users = await _context.Users.ToListAsync();
+            
+            ViewBag.Users = users;
+
             return View();
         }
+
 
         // POST: Notification/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Content,SentDate")] Notification notification)
+        public async Task<IActionResult> Create([Bind("Content,ReceiverId")] Notification notification)
         {
+
+            // Fetch the list of users from the database
+            var users = await _context.Users.ToListAsync();
+            
+            ViewBag.Users = users;
+
+            Console.WriteLine(notification.Content);
+            Console.WriteLine(notification.ReceiverId);
+            if (!ModelState.IsValid)
+            {
+                // Print validation errors to the console
+                foreach (var state in ModelState.Values)
+                {
+                    foreach (var error in state.Errors)
+                    {
+                        var errorMessage = error.ErrorMessage;
+                        Console.WriteLine(errorMessage);
+                    }
+                }
+                
+                return View(notification);
+            }
+            
             if (ModelState.IsValid)
             {
                 // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
@@ -72,15 +102,37 @@ namespace TransportMVC.Controllers
                     return RedirectToAction(nameof(Index));
                 }
 
+                // Set the SentDate and LastModifiedAt properties
+                notification.SentDate = DateTime.UtcNow;
+                notification.LastModifiedAt = DateTime.UtcNow;
+
+                // Set the CreatedBy and LastModifiedBy properties
                 notification.CreatedBy = currentUser;
                 notification.LastModifiedBy = currentUser;
 
+                // Retrieve the receiver from the database using ReceiverId
+                var receiver = await _userManager.FindByIdAsync(notification.ReceiverId);
+                if (receiver == null)
+                {
+                    // Handle the case where the receiver is not found
+                    ModelState.AddModelError("ReceiverId", "Invalid receiver selected.");
+                    return View(notification);
+                }
+
+                // Set the Receiver property
+                notification.Receiver = receiver;
+
+                // Add the notification to the context and save changes
                 _context.Add(notification);
                 await _context.SaveChangesAsync();
+                
+                // Redirect to the Index action
                 return RedirectToAction(nameof(Index));
             }
+            // If the model state is not valid, return the view with the notification object
             return View(notification);
         }
+
 
         // GET: Notification/Edit/5
         public async Task<IActionResult> Edit(Guid? id)

@@ -36,7 +36,7 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            var review = await _context.Packages
+            var review = await _context.Reviews
                 .Include(d => d.CreatedBy) 
                 .Include(d => d.LastModifiedBy) 
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -49,8 +49,13 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Review/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            // Fetch the list of packages from the database
+            var packages = await _context.Packages.ToListAsync();
+            
+            ViewBag.Packages = packages;
+
             return View();
         }
 
@@ -59,8 +64,22 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Text,Rating,Date")] Review review)
+        public async Task<IActionResult> Create([Bind("Text,Rating,AssociatedPackageId")] Review review)
         {
+            if (!ModelState.IsValid)
+            {
+                // Print validation errors to the console
+                foreach (var state in ModelState.Values)
+                {
+                    foreach (var error in state.Errors)
+                    {
+                        var errorMessage = error.ErrorMessage;
+                        Console.WriteLine(errorMessage);
+                    }
+                }
+                
+                return View(review);
+            }
             if (ModelState.IsValid)
             {
                 // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
@@ -74,6 +93,14 @@ namespace TransportMVC.Controllers
 
                 review.CreatedBy = currentUser;
                 review.LastModifiedBy = currentUser;
+
+                var associatedPackage = await _context.Packages
+                    .FirstOrDefaultAsync(p => p.Id == review.AssociatedPackageId);
+
+                if (associatedPackage != null)
+                {
+                    review.AssociatedPackage = associatedPackage;
+                }
 
                 _context.Add(review);
                 await _context.SaveChangesAsync();
@@ -91,6 +118,11 @@ namespace TransportMVC.Controllers
             }
 
             var review = await _context.Reviews.FindAsync(id);
+
+            var packages = await _context.Packages.ToListAsync();
+            
+            ViewBag.Packages = packages;
+            
             if (review == null)
             {
                 return NotFound();
