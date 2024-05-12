@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+
 
 
 namespace TransportMVC.Controllers
@@ -23,12 +25,14 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Package
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Packages.ToListAsync());
         }
 
         // GET: Package/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -52,6 +56,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Package/Create
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             // Fetch the list of destinations from the database
@@ -73,6 +78,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Name,Budget,Duration,Services,TransportOption,TransportCompany,Category,DestinationId,CoordinatorId")] Package package)
         {
             if (!ModelState.IsValid)
@@ -129,6 +135,7 @@ namespace TransportMVC.Controllers
 
 
         // GET: Package/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -160,6 +167,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Budget,Duration,Services,TransportOption,TransportCompany,Category,DestinationId,CoordinatorId")] Package package)
         {
             if (id != package.Id)
@@ -235,6 +243,7 @@ namespace TransportMVC.Controllers
 
 
         // GET: Package/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -255,6 +264,7 @@ namespace TransportMVC.Controllers
         // POST: Package/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var package = await _context.Packages.FindAsync(id);

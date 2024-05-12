@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+
 
 
 namespace TransportMVC.Controllers
@@ -23,12 +25,14 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Review
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Reviews.ToListAsync());
         }
 
         // GET: Review/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -49,6 +53,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Review/Create
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             // Fetch the list of packages from the database
@@ -64,6 +69,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Text,Rating,AssociatedPackageId")] Review review)
         {
             if (!ModelState.IsValid)
@@ -110,6 +116,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Review/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -135,6 +142,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Text,Rating")] Review review)
         {
             if (id != review.Id)
@@ -186,6 +194,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Review/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -206,6 +215,7 @@ namespace TransportMVC.Controllers
         // POST: Review/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var review = await _context.Reviews.FindAsync(id);

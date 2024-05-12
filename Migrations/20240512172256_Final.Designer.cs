@@ -12,8 +12,8 @@ using TransportMVC.Data;
 namespace TransportMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240511170454_Review")]
-    partial class Review
+    [Migration("20240512172256_Final")]
+    partial class Final
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,12 +87,15 @@ namespace TransportMVC.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Coordinators");
                 });
@@ -155,6 +158,10 @@ namespace TransportMVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -167,7 +174,6 @@ namespace TransportMVC.Migrations
                         .HasColumnType("varchar(1000)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("LastModifiedAt")
@@ -334,14 +340,12 @@ namespace TransportMVC.Migrations
                         .HasColumnType("varchar(250)");
 
                     b.Property<string>("CreatedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("LastModifiedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("ReceiverId")
@@ -373,6 +377,9 @@ namespace TransportMVC.Migrations
 
                     b.Property<int>("Category")
                         .HasColumnType("int");
+
+                    b.Property<Guid?>("CoordinatorId")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -414,6 +421,8 @@ namespace TransportMVC.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CoordinatorId");
+
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("DestinationId");
@@ -436,7 +445,6 @@ namespace TransportMVC.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("Date")
@@ -446,7 +454,6 @@ namespace TransportMVC.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("Rating")
@@ -679,7 +686,7 @@ namespace TransportMVC.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("User", null)
@@ -702,15 +709,11 @@ namespace TransportMVC.Migrations
                 {
                     b.HasOne("User", "CreatedBy")
                         .WithMany("SentNotifications")
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedById");
 
                     b.HasOne("User", "LastModifiedBy")
                         .WithMany("ModifiedNotifications")
-                        .HasForeignKey("LastModifiedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LastModifiedById");
 
                     b.HasOne("User", "Receiver")
                         .WithMany("ReceivedNotifications")
@@ -727,6 +730,10 @@ namespace TransportMVC.Migrations
 
             modelBuilder.Entity("Package", b =>
                 {
+                    b.HasOne("Coordinator", "Coordinator")
+                        .WithMany("Packages")
+                        .HasForeignKey("CoordinatorId");
+
                     b.HasOne("User", "CreatedBy")
                         .WithMany("Packages")
                         .HasForeignKey("CreatedById");
@@ -740,6 +747,8 @@ namespace TransportMVC.Migrations
                     b.HasOne("User", "LastModifiedBy")
                         .WithMany("ModifiedPackages")
                         .HasForeignKey("LastModifiedById");
+
+                    b.Navigation("Coordinator");
 
                     b.Navigation("CreatedBy");
 
@@ -758,15 +767,11 @@ namespace TransportMVC.Migrations
 
                     b.HasOne("User", "CreatedBy")
                         .WithMany("Reviews")
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedById");
 
                     b.HasOne("User", "LastModifiedBy")
                         .WithMany("ModifiedReviews")
-                        .HasForeignKey("LastModifiedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LastModifiedById");
 
                     b.Navigation("AssociatedPackage");
 
@@ -782,6 +787,11 @@ namespace TransportMVC.Migrations
                         .HasForeignKey("CreatedById");
 
                     b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("Coordinator", b =>
+                {
+                    b.Navigation("Packages");
                 });
 
             modelBuilder.Entity("Destination", b =>

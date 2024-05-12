@@ -12,8 +12,8 @@ using TransportMVC.Data;
 namespace TransportMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240511185517_Coordinator+PackageV2")]
-    partial class CoordinatorPackageV2
+    [Migration("20240512181743_password")]
+    partial class password
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,6 +158,10 @@ namespace TransportMVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -170,7 +174,6 @@ namespace TransportMVC.Migrations
                         .HasColumnType("varchar(1000)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("LastModifiedAt")
@@ -511,6 +514,10 @@ namespace TransportMVC.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext");
 
@@ -683,7 +690,7 @@ namespace TransportMVC.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("User", null)

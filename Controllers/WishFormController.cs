@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+
 
 
 namespace TransportMVC.Controllers
@@ -23,12 +25,14 @@ namespace TransportMVC.Controllers
         }
 
         // GET: WishForm
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.WishForms.ToListAsync());
         }
 
         // GET: WishForm/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -48,6 +52,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: WishForm/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -58,6 +63,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Destination,DepartureDate,Duration,Budget,Interests,AdditionalNotes,SubmissionDate")] WishForm wishForm)
         {
             
@@ -82,6 +88,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: WishForm/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -102,6 +109,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Destination,DepartureDate,Duration,Budget,Interests,AdditionalNotes,SubmissionDate")] WishForm wishForm)
         {
             if (id != wishForm.Id)
@@ -148,6 +156,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: WishForm/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -169,6 +178,7 @@ namespace TransportMVC.Controllers
         // POST: WishForm/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var wishForm = await _context.WishForms.FindAsync(id);

@@ -36,6 +36,8 @@ public class User : IdentityUser
 
     
 
+    
+
     public User()
     {
         CreatedAt = DateTime.UtcNow;

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+
 
 
 namespace TransportMVC.Controllers
@@ -24,14 +26,15 @@ namespace TransportMVC.Controllers
 
 
         
-
         // GET: Destination
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Destinations.ToListAsync());
         }
 
         // GET: Destination/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -52,7 +55,7 @@ namespace TransportMVC.Controllers
             return View(destination);
         }
 
-
+        [Authorize]
         // GET: Destination/Create
         public IActionResult Create()
         {
@@ -64,7 +67,8 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description")] Destination destination)
+        [Authorize]
+        public async Task<IActionResult> Create([Bind("Name,Description,Country")] Destination destination)
         {
             if (ModelState.IsValid)
             {
@@ -88,6 +92,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Destination/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -108,7 +113,8 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Description")] Destination destination)
+        [Authorize]
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Description,Country")] Destination destination)
         {
             if (id != destination.Id)
             {
@@ -128,6 +134,7 @@ namespace TransportMVC.Controllers
                     // Set the modified properties
                     originalDestination.Name = destination.Name;
                     originalDestination.Description = destination.Description;
+                    originalDestination.Country = destination.Country;
 
                     // Set the LastModifiedBy and LastModifiedAt properties
                     var currentUser = await _userManager.GetUserAsync(HttpContext.User);
@@ -159,6 +166,7 @@ namespace TransportMVC.Controllers
 
 
         // GET: Destination/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -179,6 +187,7 @@ namespace TransportMVC.Controllers
         // POST: Destination/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var destination = await _context.Destinations.FindAsync(id);

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -96,6 +97,19 @@ namespace TransportMVC.Data
         modelBuilder.Entity<Coordinator>()
             .HasIndex(e => e.Name)
             .IsUnique();
+
+
+
+        modelBuilder.Entity<IdentityUserRole<string>>()
+                   .HasOne<IdentityRole>()
+                   .WithMany()
+                   .HasForeignKey(ur => ur.RoleId)
+                   .OnDelete(DeleteBehavior.NoAction);
+            //The following code will set ON DELETE NO ACTION to all Foreign Keys
+            //foreach (var foreignKey in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            //{
+            //    foreignKey.DeleteBehavior = DeleteBehavior.NoAction;
+            //}
 
     }
 

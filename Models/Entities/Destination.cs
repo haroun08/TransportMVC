@@ -23,9 +23,12 @@ public class Destination
     [Required]
     public DateTime LastModifiedAt { get; set; }
 
-    public string ImageUrl { get; set; }
+    public List<Package>? Packages { get; set; }
 
-     public List<Package>? Packages { get; set; }
+    public string Country { get; set; }
+
+    public string? ImageUrl { get; set; }
+
 
 
 
@@ -38,7 +41,7 @@ public class Destination
         Random random = new Random();
         int randomNumber = random.Next(64, 166);
         // Construct the image URL with the random number
-       ImageUrl = $"https://picsum.photos/id/{randomNumber}/450/550";
+        ImageUrl = $"https://picsum.photos/id/{randomNumber}/450/550";
 
     }
     

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Data;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace TransportMVC.Controllers
 {
@@ -19,12 +21,14 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Coordinator
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Coordinators.ToListAsync());
         }
 
         // GET: Coordinator/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -44,6 +48,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Coordinator/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +59,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Name,PhoneNumber,Mail")] Coordinator coordinator)
         {
             if (ModelState.IsValid)
@@ -66,6 +72,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Coordinator/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -86,6 +93,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,PhoneNumber,Mail")] Coordinator coordinator)
         {
             if (id != coordinator.Id)
@@ -117,6 +125,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Coordinator/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -137,6 +146,7 @@ namespace TransportMVC.Controllers
         // POST: Coordinator/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var coordinator = await _context.Coordinators.FindAsync(id);
