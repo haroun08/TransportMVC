@@ -1,0 +1,101 @@
+@model IEnumerable<Review>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reviews</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Font Awesome CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <style>
+            body {
+                background-color: #f8f9fa; /* Light gray background */
+            }
+
+            .container {
+                margin-top: 50px;
+            }
+
+            .review-card {
+                background-color: #ffffff; /* White card background */
+                border-radius: 10px;
+                box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+                .review-card h4 {
+                    color: #333; /* Dark text color */
+                }
+
+                .review-card p {
+                    color: #666; /* Light text color */
+                }
+
+                .review-card .rating {
+                    color: #ffc107; /* Yellow star color */
+                }
+
+                .review-card .actions {
+                    text-align: right;
+                }
+
+                    .review-card .actions a {
+                        color: #007bff; /* Blue link color */
+                        margin-left: 10px;
+                        text-decoration: none;
+                    }
+
+                        .review-card .actions a:hover {
+                            text-decoration: underline;
+                        }
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <h1 class="text-center mb-4">Reviews</h1>
+
+            @foreach (var item in Model) {
+            <div class="review-card">
+                <h4>Review Id: @item.Id</h4>
+                <p>Text: @item.Text</p>
+                <p>Rating: <span class="rating">@Html.Raw(GenerateStarRating(item.Rating))</span></p>
+                <p>Date: @item.Date</p>
+                <div class="actions">
+                    <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="#" class="btn btn-sm btn-info">Details</a>
+                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </div>
+    }
+
+            <div class="text-center">
+                <a href="#" class="btn btn-primary">Add New Review</a>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- Font Awesome JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
+        <script>
+    function GenerateStarRating(rating) {
+        var stars = '';
+        for (var i = 0; i < 5; i++) {
+            if (i < rating) {
+                stars += '<i class="fas fa-star"></i> ';
+            } else {
+                stars += '<i class="far fa-star"></i> ';
+            }
+        }
+        return stars;
+    }
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,202 @@
+@model RegisterViewModel
+
+@{
+    ViewBag.Title = "User Registration";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Sign Up</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signup-container {
+            background-color: #ffffff; /* White container */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+            width: 400px; /* Adjusted width */
+        }
+
+        .signup-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .password-strength {
+            height: 5px;
+            margin-bottom: 15px;
+        }
+
+            .password-strength.weak {
+                background-color: #ff6347; /* Red for weak passwords */
+            }
+
+            .password-strength.medium {
+                background-color: #ffa500; /* Orange for medium passwords */
+            }
+
+            .password-strength.strong {
+                background-color: #28a745; /* Green for strong passwords */
+            }
+
+        #togglePassword {
+            cursor: pointer;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .left-photo {
+            height: 100vh;
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 p-0">
+                <!-- Add your 3D photo here -->
+                <img src="C:/Users/nebra/Downloads/SignUp.jpeg" class="img-fluid left-photo" alt="3D Photo">
+            </div>
+            <div class="col-md-6 signup-container">
+                <h1 class="signup-title">User Sign Up</h1>
+                <form>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="togglePassword">
+                                    <i class="fas fa-eye" id="eyeIcon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="password-strength"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="toggleConfirmPassword">
+                                    <i class="fas fa-eye" id="confirmEyeIcon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <small id="passwordMismatch" class="form-text text-danger d-none">Passwords do not match</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mb-3">Sign Up</button>
+                    <div class="text-center">
+                        Or sign up with:
+                        <button type="button" class="btn btn-info">
+                            <i class="fab fa-facebook-square"></i> Facebook
+                        </button>
+                        <button type="button" class="btn btn-danger">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Font Awesome JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
+    <script>
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+    const usernameInput = document.getElementById('username');
+    const passwordStrength = document.querySelector('.password-strength');
+
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        eyeIcon.classList.toggle('fa-eye-slash');
+    });
+
+    passwordInput.addEventListener('input', function() {
+        const password = passwordInput.value;
+        const username = usernameInput.value;
+
+        const strength = calculatePasswordStrength(password, username);
+        updatePasswordStrengthBar(strength);
+    });
+
+    function calculatePasswordStrength(password, username) {
+        let strength = 0;
+
+        // Check password length
+        if (password.length >= 8) strength += 1;
+
+        // Check for symbols
+        if (/[!#$%^&*(),.?":{}|<>]/.test(password)) strength += 1;
+
+        // Check for uppercase letters
+        if (/[A-Z]/.test(password)) strength += 1;
+
+        // Check for lowercase letters
+        if (/[a-z]/.test(password)) strength += 1;
+
+        // Check for numbers
+        if (/\d/.test(password)) strength += 1;
+
+        // Check if the password contains the username
+        if (!password.toLowerCase().includes(username.toLowerCase())) strength -= 1;
+
+        return strength;
+    }
+
+    function updatePasswordStrengthBar(strength) {
+        passwordStrength.className = 'password-strength';
+
+        if (strength <= 2) {
+            passwordStrength.classList.add('weak');
+        } else if (strength <= 4) {
+            passwordStrength.classList.add('medium');
+        } else {
+            passwordStrength.classList.add('strong');
+        }
+    }
+    </script>
+
+
+</body>
+</html>

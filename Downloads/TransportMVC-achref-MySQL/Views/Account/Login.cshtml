@@ -1,0 +1,162 @@
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "User Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('C:/Users/nebra/Downloads/Login.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left-container {
+            background-color: #012333; /* Darker blue */
+            color: #ffffff;
+            padding: 50px; /* Adjusted padding */
+            margin-right: -15px; /* Remove right margin */
+            background-image: url('C:/Users/nebra/Downloads/Logo_Travel.jpg'); /* Add your logo path here */
+            background-repeat: no-repeat;
+            background-position: center bottom; /* Position image at the bottom */
+            background-size: 50%; /* Adjust the size of the logo */
+            margin-left: 15px; /* Add left margin */
+        }
+
+            .left-container h2 {
+                font-size: 36px; /* Increased font size */
+                margin-bottom: 20px; /* Adjusted margin */
+            }
+
+            .left-container p {
+                font-size: 24px; /* Increased font size */
+                margin-bottom: 20px; /* Adjusted margin */
+            }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .bg-primary {
+            background-color: #007bff !important;
+        }
+
+        .bg-success {
+            background-color: #28a745 !important;
+        }
+
+        .btn-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            .btn-link:hover {
+                text-decoration: underline;
+            }
+
+        #togglePassword {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Column for the welcome message -->
+            <div class="col-md-5 left-container">
+                <h2>Welcome back to our travel agency</h2>
+                <div class="progress mt-3">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p>Login to access your account</p>
+            </div>
+
+            <!-- Column for the login form -->
+            <div class="col-md-7">
+                <div class="login-container p-5">
+                    <h1 class="login-title">User Login</h1>
+                    <form>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password" placeholder="Password">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="togglePassword">
+                                        <i class="fas fa-eye" id="eyeIcon"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember Me</label>
+                        </div>
+                        <div class="text-center">
+                            <a href="#" class="btn btn-link">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mb-3">Login</button>
+                        <button type="button" class="btn btn-info btn-block mb-3">
+                            <i class="fab fa-facebook-square"></i> Login with Facebook
+                        </button>
+                        <button type="button" class="btn btn-danger btn-block">
+                            <i class="fab fa-google"></i> Login with Google
+                        </button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <span>Don't have an account? </span>
+                        <a href="Register.cshtml" class="btn btn-link">Sign up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Font Awesome JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
+    <script>
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        eyeIcon.classList.toggle('fa-eye-slash');
+    });
+    </script>
+
+</body>
+</html>
