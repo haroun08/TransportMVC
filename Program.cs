@@ -22,17 +22,31 @@ namespace TransportMVC
                 options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
                     new MySqlServerVersion(new Version(8, 0, 0)))); // Adjust MySQL server version as needed
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            builder.Services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // Configure the Application Cookie settings
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                // If the LoginPath isn't set, ASP.NET Core defaults the path to /Account/Login.
+                options.LoginPath = "/Account/Login"; 
+
+                // If the AccessDenied isn't set, ASP.NET Core defaults the path to /Account/AccessDenied
+                options.AccessDeniedPath = "/Account/AccessDenied"; // Set your access denied path here
+                
+            });
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
             }
 
             app.UseHttpsRedirection();
@@ -40,9 +54,10 @@ namespace TransportMVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            
             app.UseAuthorization();
 
-            app.UseAuthentication();
 
             app.MapControllerRoute(
                 name: "default",

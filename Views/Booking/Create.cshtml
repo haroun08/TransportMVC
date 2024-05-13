@@ -13,9 +13,18 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="State" class="control-label"></label>
-                <select asp-for="State" class="form-control"></select>
-                <span asp-validation-for="State" class="text-danger"></span>
+                <label asp-for="AssociatedPackageId" class="control-label"></label>
+                <select asp-for="AssociatedPackageId" class="form-control">
+                    <option value="">Select a package</option>
+                    @if (ViewBag.Packages != null)
+                    {
+                        foreach (var package in ViewBag.Packages)
+                        {
+                            <option value="@package.Id">@package.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="AssociatedPackageId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NumberOfTravellers" class="control-label"></label>
@@ -23,9 +32,15 @@
                 <span asp-validation-for="NumberOfTravellers" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BookingDate" class="control-label"></label>
-                <input asp-for="BookingDate" class="form-control" />
-                <span asp-validation-for="BookingDate" class="text-danger"></span>
+                <label asp-for="PaymentMethod" class="control-label"></label>
+                <select asp-for="PaymentMethod" class="form-control">
+                    <option value="">Select Payment Method</option>
+                    @foreach (var paymentMethod in Enum.GetValues(typeof(PaymentMethod)))
+                    {
+                        <option value="@paymentMethod">@paymentMethod</option>
+                    }
+                </select>
+                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -33,15 +48,16 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="PaymentMethod" class="control-label"></label>
-                <input asp-for="PaymentMethod" class="form-control" />
-                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+                <label asp-for="CouponCode" class="control-label"></label>
+                <input asp-for="CouponCode" class="form-control" />
+                <span asp-validation-for="CouponCode" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="LastModifiedAt" class="control-label"></label>
-                <input asp-for="LastModifiedAt" class="form-control" />
-                <span asp-validation-for="LastModifiedAt" class="text-danger"></span>
-            </div>
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-danger">@ViewBag.Message</div>
+            }
+            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

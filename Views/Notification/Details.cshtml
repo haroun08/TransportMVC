@@ -22,6 +22,30 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SentDate)
         </dd>
+        <dt class="col-sm-2">
+           Sent By
+        </dt>
+        <dd class="col-sm-10">
+            @Model.CreatedBy?.UserName
+        </dd>
+        <dt class="col-sm-2">
+           Sent To
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Receiver?.UserName
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastModifiedAt)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastModifiedAt)
+        </dd>
+        <dt class="col-sm-2">
+            Last modified By
+        </dt>
+        <dd class="col-sm-10">
+            @Model.LastModifiedBy?.UserName
+        </dd>
     </dl>
 </div>
 <div>

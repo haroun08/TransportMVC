@@ -8,13 +8,24 @@ public enum BookingState
     Cancelled
 }
 
+public enum PaymentMethod
+{
+    Cash,
+    CreditCard,
+    PayPal,
+    BankTransfer
+    
+}
+
 public class Booking 
 {
     [Key]
     public Guid Id { get; set; }
 
+    public Package? AssociatedPackage { get; set; }
+
     [Required(ErrorMessage = "Associated package is required")]
-    public Package AssociatedPackage { get; set; }
+    public Guid AssociatedPackageId { get; set; }
 
     [Required(ErrorMessage = "State is required")]
     public BookingState State { get; set; }
@@ -24,29 +35,30 @@ public class Booking
     public int NumberOfTravellers { get; set; }
 
     [Required]
-    public DateTime BookingDate { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     [Required]
     public bool IsPaid { get; set; }
 
     [Required(ErrorMessage = "Payment method is required")]
-    public string PaymentMethod { get; set; }
-
-    [Required]
-    public User Owner { get; set; }
-
-
-    [Required]
-    public User LastModifiedBy { get; set; }
+    public PaymentMethod PaymentMethod { get; set; }
 
     [Required]
     public DateTime LastModifiedAt { get; set; }
 
+    public User? CreatedBy { get; set; }
+
+    public User? LastModifiedBy { get; set; }
+
+    public string? CouponCode { get; set; }
+
+    public decimal? TotalAmount { get; set; } 
+
     public Booking()
     {
         Id = Guid.NewGuid();
-        BookingDate = DateTime.UtcNow;
-        LastModifiedAt = BookingDate;
+        CreatedAt = DateTime.UtcNow;
+        LastModifiedAt = CreatedAt;
         State = BookingState.Pending;
     }
 }

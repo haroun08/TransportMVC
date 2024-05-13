@@ -31,8 +31,14 @@ namespace TransportMVC.Migrations
                     b.Property<Guid>("AssociatedPackageId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("BookingDate")
+                    b.Property<string>("CouponCode")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<bool>("IsPaid")
                         .HasColumnType("tinyint(1)");
@@ -41,30 +47,27 @@ namespace TransportMVC.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("NumberOfTravellers")
                         .HasColumnType("int");
 
-                    b.Property<string>("OwnerId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("PaymentMethod")
+                        .HasColumnType("int");
 
                     b.Property<int>("State")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("TotalAmount")
+                        .HasColumnType("decimal(65,30)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AssociatedPackageId");
 
-                    b.HasIndex("LastModifiedById");
+                    b.HasIndex("CreatedById");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("LastModifiedById");
 
                     b.ToTable("Bookings");
                 });
@@ -81,12 +84,15 @@ namespace TransportMVC.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Coordinators");
                 });
@@ -104,15 +110,43 @@ namespace TransportMVC.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("varchar(255)");
+
                     b.Property<decimal>("DiscountAmount")
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<DateTime>("LastModifiedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("LastModifiedById")
+                        .HasColumnType("varchar(255)");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("LastModifiedById");
+
                     b.ToTable("Coupons");
+                });
+
+            modelBuilder.Entity("CouponPackage", b =>
+                {
+                    b.Property<Guid>("CouponsId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("PackagesId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("CouponsId", "PackagesId");
+
+                    b.HasIndex("PackagesId");
+
+                    b.ToTable("CouponPackage");
                 });
 
             modelBuilder.Entity("Destination", b =>
@@ -121,19 +155,28 @@ namespace TransportMVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("LastModifiedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
@@ -142,6 +185,8 @@ namespace TransportMVC.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("LastModifiedById");
 
@@ -197,79 +242,6 @@ namespace TransportMVC.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("varchar(13)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -364,16 +336,29 @@ namespace TransportMVC.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("varchar(250)");
 
-                    b.Property<DateTime>("SentDate")
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("LastModifiedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("LastModifiedById")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ReceiverId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
+                    b.Property<DateTime>("SentDate")
+                        .HasColumnType("datetime(6)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("LastModifiedById");
+
+                    b.HasIndex("ReceiverId");
 
                     b.ToTable("Notifications");
                 });
@@ -387,18 +372,16 @@ namespace TransportMVC.Migrations
                     b.Property<decimal>("Budget")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
-                    b.Property<Guid?>("CouponId")
+                    b.Property<Guid?>("CoordinatorId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("DestinationId")
@@ -413,8 +396,12 @@ namespace TransportMVC.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedById")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Services")
                         .HasColumnType("longtext");
@@ -431,13 +418,16 @@ namespace TransportMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CouponId");
+                    b.HasIndex("CoordinatorId");
 
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("DestinationId");
 
                     b.HasIndex("LastModifiedById");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Packages");
                 });
@@ -451,8 +441,17 @@ namespace TransportMVC.Migrations
                     b.Property<Guid>("AssociatedPackageId")
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("varchar(255)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("LastModifiedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("LastModifiedById")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
@@ -461,17 +460,86 @@ namespace TransportMVC.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AssociatedPackageId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("LastModifiedById");
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("LastModifiedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("WishForm", b =>
@@ -485,6 +553,12 @@ namespace TransportMVC.Migrations
 
                     b.Property<decimal?>("Budget")
                         .HasColumnType("decimal(65,30)");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("DepartureDate")
                         .HasColumnType("datetime(6)");
@@ -502,64 +576,77 @@ namespace TransportMVC.Migrations
                     b.Property<DateTime>("SubmissionDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CreatedById");
 
                     b.ToTable("WishForms");
-                });
-
-            modelBuilder.Entity("User", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("LastModifiedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("Booking", b =>
                 {
                     b.HasOne("Package", "AssociatedPackage")
-                        .WithMany()
+                        .WithMany("Bookings")
                         .HasForeignKey("AssociatedPackageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("User", "LastModifiedBy")
-                        .WithMany()
-                        .HasForeignKey("LastModifiedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("User", "CreatedBy")
+                        .WithMany("Bookings")
+                        .HasForeignKey("CreatedById");
 
-                    b.HasOne("User", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("User", "LastModifiedBy")
+                        .WithMany("ModifiedBookings")
+                        .HasForeignKey("LastModifiedById");
 
                     b.Navigation("AssociatedPackage");
 
-                    b.Navigation("LastModifiedBy");
+                    b.Navigation("CreatedBy");
 
-                    b.Navigation("Owner");
+                    b.Navigation("LastModifiedBy");
+                });
+
+            modelBuilder.Entity("Coupon", b =>
+                {
+                    b.HasOne("User", "CreatedBy")
+                        .WithMany("Coupons")
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("User", "LastModifiedBy")
+                        .WithMany("ModifiedCoupons")
+                        .HasForeignKey("LastModifiedById");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("LastModifiedBy");
+                });
+
+            modelBuilder.Entity("CouponPackage", b =>
+                {
+                    b.HasOne("Coupon", null)
+                        .WithMany()
+                        .HasForeignKey("CouponsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Package", null)
+                        .WithMany()
+                        .HasForeignKey("PackagesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Destination", b =>
                 {
+                    b.HasOne("User", "CreatedBy")
+                        .WithMany("Destinations")
+                        .HasForeignKey("CreatedById");
+
                     b.HasOne("User", "LastModifiedBy")
-                        .WithMany()
-                        .HasForeignKey("LastModifiedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("ModifiedDestinations")
+                        .HasForeignKey("LastModifiedById");
+
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("LastModifiedBy");
                 });
@@ -575,7 +662,7 @@ namespace TransportMVC.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -584,7 +671,7 @@ namespace TransportMVC.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -596,10 +683,10 @@ namespace TransportMVC.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -608,7 +695,7 @@ namespace TransportMVC.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -617,38 +704,48 @@ namespace TransportMVC.Migrations
 
             modelBuilder.Entity("Notification", b =>
                 {
-                    b.HasOne("User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                    b.HasOne("User", "CreatedBy")
+                        .WithMany("SentNotifications")
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("User", "LastModifiedBy")
+                        .WithMany("ModifiedNotifications")
+                        .HasForeignKey("LastModifiedById");
+
+                    b.HasOne("User", "Receiver")
+                        .WithMany("ReceivedNotifications")
+                        .HasForeignKey("ReceiverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("LastModifiedBy");
+
+                    b.Navigation("Receiver");
                 });
 
             modelBuilder.Entity("Package", b =>
                 {
-                    b.HasOne("Coupon", null)
-                        .WithMany("ApplicablePackages")
-                        .HasForeignKey("CouponId");
+                    b.HasOne("Coordinator", "Coordinator")
+                        .WithMany("Packages")
+                        .HasForeignKey("CoordinatorId");
 
                     b.HasOne("User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Packages")
+                        .HasForeignKey("CreatedById");
 
                     b.HasOne("Destination", "Destination")
-                        .WithMany()
+                        .WithMany("Packages")
                         .HasForeignKey("DestinationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("User", "LastModifiedBy")
-                        .WithMany()
-                        .HasForeignKey("LastModifiedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("ModifiedPackages")
+                        .HasForeignKey("LastModifiedById");
+
+                    b.Navigation("Coordinator");
 
                     b.Navigation("CreatedBy");
 
@@ -660,36 +757,79 @@ namespace TransportMVC.Migrations
             modelBuilder.Entity("Review", b =>
                 {
                     b.HasOne("Package", "AssociatedPackage")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("AssociatedPackageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("User", "CreatedBy")
+                        .WithMany("Reviews")
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("User", "LastModifiedBy")
+                        .WithMany("ModifiedReviews")
+                        .HasForeignKey("LastModifiedById");
 
                     b.Navigation("AssociatedPackage");
 
-                    b.Navigation("User");
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("LastModifiedBy");
                 });
 
             modelBuilder.Entity("WishForm", b =>
                 {
-                    b.HasOne("User", "User")
+                    b.HasOne("User", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatedById");
 
-                    b.Navigation("User");
+                    b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("Coupon", b =>
+            modelBuilder.Entity("Coordinator", b =>
                 {
-                    b.Navigation("ApplicablePackages");
+                    b.Navigation("Packages");
+                });
+
+            modelBuilder.Entity("Destination", b =>
+                {
+                    b.Navigation("Packages");
+                });
+
+            modelBuilder.Entity("Package", b =>
+                {
+                    b.Navigation("Bookings");
+
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.Navigation("Bookings");
+
+                    b.Navigation("Coupons");
+
+                    b.Navigation("Destinations");
+
+                    b.Navigation("ModifiedBookings");
+
+                    b.Navigation("ModifiedCoupons");
+
+                    b.Navigation("ModifiedDestinations");
+
+                    b.Navigation("ModifiedNotifications");
+
+                    b.Navigation("ModifiedPackages");
+
+                    b.Navigation("ModifiedReviews");
+
+                    b.Navigation("Packages");
+
+                    b.Navigation("ReceivedNotifications");
+
+                    b.Navigation("Reviews");
+
+                    b.Navigation("SentNotifications");
                 });
 #pragma warning restore 612, 618
         }

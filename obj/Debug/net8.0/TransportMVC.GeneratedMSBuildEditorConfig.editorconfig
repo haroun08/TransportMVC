@@ -26,12 +26,44 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\Users\LENOVO\Desktop\Projects\C#\TransportMVC
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Account/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/CreateRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cQ3JlYXRlUm9sZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/EditRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cRWRpdFJvbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/EditUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cRWRpdFVzZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/EditUsersInRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cRWRpdFVzZXJzSW5Sb2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/ListRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cTGlzdFJvbGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/ListUsers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cTGlzdFVzZXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/ManageUserRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cTWFuYWdlVXNlclJvbGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Booking/Create.cshtml]
@@ -112,6 +144,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Destination/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGluYXRpb25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Error/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3JcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Home/Index.cshtml]

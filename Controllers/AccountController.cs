@@ -7,15 +7,15 @@ namespace TransportMVC.Controllers
     public class AccountController : Controller
     {
         //userManager will hold the UserManager instance
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<User> userManager;
 
         //signInManager will hold the SignInManager instance
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly SignInManager<User> signInManager;
 
         //Both UserManager and SignInManager services are injected into the AccountController
         //using constructor injection
-        public AccountController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -28,15 +28,17 @@ namespace TransportMVC.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                // Copy data from RegisterViewModel to IdentityUser
-                var user = new IdentityUser
+                // Copy data from RegisterViewModel to ApplicationUser
+                var user = new User
                 {
-                    UserName = model.Email,
-                    Email = model.Email
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    
                 };
 
                 // Store user data in AspNetUsers database table
@@ -46,6 +48,14 @@ namespace TransportMVC.Controllers
                 // SignInManager and redirect to index action of HomeController
                 if (result.Succeeded)
                 {
+                    // If the user is signed in and in the Admin role, then it is
+                    // the Admin user that is creating a new user. 
+                    // So redirect the Admin user to ListUsers action of Administration Controller
+                    if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("ListUsers", "Administration");
+                    }
+
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("index", "home");
                 }
@@ -62,23 +72,33 @@ namespace TransportMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string? ReturnUrl = null)
         {
+            ViewData["ReturnUrl"] = ReturnUrl;
             return View();
         }
         
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string? ReturnUrl)
         {
             if (ModelState.IsValid)
             {
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
                     // Handle successful login
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    // Check if the ReturnUrl is not null and is a local URL
+                    if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
+                    {
+                        return Redirect(ReturnUrl);
+                    }
+                    else
+                    {
+                        // Redirect to default page
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -92,10 +112,23 @@ namespace TransportMVC.Controllers
                 {
                     // Handle failure
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    // Check if the email is incorrect
+                    var user = await userManager.FindByEmailAsync(model.Email);
+                    if (user == null)
+                    {
+                        ModelState.AddModelError(nameof(model.Email), "Invalid email.");
+                        
+                    }
+                    else
+                    {
+                        // Email is correct, so the password must be incorrect
+                        ModelState.AddModelError(nameof(model.Password), "Invalid password.");
+                    }
+
+
                     return View(model);
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -106,5 +139,34 @@ namespace TransportMVC.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("index", "home");
         }
+        [AllowAnonymous]
+        [HttpPost]
+        [HttpGet]
+        public async Task<IActionResult> IsEmailAvailable(string Email)
+        {
+            //Check If the Email Id is Already in the Database
+            var user = await userManager.FindByEmailAsync(Email);
+            if (user == null)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json($"Email {Email} is already in use.");
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+
+
+
+
+
     }
 }

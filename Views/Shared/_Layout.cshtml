@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
+@inject SignInManager<User> SignInManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,8 +25,41 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="Index">Booking</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Coordinator" asp-action="Index">Coordinator</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Coupon" asp-action="Index">Coupon</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Destination" asp-action="Index">Destination</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Notification" asp-action="Index">Notification</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Package" asp-action="Index">Package</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Review" asp-action="Index">Review</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="WishForm" asp-action="Index">WishForm</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" 
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                    Manage
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" asp-controller="Administration"
+                                       asp-action="ListUsers">Users</a>
+                                    <a class="dropdown-item" asp-controller="Administration"
+                                       asp-action="ListRoles">Roles</a>
+                                </ul>
+                            </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         @* If the user is signed-in, display Logout link *@

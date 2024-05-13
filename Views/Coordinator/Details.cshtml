@@ -31,6 +31,47 @@
     </dl>
 </div>
 <div>
+    <h4>Packages</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Start Date</th>
+                <th>Duration</th>
+                <th>Budget</th>
+                <th>Transport Option</th>
+                <th>Transport Company</th>
+                <th>Category</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Packages != null && Model.Packages.Any())
+            {
+                foreach (var package in Model.Packages)
+                {
+                    <tr>
+                        <td>@package.Name</td>
+                        <td>@package.StartDate</td>
+                        <td>@package.Duration</td>
+                        <td>@package.Budget</td>
+                        <td>@package.TransportOption</td>
+                        <td>@package.TransportCompany</td>
+                        <td>@package.Category</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3">No Packages available for this Coordinator.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
