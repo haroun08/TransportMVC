@@ -85,15 +85,20 @@
                                 Entities
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Booking" asp-action="Index">Booking</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Coordinator" asp-action="Index">Coordinator</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Coupon" asp-action="Index">Coupon</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Destination" asp-action="Index">Destination</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Notification" asp-action="Index">Notification</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Package" asp-action="Index">Package</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Booking" asp-action="Index">Booking</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Review" asp-action="Index">Review</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="WishForm" asp-action="Index">WishForm</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Administration" asp-action="ListUsers">Users</a></li>
+                                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                                {
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Coordinator" asp-action="Index">Coordinator</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Coupon" asp-action="Index">Coupon</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Destination" asp-action="Index">Destination</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Administration" asp-action="ListUsers">Users</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Administration" asp-action="ListUsers">Roles</a></li>
+                                }
+                               
                             </ul>
                         </li>
                     </ul>

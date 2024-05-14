@@ -17,263 +17,263 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TransportMVC
 build_property.RootNamespace = TransportMVC
-build_property.ProjectDir = D:\C# .NET\TransportMVC\
+build_property.ProjectDir = C:\Users\LENOVO\Desktop\Projects\C#\TransportMVC\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = true
-build_property.MSBuildProjectDirectory = D:\C# .NET\TransportMVC
+build_property.MSBuildProjectDirectory = C:\Users\LENOVO\Desktop\Projects\C#\TransportMVC
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/C\# .NET/TransportMVC/Views/Account/AccessDenied.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Account/Login.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Account/Register.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Administration/CreateRole.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/CreateRole.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cQ3JlYXRlUm9sZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Administration/EditRole.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/EditRole.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cRWRpdFJvbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Administration/EditUser.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/EditUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cRWRpdFVzZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Administration/EditUsersInRole.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/EditUsersInRole.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cRWRpdFVzZXJzSW5Sb2xlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Administration/ListRoles.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/ListRoles.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cTGlzdFJvbGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Administration/ListUsers.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/ListUsers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cTGlzdFVzZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Administration/ManageUserRoles.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Administration/ManageUserRoles.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXRpb25cTWFuYWdlVXNlclJvbGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Booking/Create.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Booking/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Booking/Delete.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Booking/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Booking/Details.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Booking/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Booking/Edit.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Booking/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Booking/Index.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Booking/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Coordinator/Create.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Coordinator/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29vcmRpbmF0b3JcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Coordinator/Delete.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Coordinator/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29vcmRpbmF0b3JcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Coordinator/Details.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Coordinator/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29vcmRpbmF0b3JcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Coordinator/Edit.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Coordinator/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29vcmRpbmF0b3JcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Coordinator/Index.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Coordinator/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29vcmRpbmF0b3JcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Coupon/Create.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Coupon/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cG9uXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Coupon/Delete.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Coupon/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cG9uXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Coupon/Details.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Coupon/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cG9uXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Coupon/Edit.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Coupon/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cG9uXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Coupon/Index.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Coupon/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cG9uXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Destination/Create.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Destination/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGluYXRpb25cQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Destination/Delete.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Destination/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGluYXRpb25cRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Destination/Details.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Destination/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGluYXRpb25cRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Destination/Edit.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Destination/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGluYXRpb25cRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Destination/Index.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Destination/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGluYXRpb25cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Error/Error.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Error/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3JcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Home/Index.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Home/Privacy.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Notification/Create.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Notification/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90aWZpY2F0aW9uXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Notification/Delete.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Notification/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90aWZpY2F0aW9uXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Notification/Details.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Notification/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90aWZpY2F0aW9uXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Notification/Edit.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Notification/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90aWZpY2F0aW9uXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Notification/Index.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Notification/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90aWZpY2F0aW9uXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Package/Create.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Package/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFja2FnZVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Package/Delete.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Package/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFja2FnZVxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Package/Details.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Package/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFja2FnZVxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Package/Edit.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Package/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFja2FnZVxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Package/Index.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Package/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFja2FnZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Review/Create.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Review/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3XENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Review/Delete.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Review/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3XERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Review/Details.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Review/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3XERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Review/Edit.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Review/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3XEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Review/Index.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Review/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Shared/Error.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/User/Create.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/User/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/User/Delete.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/User/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/User/Details.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/User/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/User/Edit.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/User/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/User/Index.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/User/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/WishForm/Create.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/WishForm/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2lzaEZvcm1cQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/WishForm/Delete.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/WishForm/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2lzaEZvcm1cRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/WishForm/Details.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/WishForm/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2lzaEZvcm1cRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/WishForm/Edit.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/WishForm/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2lzaEZvcm1cRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/WishForm/Index.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/WishForm/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2lzaEZvcm1cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/_ViewImports.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/_ViewStart.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/C\# .NET/TransportMVC/Views/Shared/_Layout.cshtml]
+[C:/Users/LENOVO/Desktop/Projects/C\#/TransportMVC/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-3w45armdaz

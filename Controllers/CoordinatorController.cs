@@ -48,7 +48,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Coordinator/Create
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -59,7 +59,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Name,PhoneNumber,Mail")] Coordinator coordinator)
         {
             if (ModelState.IsValid)
@@ -72,7 +72,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Coordinator/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -93,7 +93,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,PhoneNumber,Mail")] Coordinator coordinator)
         {
             if (id != coordinator.Id)
@@ -125,7 +125,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Coordinator/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -146,7 +146,7 @@ namespace TransportMVC.Controllers
         // POST: Coordinator/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var coordinator = await _context.Coordinators.FindAsync(id);

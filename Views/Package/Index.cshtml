@@ -1,4 +1,6 @@
 @model IEnumerable<Package>
+    @using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
 
 @{
     ViewData["Title"] = "Index";
@@ -83,9 +85,10 @@
                 @Html.DisplayFor(modelItem => item.LastModifiedAt)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin")){
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>}
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
