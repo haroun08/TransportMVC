@@ -28,7 +28,11 @@ namespace TransportMVC.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.WishForms.ToListAsync());
+             var wishForms = await _context.WishForms
+                                        .Include(b => b.CreatedBy)
+                                        .ToListAsync();
+
+            return View(wishForms);
         }
 
         // GET: WishForm/Details/5
