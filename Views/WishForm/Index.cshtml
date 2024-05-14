@@ -1,7 +1,13 @@
 @model IEnumerable<WishForm>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 @{
     ViewData["Title"] = "Index";
+    var currentUser = await UserManager.GetUserAsync(User);
+    var isAdmin = User.IsInRole("Admin");
+    var userWishForms = isAdmin ? Model : Model.Where(w => w.CreatedBy.Id == currentUser.Id);
 }
 
 <h1>Index</h1>
@@ -13,59 +19,61 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Destination)
+                Destination
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DepartureDate)
+                Departure Date
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Duration)
+                Duration
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Budget)
+                Budget
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Interests)
+                Interests
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AdditionalNotes)
+                Additional Notes
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SubmissionDate)
+                Submission Date
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Destination)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartureDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Budget)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Interests)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdditionalNotes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubmissionDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in userWishForms)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Destination)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartureDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Budget)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Interests)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdditionalNotes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubmissionDate)
+                </td>
+                <td>
+                   @if (SignInManager.IsSignedIn(User) && isAdmin){
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>}
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

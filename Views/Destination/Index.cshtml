@@ -13,8 +13,7 @@
 <h1>Destinations</h1>
 
 <p>
-    <a asp-action="Create">Create New Destination</a>
-</p>
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin")){<a asp-action="Create">Create New</a>}
 <table class="table">
     <thead>
         <tr>
