@@ -1,0 +1,94 @@
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "User Login";
+}
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-section {
+        display: flex;
+        align-items: center;
+    }
+
+    .login-image {
+        width: 600px; /* Increased width */
+        margin-right: 200px;
+    }
+
+       
+
+    .login-container {
+        max-width: 700px; /* Increased width */
+        width: 100%;
+        padding: 30px; /* Increased padding */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+        .login-container:hover {
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Hover effect */
+        }
+
+    .login-heading {
+        margin-top: 0;
+    }
+
+    .login-form {
+        display: grid;
+        width:350px;
+        grid-template-columns: 1fr;
+        grid-gap: 20px;
+    }
+</style>
+
+<div class="container">
+    <div class="login-section">
+        <img src="/img/travel.png" alt="registration" class="login-image" />
+        <div class="login-container">
+            <h1 class="login-heading">LOGIN</h1>
+            <div class="login-form">
+                <form method="post">
+                    <input type="hidden" name="ReturnUrl" value="@ViewData["ReturnUrl"]" />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="UserName"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label asp-for="RememberMe">
+                                <input asp-for="RememberMe" />
+                                @Html.DisplayNameFor(m => m.RememberMe)
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

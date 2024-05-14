@@ -1,0 +1,108 @@
+@model Package
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Package</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DestinationId" class="control-label"></label>
+                <select asp-for="DestinationId" class="form-control">
+                    <option value="">Select a destination</option>
+                    @if (ViewBag.Destinations != null)
+                    {
+                        foreach (var destination in ViewBag.Destinations)
+                        {
+                            <option value="@destination.Id">@destination.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="DestinationId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Budget" class="control-label"></label>
+                <input asp-for="Budget" class="form-control" />
+                <span asp-validation-for="Budget" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Duration" class="control-label"></label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Services" class="control-label"></label>
+                <input asp-for="Services" class="form-control" />
+                <span asp-validation-for="Services" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportOption" class="control-label"></label>
+                <select asp-for="TransportOption" class="form-control">
+                    <option value="">Select a transport option</option>
+                    @foreach (var option in Enum.GetValues(typeof(TransportOption)))
+                    {
+                        <option value="@option">@option</option>
+                    }
+                </select>
+                <span asp-validation-for="TransportOption" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportCompany" class="control-label"></label>
+                <input asp-for="TransportCompany" class="form-control" />
+                <span asp-validation-for="TransportCompany" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="Category" class="form-control">
+                    <option value="">Select a category</option>
+                    @foreach (var category in Enum.GetValues(typeof(Category)))
+                    {
+                        <option value="@category">@category</option>
+                    }
+                </select>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CoordinatorId" class="control-label"></label>
+                <select asp-for="CoordinatorId" class="form-control">
+                    <option value="">Select a coordinator</option>
+                    @if (ViewBag.Coordinators != null)
+                    {
+                        foreach (var coordinator in ViewBag.Coordinators)
+                        {
+                            <option value="@coordinator.Id">@coordinator.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="CoordinatorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

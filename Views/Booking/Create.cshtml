@@ -1,0 +1,104 @@
+@model Booking
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<style>
+    .row {
+        min-height: 100vh;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+  
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-primary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+        }
+
+    .text-danger {
+        color: #dc3545;
+    }
+</style>
+
+<h1>Create</h1>
+
+<h4>Booking</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="form-label" asp-for="AssociatedPackageId">Package</label>
+                <select asp-for="AssociatedPackageId" class="form-control">
+                    <option value="">Select a package</option>
+                    @if (ViewBag.Packages != null)
+                    {
+                        foreach (var package in ViewBag.Packages)
+                        {
+                            <option value="@package.Id">@package.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="AssociatedPackageId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label" asp-for="NumberOfTravellers">Number of Travellers</label>
+                <input asp-for="NumberOfTravellers" class="form-control" />
+                <span asp-validation-for="NumberOfTravellers" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label" asp-for="PaymentMethod">Payment Method</label>
+                <select asp-for="PaymentMethod" class="form-control">
+                    <option value="">Select Payment Method</option>
+                    @foreach (var paymentMethod in Enum.GetValues(typeof(PaymentMethod)))
+                    {
+                        <option value="@paymentMethod">@paymentMethod</option>
+                    }
+                </select>
+                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <input class="form-check-input" asp-for="IsPaid" />
+                <label class="form-check-label" asp-for="IsPaid">Is Paid</label>
+            </div>
+            <div class="form-group">
+                <label class="form-label" asp-for="CouponCode">Coupon Code</label>
+                <input asp-for="CouponCode" class="form-control" />
+                <span asp-validation-for="CouponCode" class="text-danger"></span>
+            </div>
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-danger">@ViewBag.Message</div>
+            }
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

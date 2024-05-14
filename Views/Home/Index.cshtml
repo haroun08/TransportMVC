@@ -1,0 +1,101 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+@model IEnumerable<Destination> 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style.min.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/easing.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <!-- Destination Start -->
+    <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-3 pb-3">
+                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Destinations</h6>
+                <h1>Tours & Travel Destinations</h1>
+            </div>
+            <div class="row">
+                @foreach (var destination in Model)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="service-item bg-white text-center mb-2 py-5 px-4">
+                            <!-- Display destination information -->
+                            <h5 class="mb-2">@destination.Name</h5>
+                            <p class="m-0">@destination.Description</p>
+                            <p class="m-0">Location: @destination.Country</p>
+                            <img src="@destination.ImageUrl" alt="@destination.Name" class="img-fluid">
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- Destination End -->
+    <!-- Packages Start -->
+    <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-3 pb-3">
+                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Packages</h6>
+                <h1>Tours & Travel Packages</h1>
+            </div>
+            <div class="row">
+                @if (ViewBag.Packages != null && ViewBag.Packages.Any()) 
+                {
+                    @foreach (var package in ViewBag.Packages)
+                    {
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="service-item bg-white text-center mb-2 py-5 px-4">
+                                <!-- Display package information -->
+                                <h5 class="mb-2">@package.Name</h5>
+                                <p class="m-0">Start Date: @package.StartDate.ToShortDateString()</p>
+                                <p class="m-0">Budget: @package.Budget</p>
+                                <p class="m-0">Duration: @package.Duration</p>
+                                <p class="m-0">Services: @package.Services</p>
+                                <p class="m-0">Transport Option: @package.TransportOption</p>
+                                <p class="m-0">Transport Company: @package.TransportCompany</p>
+                                <p class="m-0">Category: @package.Category</p>
+                                <p class="m-0">Destination: @package.Destination.Name</p>
+                                <p class="m-0">Coordinator: @package.Coordinator.Name</p>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-lg-12 text-center">
+                        <p>No packages available.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- Packages End -->
+
+
+</body>
+</html>
