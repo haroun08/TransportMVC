@@ -41,7 +41,7 @@ public class Destination
         Random random = new Random();
         int randomNumber = random.Next(64, 166);
         // Construct the image URL with the random number
-        ImageUrl = $"https://picsum.photos/id/{randomNumber}/450/550";
+        ImageUrl = $"https://picsum.photos/id/{randomNumber}/250/250";
 
     }
     
