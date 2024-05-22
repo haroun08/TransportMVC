@@ -55,7 +55,11 @@ namespace TransportMVC.Controllers
             return View(destination);
         }
 
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         // GET: Destination/Create
         public IActionResult Create()
         {
@@ -67,7 +71,11 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Create([Bind("Name,Description,Country")] Destination destination)
         {
             if (ModelState.IsValid)
@@ -92,7 +100,11 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Destination/Edit/5
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -113,7 +125,11 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Description,Country")] Destination destination)
         {
             if (id != destination.Id)
@@ -166,7 +182,11 @@ namespace TransportMVC.Controllers
 
 
         // GET: Destination/Delete/5
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -187,7 +207,11 @@ namespace TransportMVC.Controllers
         // POST: Destination/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var destination = await _context.Destinations.FindAsync(id);

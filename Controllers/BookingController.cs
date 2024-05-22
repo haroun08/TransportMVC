@@ -30,7 +30,10 @@ namespace TransportMVC.Controllers
         {
             var bookings = await _context.Bookings
                                         .Include(b => b.AssociatedPackage)
+<<<<<<< HEAD
                                         .Include(b => b.CreatedBy)
+=======
+>>>>>>> origin/HarounTest
                                         .ToListAsync();
 
             return View(bookings);

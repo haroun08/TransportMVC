@@ -25,14 +25,22 @@ namespace TransportMVC.Controllers
 
 
         // GET: Coupon
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [AllowAnonymous]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Index()
         {
             return View(await _context.Coupons.ToListAsync());
         }
 
         // GET: Coupon/Details/5
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [AllowAnonymous]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -54,7 +62,11 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Coupon/Create
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Create()
         {
             // Fetch the list of packages from the database
@@ -70,7 +82,11 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Create(Coupon coupon)
         {
             if (!ModelState.IsValid)
@@ -118,7 +134,11 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Coupon/Edit/5
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -144,7 +164,11 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Code,DiscountAmount,ExpirationDate")] Coupon coupon)
         {
             if (id != coupon.Id)
@@ -221,7 +245,11 @@ namespace TransportMVC.Controllers
 
 
         // GET: Coupon/Delete/5
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -242,7 +270,11 @@ namespace TransportMVC.Controllers
         // POST: Coupon/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var coupon = await _context.Coupons.FindAsync(id);

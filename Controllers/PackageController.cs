@@ -56,7 +56,11 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Package/Create
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Create()
         {
             // Fetch the list of destinations from the database
@@ -78,7 +82,11 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Create([Bind("Name,Budget,Duration,Services,TransportOption,TransportCompany,Category,DestinationId,CoordinatorId")] Package package)
         {
             if (!ModelState.IsValid)
@@ -135,7 +143,11 @@ namespace TransportMVC.Controllers
 
 
         // GET: Package/Edit/5
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -167,7 +179,11 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Budget,Duration,Services,TransportOption,TransportCompany,Category,DestinationId,CoordinatorId")] Package package)
         {
             if (id != package.Id)
@@ -243,7 +259,11 @@ namespace TransportMVC.Controllers
 
 
         // GET: Package/Delete/5
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -264,7 +284,11 @@ namespace TransportMVC.Controllers
         // POST: Package/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+<<<<<<< HEAD
         [Authorize(Roles = "Admin")]
+=======
+        [Authorize]
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var package = await _context.Packages.FindAsync(id);

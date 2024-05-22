@@ -110,8 +110,25 @@ namespace TransportMVC.Controllers
                 }
                 else
                 {
+<<<<<<< HEAD
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
 
+=======
+                    // Handle failure
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    // Check if the email is incorrect
+                    var user = await userManager.FindByEmailAsync(model.Email);
+                    if (user == null)
+                    {
+                        ModelState.AddModelError(nameof(model.Email), "Invalid email.");
+                        
+                    }
+                    else
+                    {
+                        // Email is correct, so the password must be incorrect
+                        ModelState.AddModelError(nameof(model.Password), "Invalid password.");
+                    }
+>>>>>>> origin/HarounTest
 
 
                     return View(model);

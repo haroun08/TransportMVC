@@ -13147,12 +13147,17 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\kunha\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+=======
+    "C:\\Users\\LENOVO\\.nuget\\packages\\": {}
+>>>>>>> origin/HarounTest
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "D:\\C# .NET\\TransportMVC\\TransportMVC.csproj",
       "projectName": "TransportMVC",
       "projectPath": "D:\\C# .NET\\TransportMVC\\TransportMVC.csproj",
@@ -13166,13 +13171,26 @@
         "C:\\Users\\kunha\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+=======
+      "projectUniqueName": "C:\\Users\\LENOVO\\Desktop\\Projects\\C#\\TransportMVC\\TransportMVC.csproj",
+      "projectName": "TransportMVC",
+      "projectPath": "C:\\Users\\LENOVO\\Desktop\\Projects\\C#\\TransportMVC\\TransportMVC.csproj",
+      "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\LENOVO\\Desktop\\Projects\\C#\\TransportMVC\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> origin/HarounTest
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+<<<<<<< HEAD
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
+=======
+>>>>>>> origin/HarounTest
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -13263,7 +13281,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+>>>>>>> origin/HarounTest
       }
     }
   }

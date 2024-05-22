@@ -4,6 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
+<<<<<<< HEAD
 <style>
     .row {
         min-height: 100vh;
@@ -33,16 +34,26 @@
     }
 </style>
 
+=======
+>>>>>>> origin/HarounTest
 <h1>Create</h1>
 
 <h4>Booking</h4>
 <hr />
 <div class="row">
+<<<<<<< HEAD
     <div class="col-md-6">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="form-label" asp-for="AssociatedPackageId">Package</label>
+=======
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AssociatedPackageId" class="control-label"></label>
+>>>>>>> origin/HarounTest
                 <select asp-for="AssociatedPackageId" class="form-control">
                     <option value="">Select a package</option>
                     @if (ViewBag.Packages != null)
@@ -56,12 +67,20 @@
                 <span asp-validation-for="AssociatedPackageId" class="text-danger"></span>
             </div>
             <div class="form-group">
+<<<<<<< HEAD
                 <label class="form-label" asp-for="NumberOfTravellers">Number of Travellers</label>
+=======
+                <label asp-for="NumberOfTravellers" class="control-label"></label>
+>>>>>>> origin/HarounTest
                 <input asp-for="NumberOfTravellers" class="form-control" />
                 <span asp-validation-for="NumberOfTravellers" class="text-danger"></span>
             </div>
             <div class="form-group">
+<<<<<<< HEAD
                 <label class="form-label" asp-for="PaymentMethod">Payment Method</label>
+=======
+                <label asp-for="PaymentMethod" class="control-label"></label>
+>>>>>>> origin/HarounTest
                 <select asp-for="PaymentMethod" class="form-control">
                     <option value="">Select Payment Method</option>
                     @foreach (var paymentMethod in Enum.GetValues(typeof(PaymentMethod)))
@@ -72,11 +91,20 @@
                 <span asp-validation-for="PaymentMethod" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
+<<<<<<< HEAD
                 <input class="form-check-input" asp-for="IsPaid" />
                 <label class="form-check-label" asp-for="IsPaid">Is Paid</label>
             </div>
             <div class="form-group">
                 <label class="form-label" asp-for="CouponCode">Coupon Code</label>
+=======
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsPaid" /> @Html.DisplayNameFor(model => model.IsPaid)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="CouponCode" class="control-label"></label>
+>>>>>>> origin/HarounTest
                 <input asp-for="CouponCode" class="form-control" />
                 <span asp-validation-for="CouponCode" class="text-danger"></span>
             </div>
@@ -85,9 +113,15 @@
             {
                 <div class="alert alert-danger">@ViewBag.Message</div>
             }
+<<<<<<< HEAD
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Create</button>
+=======
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+>>>>>>> origin/HarounTest
             </div>
         </form>
     </div>
@@ -98,7 +132,11 @@
 </div>
 
 @section Scripts {
+<<<<<<< HEAD
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+=======
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+>>>>>>> origin/HarounTest
 }

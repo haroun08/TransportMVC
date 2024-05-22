@@ -1,15 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+<<<<<<< HEAD
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TransportMVC.Models;
 using TransportMVC.Data;
+=======
+using TransportMVC.Models;
+
+>>>>>>> origin/HarounTest
 
 namespace TransportMVC.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+<<<<<<< HEAD
         private readonly ApplicationDbContext _context;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
@@ -27,11 +33,25 @@ namespace TransportMVC.Controllers
         }
 
         // Action for the Home/Privacy view
+=======
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+>>>>>>> origin/HarounTest
         public IActionResult Privacy()
         {
             return View();
         }
 
+<<<<<<< HEAD
         // Action for displaying the details of a destination
         public async Task<IActionResult> DestinationDetails(Guid? id)
         {
@@ -52,10 +72,16 @@ namespace TransportMVC.Controllers
         }
 
         // Action for the Error view
+=======
+>>>>>>> origin/HarounTest
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/HarounTest

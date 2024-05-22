@@ -26,6 +26,7 @@ namespace TransportMVC.Controllers
 
         // GET: WishForm
         [AllowAnonymous]
+<<<<<<< HEAD
         [Authorize]
         public async Task<IActionResult> Index()
         {
@@ -34,11 +35,19 @@ namespace TransportMVC.Controllers
                                         .ToListAsync();
 
             return View(wishForms);
+=======
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.WishForms.ToListAsync());
+>>>>>>> origin/HarounTest
         }
 
         // GET: WishForm/Details/5
         [AllowAnonymous]
+<<<<<<< HEAD
         [Authorize]
+=======
+>>>>>>> origin/HarounTest
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)

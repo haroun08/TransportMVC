@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 @using Microsoft.AspNetCore.Identity
 @model Booking
 @inject SignInManager<User> SignInManager
+=======
+@model Booking
+>>>>>>> origin/HarounTest
 
 @{
     ViewData["Title"] = "Edit";
@@ -29,6 +33,7 @@
                 </select>
                 <span asp-validation-for="AssociatedPackageId" class="text-danger"></span>
             </div>
+<<<<<<< HEAD
             @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
                 <div class="form-group">
@@ -42,6 +47,18 @@
                     <span asp-validation-for="State" class="text-danger"></span>
                 </div>
             }
+=======
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <select asp-for="State" class="form-control">
+                    @foreach (var state in Enum.GetValues(typeof(BookingState)))
+                    {
+                        <option value="@state">@state</option>
+                    }
+                </select>
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+>>>>>>> origin/HarounTest
 
             <div class="form-group">
                 <label asp-for="NumberOfTravellers" class="control-label"></label>
@@ -59,6 +76,7 @@
                 </select>
                 <span asp-validation-for="PaymentMethod" class="text-danger"></span>
             </div>
+<<<<<<< HEAD
             @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
                 <div class="form-group form-check">
@@ -68,6 +86,13 @@
                 </div>
             }
             
+=======
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsPaid" /> @Html.DisplayNameFor(model => model.IsPaid)
+                </label>
+            </div>
+>>>>>>> origin/HarounTest
             <div class="form-group">
                 <label asp-for="CouponCode" class="control-label"></label>
                 <input asp-for="CouponCode" class="form-control" />

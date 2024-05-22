@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TransportMVC.styles.css" asp-append-version="true" />
+<<<<<<< HEAD
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-B4dIYHKNRi9gA0FqAfGO6cgSU4S+hjefPxHIJn0tFOfFV5tVxgbsv/CGy5g5hvBh" crossorigin="anonymous">
     <link href="img/favicon.ico" rel="icon">
 
@@ -104,10 +105,65 @@
                     </ul>
 
                     <!-- Right elements -->
+=======
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TransportMVC</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="Index">Booking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Coordinator" asp-action="Index">Coordinator</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Coupon" asp-action="Index">Coupon</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Destination" asp-action="Index">Destination</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Notification" asp-action="Index">Notification</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Package" asp-action="Index">Package</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Review" asp-action="Index">Review</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="WishForm" asp-action="Index">WishForm</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" 
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                    Manage
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" asp-controller="Administration"
+                                       asp-action="ListUsers">Users</a>
+                                    <a class="dropdown-item" asp-controller="Administration"
+                                       asp-action="ListRoles">Roles</a>
+                                </ul>
+                            </li>
+                    </ul>
+>>>>>>> origin/HarounTest
                     <ul class="navbar-nav ml-auto">
                         @* If the user is signed-in, display Logout link *@
                         @if (SignInManager.IsSignedIn(User))
                         {
+<<<<<<< HEAD
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuAvatar" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
@@ -124,23 +180,40 @@
                                         </form>
                                     </li>
                                 </ul>
+=======
+                            <li class="nav-item">
+                                <form method="post" asp-controller="account" asp-action="logout">
+                                    <button type="submit" style="width:auto" class="nav-link btn btn-link py-0">
+                                        Logout @User?.Identity?.Name
+                                    </button>
+                                </form>
+>>>>>>> origin/HarounTest
                             </li>
                         }
                         else
                         {
                             @* Display Register and Login links for users who are not signed in *@
                             <li class="nav-item">
+<<<<<<< HEAD
                                 <a class="nav-link" asp-controller="Account" asp-action="Register">
+=======
+                                <a class="nav-link" asp-controller="account" asp-action="register">
+>>>>>>> origin/HarounTest
                                     Register
                                 </a>
                             </li>
                             <li class="nav-item">
+<<<<<<< HEAD
                                 <a class="nav-link" asp-controller="Account" asp-action="Login">
+=======
+                                <a class="nav-link" asp-controller="account" asp-action="login">
+>>>>>>> origin/HarounTest
                                     Login
                                 </a>
                             </li>
                         }
                     </ul>
+<<<<<<< HEAD
                 </div>
                 <!-- Collapsible wrapper -->
             </div>
@@ -149,12 +222,20 @@
         <!-- Navbar -->
     </header>
 
+=======
+
+                </div>
+            </div>
+        </nav>
+    </header>
+>>>>>>> origin/HarounTest
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
+<<<<<<< HEAD
 
     <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
         <div class="row pt-5">
@@ -229,6 +310,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-aDaGCi5MwDw8R5Bhh8Kt+5f1an3E7dVjNrnQVysuIGzz4kx7QQYo9kSoPtv5Q07D7O5L75W/hJ1m+0rYX4mPzA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js" integrity="sha512-Jq3w4gLWPOUG9r2ecys//MFqcmHDbM9FqALGuoyrARsG2AZyeFxG3HHIgGQ65iL4rvZjXn8gbB5jdumH9ivPiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+=======
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - TransportMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+>>>>>>> origin/HarounTest
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

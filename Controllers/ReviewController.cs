@@ -28,12 +28,16 @@ namespace TransportMVC.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
+<<<<<<< HEAD
              var reviews = await _context.Reviews
                                         .Include(b => b.AssociatedPackage)
                                         .Include(b => b.CreatedBy)
                                         .ToListAsync();
 
             return View(reviews);
+=======
+            return View(await _context.Reviews.ToListAsync());
+>>>>>>> origin/HarounTest
         }
 
         // GET: Review/Details/5

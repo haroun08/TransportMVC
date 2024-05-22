@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <None Remove="Views\Shared\styles.css" />
   </ItemGroup>
 
@@ -18,6 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+=======
+>>>>>>> origin/HarounTest
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.4" />

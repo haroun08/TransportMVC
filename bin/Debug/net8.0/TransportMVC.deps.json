@@ -66,8 +66,11 @@
           "Microsoft.AspNetCore.Connections.Abstractions": "8.0.0.0",
           "Microsoft.AspNetCore.CookiePolicy": "8.0.0.0",
           "Microsoft.AspNetCore.Cors": "8.0.0.0",
+<<<<<<< HEAD
           "Microsoft.AspNetCore.Cryptography.Internal.Reference": "8.0.0.0",
           "Microsoft.AspNetCore.Cryptography.KeyDerivation.Reference": "8.0.0.0",
+=======
+>>>>>>> origin/HarounTest
           "Microsoft.AspNetCore.DataProtection.Abstractions": "8.0.0.0",
           "Microsoft.AspNetCore.DataProtection": "8.0.0.0",
           "Microsoft.AspNetCore.DataProtection.Extensions": "8.0.0.0",
@@ -157,14 +160,20 @@
           "Microsoft.Extensions.Features": "8.0.0.0",
           "Microsoft.Extensions.FileProviders.Abstractions.Reference": "8.0.0.0",
           "Microsoft.Extensions.FileProviders.Composite": "8.0.0.0",
+<<<<<<< HEAD
           "Microsoft.Extensions.FileProviders.Embedded.Reference": "8.0.0.0",
+=======
+>>>>>>> origin/HarounTest
           "Microsoft.Extensions.FileProviders.Physical": "8.0.0.0",
           "Microsoft.Extensions.FileSystemGlobbing": "8.0.0.0",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.0.0",
           "Microsoft.Extensions.Hosting": "8.0.0.0",
           "Microsoft.Extensions.Http": "8.0.0.0",
+<<<<<<< HEAD
           "Microsoft.Extensions.Identity.Core.Reference": "8.0.0.0",
           "Microsoft.Extensions.Identity.Stores.Reference": "8.0.0.0",
+=======
+>>>>>>> origin/HarounTest
           "Microsoft.Extensions.Localization.Abstractions": "8.0.0.0",
           "Microsoft.Extensions.Localization": "8.0.0.0",
           "Microsoft.Extensions.Logging.Abstractions.Reference": "8.0.0.0",
@@ -178,7 +187,10 @@
           "Microsoft.Extensions.ObjectPool": "8.0.0.0",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0.0",
           "Microsoft.Extensions.Options.DataAnnotations": "8.0.0.0",
+<<<<<<< HEAD
           "Microsoft.Extensions.Options.Reference": "8.0.0.0",
+=======
+>>>>>>> origin/HarounTest
           "Microsoft.Extensions.Primitives.Reference": "8.0.0.0",
           "Microsoft.Extensions.WebEncoders": "8.0.0.0",
           "Microsoft.JSInterop": "8.0.0.0",
@@ -1006,6 +1018,12 @@
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.424.17014"
           }
+<<<<<<< HEAD
+=======
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
+>>>>>>> origin/HarounTest
         }
       },
       "Microsoft.AspNetCore.Cryptography.KeyDerivation/8.0.4": {
@@ -1017,6 +1035,12 @@
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.424.17014"
           }
+<<<<<<< HEAD
+=======
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
+>>>>>>> origin/HarounTest
         }
       },
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore/8.0.4": {
@@ -1827,6 +1851,12 @@
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.424.17014"
           }
+<<<<<<< HEAD
+=======
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.Extensions.FileProviders.Embedded.dll": {}
+>>>>>>> origin/HarounTest
         }
       },
       "Microsoft.Extensions.Identity.Core/8.0.4": {
@@ -1840,6 +1870,12 @@
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.424.17014"
           }
+<<<<<<< HEAD
+=======
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.Extensions.Identity.Core.dll": {}
+>>>>>>> origin/HarounTest
         }
       },
       "Microsoft.Extensions.Identity.Stores/8.0.4": {
@@ -1853,6 +1889,12 @@
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.424.17014"
           }
+<<<<<<< HEAD
+=======
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.Extensions.Identity.Stores.dll": {}
+>>>>>>> origin/HarounTest
         }
       },
       "Microsoft.Extensions.Logging/8.0.0": {
@@ -1884,6 +1926,12 @@
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.224.6711"
           }
+<<<<<<< HEAD
+=======
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.Extensions.Options.dll": {}
+>>>>>>> origin/HarounTest
         }
       },
       "Microsoft.Extensions.Primitives/8.0.0": {},
@@ -3476,6 +3524,7 @@
         },
         "compileOnly": true
       },
+<<<<<<< HEAD
       "Microsoft.AspNetCore.Cryptography.Internal.Reference/8.0.0.0": {
         "compile": {
           "Microsoft.AspNetCore.Cryptography.Internal.dll": {}
@@ -3488,6 +3537,8 @@
         },
         "compileOnly": true
       },
+=======
+>>>>>>> origin/HarounTest
       "Microsoft.AspNetCore.DataProtection.Abstractions/8.0.0.0": {
         "compile": {
           "Microsoft.AspNetCore.DataProtection.Abstractions.dll": {}
@@ -4022,12 +4073,15 @@
         },
         "compileOnly": true
       },
+<<<<<<< HEAD
       "Microsoft.Extensions.FileProviders.Embedded.Reference/8.0.0.0": {
         "compile": {
           "Microsoft.Extensions.FileProviders.Embedded.dll": {}
         },
         "compileOnly": true
       },
+=======
+>>>>>>> origin/HarounTest
       "Microsoft.Extensions.FileProviders.Physical/8.0.0.0": {
         "compile": {
           "Microsoft.Extensions.FileProviders.Physical.dll": {}
@@ -4058,6 +4112,7 @@
         },
         "compileOnly": true
       },
+<<<<<<< HEAD
       "Microsoft.Extensions.Identity.Core.Reference/8.0.0.0": {
         "compile": {
           "Microsoft.Extensions.Identity.Core.dll": {}
@@ -4070,6 +4125,8 @@
         },
         "compileOnly": true
       },
+=======
+>>>>>>> origin/HarounTest
       "Microsoft.Extensions.Localization.Abstractions/8.0.0.0": {
         "compile": {
           "Microsoft.Extensions.Localization.Abstractions.dll": {}
@@ -4148,12 +4205,15 @@
         },
         "compileOnly": true
       },
+<<<<<<< HEAD
       "Microsoft.Extensions.Options.Reference/8.0.0.0": {
         "compile": {
           "Microsoft.Extensions.Options.dll": {}
         },
         "compileOnly": true
       },
+=======
+>>>>>>> origin/HarounTest
       "Microsoft.Extensions.Primitives.Reference/8.0.0.0": {
         "compile": {
           "Microsoft.Extensions.Primitives.dll": {}
@@ -7022,6 +7082,7 @@
       "serviceable": false,
       "sha512": ""
     },
+<<<<<<< HEAD
     "Microsoft.AspNetCore.Cryptography.Internal.Reference/8.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -7032,6 +7093,8 @@
       "serviceable": false,
       "sha512": ""
     },
+=======
+>>>>>>> origin/HarounTest
     "Microsoft.AspNetCore.DataProtection.Abstractions/8.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -7477,11 +7540,14 @@
       "serviceable": false,
       "sha512": ""
     },
+<<<<<<< HEAD
     "Microsoft.Extensions.FileProviders.Embedded.Reference/8.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
     },
+=======
+>>>>>>> origin/HarounTest
     "Microsoft.Extensions.FileProviders.Physical/8.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -7507,6 +7573,7 @@
       "serviceable": false,
       "sha512": ""
     },
+<<<<<<< HEAD
     "Microsoft.Extensions.Identity.Core.Reference/8.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -7517,6 +7584,8 @@
       "serviceable": false,
       "sha512": ""
     },
+=======
+>>>>>>> origin/HarounTest
     "Microsoft.Extensions.Localization.Abstractions/8.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -7582,11 +7651,14 @@
       "serviceable": false,
       "sha512": ""
     },
+<<<<<<< HEAD
     "Microsoft.Extensions.Options.Reference/8.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
     },
+=======
+>>>>>>> origin/HarounTest
     "Microsoft.Extensions.Primitives.Reference/8.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,

@@ -1,4 +1,5 @@
 @model IEnumerable<Notification>
+<<<<<<< HEAD
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
@@ -18,21 +19,43 @@
 
 <p>
     @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin")){<a asp-action="Create">Create New</a>}
+=======
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+>>>>>>> origin/HarounTest
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
+<<<<<<< HEAD
                 Content
             </th>
             <th>
                 Sent Date
+=======
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SentDate)
+>>>>>>> origin/HarounTest
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
+<<<<<<< HEAD
 @foreach (var item in userNotifications) {
+=======
+@foreach (var item in Model) {
+>>>>>>> origin/HarounTest
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Content)
@@ -41,6 +64,7 @@
                 @Html.DisplayFor(modelItem => item.SentDate)
             </td>
             <td>
+<<<<<<< HEAD
                 @if (SignInManager.IsSignedIn(User) && (isAdmin || item.ReceiverId == currentUser.Id))
                 {
                     @if (isAdmin)
@@ -50,6 +74,11 @@
                     }
                     <a asp-action="Details" asp-route-id="@item.Id">Details </a>
                 }
+=======
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+>>>>>>> origin/HarounTest
             </td>
         </tr>
 }

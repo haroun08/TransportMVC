@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
+<<<<<<< HEAD
 <style>
     .table {
         min-height:100vh;
@@ -17,6 +18,14 @@
     }
 </p>
 
+=======
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+>>>>>>> origin/HarounTest
 <table class="table">
     <thead>
         <tr>
@@ -33,6 +42,7 @@
         </tr>
     </thead>
     <tbody>
+<<<<<<< HEAD
         @foreach (var item in Model)
         {
             <tr>
@@ -63,3 +73,25 @@
 {
     <script>window.location.href = "/Account/Login";</script>
 }
+=======
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+>>>>>>> origin/HarounTest
