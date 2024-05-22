@@ -1,4 +1,6 @@
 @model Package
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
 
 @{
     ViewData["Title"] = "Details";
@@ -58,54 +60,62 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Category)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastModifiedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastModifiedAt)
-        </dd>
+
+        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.CreatedAt)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.LastModifiedAt)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.LastModifiedAt)
+            </dd>
+        }
     </dl>
 </div>
-<div>
-    <h4>Coupons</h4>
-    <hr />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Code</th>
-                <th>Discount Amount</th>
-                <th>Expiration Date</th>
-                <!-- Add more columns if needed -->
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Coupons != null && Model.Coupons.Any())
-            {
-                foreach (var coupon in Model.Coupons)
+
+     @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+    {
+    <div>
+        <h4>Coupons</h4>
+        <hr />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Discount Amount</th>
+                    <th>Expiration Date</th>
+                    <!-- Add more columns if needed -->
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Coupons != null && Model.Coupons.Any())
+                {
+                    foreach (var coupon in Model.Coupons)
+                    {
+                        <tr>
+                            <td>@coupon.Code</td>
+                            <td>@coupon.DiscountAmount</td>
+                            <td>@coupon.ExpirationDate</td>
+                            <!-- Add more columns if needed -->
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>@coupon.Code</td>
-                        <td>@coupon.DiscountAmount</td>
-                        <td>@coupon.ExpirationDate</td>
-                        <!-- Add more columns if needed -->
+                        <td colspan="3">No coupons available for this package.</td>
                     </tr>
                 }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="3">No coupons available for this package.</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
+    }
 <div>
     <h4>Reviews</h4>
     <hr />
@@ -141,6 +151,7 @@
     </table>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+     @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {<a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>} |
     <a asp-action="Index">Back to List</a>
 </div>

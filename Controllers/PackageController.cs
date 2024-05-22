@@ -56,7 +56,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Package/Create
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             // Fetch the list of destinations from the database
@@ -78,7 +78,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Name,Budget,Duration,Services,TransportOption,TransportCompany,Category,DestinationId,CoordinatorId")] Package package)
         {
             if (!ModelState.IsValid)
@@ -135,7 +135,7 @@ namespace TransportMVC.Controllers
 
 
         // GET: Package/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -167,7 +167,7 @@ namespace TransportMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Budget,Duration,Services,TransportOption,TransportCompany,Category,DestinationId,CoordinatorId")] Package package)
         {
             if (id != package.Id)
@@ -243,7 +243,7 @@ namespace TransportMVC.Controllers
 
 
         // GET: Package/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -264,7 +264,7 @@ namespace TransportMVC.Controllers
         // POST: Package/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var package = await _context.Packages.FindAsync(id);

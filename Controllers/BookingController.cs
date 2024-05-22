@@ -30,6 +30,7 @@ namespace TransportMVC.Controllers
         {
             var bookings = await _context.Bookings
                                         .Include(b => b.AssociatedPackage)
+                                        .Include(b => b.CreatedBy)
                                         .ToListAsync();
 
             return View(bookings);

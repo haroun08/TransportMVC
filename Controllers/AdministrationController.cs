@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +17,14 @@ namespace TransportMVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateRole()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel roleModel)
         {
             if (ModelState.IsValid)
@@ -60,6 +63,7 @@ namespace TransportMVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ListRoles()
         {
             List<IdentityRole> roles = await _roleManager.Roles.ToListAsync();
@@ -67,6 +71,7 @@ namespace TransportMVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditRole(string roleId)
         {
             //First Get the role information from the database
@@ -104,6 +109,7 @@ namespace TransportMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             if (ModelState.IsValid)
@@ -139,6 +145,7 @@ namespace TransportMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteRole(string roleId)
         {
             var role = await _roleManager.FindByIdAsync(roleId);
@@ -186,6 +193,7 @@ namespace TransportMVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
             ViewBag.roleId = roleId;
@@ -226,6 +234,7 @@ namespace TransportMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
             var role = await _roleManager.FindByIdAsync(roleId);
@@ -273,6 +282,7 @@ namespace TransportMVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditUser(string UserId)
         {
             //First Fetch the User Details by UserId
@@ -306,6 +316,7 @@ namespace TransportMVC.Controllers
         } 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
             var user = await _userManager.FindByIdAsync(model.Id);
@@ -343,6 +354,7 @@ namespace TransportMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string UserId)
         {
             //First Fetch the User you want to Delete
@@ -378,6 +390,7 @@ namespace TransportMVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ManageUserRoles(string UserId)
         {
             //First Fetch the User Information from the Identity database by user Id
@@ -425,6 +438,7 @@ namespace TransportMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ManageUserRoles(List<UserRolesViewModel> model, string UserId)
         {
             var user = await _userManager.FindByIdAsync(UserId);
@@ -466,6 +480,7 @@ namespace TransportMVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult ListUsers()
         {
             var users = _userManager.Users;

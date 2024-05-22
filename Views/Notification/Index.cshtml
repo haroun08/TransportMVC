@@ -1,28 +1,38 @@
 @model IEnumerable<Notification>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 @{
     ViewData["Title"] = "Index";
+    var currentUser = await UserManager.GetUserAsync(User);
+    var isAdmin = User.IsInRole("Admin");
+    var userNotifications = isAdmin ? Model : Model.Where(n => n.ReceiverId == currentUser.Id);
 }
-
-<h1>Index</h1>
+<style>
+    table{
+        min-height: 100vh;
+    }
+</style>
+<h1>Notification</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin")){<a asp-action="Create">Create New</a>}
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Content)
+                Content
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SentDate)
+                Sent Date
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in userNotifications) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Content)
@@ -31,9 +41,15 @@
                 @Html.DisplayFor(modelItem => item.SentDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @if (SignInManager.IsSignedIn(User) && (isAdmin || item.ReceiverId == currentUser.Id))
+                {
+                    @if (isAdmin)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit |</a> 
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete |</a>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.Id">Details </a>
+                }
             </td>
         </tr>
 }
