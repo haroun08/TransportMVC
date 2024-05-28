@@ -25,7 +25,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: WishForm
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> Index()
         {
              var wishForms = await _context.WishForms

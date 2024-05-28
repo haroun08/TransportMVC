@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\TransportMVC.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\LENOVO\\Desktop\\Projects\\C#\\TransportMVC\\wwwroot\\css\\card.css",
+      "PackagePath": "staticwebassets\\css\\card.css"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Desktop\\Projects\\C#\\TransportMVC\\wwwroot\\css\\rating.css",
+      "PackagePath": "staticwebassets\\css\\rating.css"
+    },
+    {
       "Id": "C:\\Users\\LENOVO\\Desktop\\Projects\\C#\\TransportMVC\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

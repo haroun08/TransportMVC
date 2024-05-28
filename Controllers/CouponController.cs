@@ -55,13 +55,16 @@ namespace TransportMVC.Controllers
 
         // GET: Coupon/Create
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(Guid? packageId)
         {
-            // Fetch the list of packages from the database
-            var packages = await _context.Packages.ToListAsync();
-            
-            ViewBag.Packages = packages;
-
+            if (packageId == null){
+                var packages = await _context.Packages.ToListAsync();
+                ViewBag.Packages = packages;
+                ViewBag.Mode = "select";
+            } else {
+                ViewBag.Package = packageId;
+                ViewBag.Mode = "direct";
+            }
             return View();
         }
 

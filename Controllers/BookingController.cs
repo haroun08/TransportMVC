@@ -25,11 +25,12 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Booking
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var bookings = await _context.Bookings
                                         .Include(b => b.AssociatedPackage)
+                                        .Include(b => b.AssociatedPackage.Destination)
                                         .Include(b => b.CreatedBy)
                                         .ToListAsync();
 
@@ -49,6 +50,8 @@ namespace TransportMVC.Controllers
                 .Include(d => d.CreatedBy) 
                 .Include(d => d.LastModifiedBy) 
                 .Include(d => d.AssociatedPackage)
+                .Include(d => d.AssociatedPackage.Destination)
+                .Include(d => d.AssociatedPackage.Reviews)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
 
@@ -57,17 +60,26 @@ namespace TransportMVC.Controllers
                 return NotFound();
             }
 
-            return View(booking);
+            BookingReviewViewModel model = new BookingReviewViewModel();
+            model.Booking=booking;
+            
+            return View(model);
         }
 
         // GET: Booking/Create
         [Authorize]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(Guid? packageId)
         {
-            // Fetch the list of packages from the database
-            var packages = await _context.Packages.ToListAsync();
+            if (packageId == null){
+                var packages = await _context.Packages.ToListAsync();
+                ViewBag.Packages = packages;
+                ViewBag.Mode = "create";
+            } else {
+                ViewBag.Package = packageId;
+                ViewBag.Mode = "Book";
+            }
             
-            ViewBag.Packages = packages;
+            
 
             return View();
         }
@@ -356,4 +368,6 @@ namespace TransportMVC.Controllers
             return _context.Bookings.Any(e => e.Id == id);
         }
     }
+        
 }
+    

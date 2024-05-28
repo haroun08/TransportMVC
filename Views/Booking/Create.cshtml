@@ -41,20 +41,31 @@
     <div class="col-md-6">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label class="form-label" asp-for="AssociatedPackageId">Package</label>
-                <select asp-for="AssociatedPackageId" class="form-control">
-                    <option value="">Select a package</option>
-                    @if (ViewBag.Packages != null)
-                    {
-                        foreach (var package in ViewBag.Packages)
+            @if (ViewBag.Mode == "create"){
+                <div class="form-group">
+                    <label class="form-label" asp-for="AssociatedPackageId">Package</label>
+                    <select asp-for="AssociatedPackageId" class="form-control">
+                        <option value="">Select a package</option>
+                        @if (ViewBag.Packages != null)
                         {
-                            <option value="@package.Id">@package.Name</option>
+                            foreach (var package in ViewBag.Packages)
+                            {
+                                <option value="@package.Id">@package.Name</option>
+                            }
                         }
-                    }
-                </select>
-                <span asp-validation-for="AssociatedPackageId" class="text-danger"></span>
-            </div>
+                    </select>
+                    <span asp-validation-for="AssociatedPackageId" class="text-danger"></span>
+                </div>
+            }
+             @if (ViewBag.Mode == "Book"){
+                <div class="form-group" hidden>
+                    <label class="form-label" asp-for="AssociatedPackageId">Package</label>
+                    <select asp-for="AssociatedPackageId" class="form-control">
+                        <option value="@ViewBag.Package">Selected package</option>
+                    </select>
+                    <span asp-validation-for="AssociatedPackageId" class="text-danger"></span>
+                </div>
+             }
             <div class="form-group">
                 <label class="form-label" asp-for="NumberOfTravellers">Number of Travellers</label>
                 <input asp-for="NumberOfTravellers" class="form-control" />

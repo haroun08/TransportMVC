@@ -8,6 +8,8 @@
     <title>@ViewData["Title"] - TransportMVC</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/card.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/rating.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TransportMVC.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-B4dIYHKNRi9gA0FqAfGO6cgSU4S+hjefPxHIJn0tFOfFV5tVxgbsv/CGy5g5hvBh" crossorigin="anonymous">
     <link href="img/favicon.ico" rel="icon">
@@ -79,63 +81,69 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Transport</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Entities
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Notification" asp-action="Index">Notification</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Package" asp-action="Index">Package</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Booking" asp-action="Index">Booking</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Review" asp-action="Index">Review</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="WishForm" asp-action="Index">WishForm</a></li>
-                                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                                {
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Coordinator" asp-action="Index">Coordinator</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Coupon" asp-action="Index">Coupon</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Destination" asp-action="Index">Destination</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Administration" asp-action="ListUsers">Users</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Administration" asp-action="ListRoles">Roles</a></li>
-                                }
-                               
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Notification" asp-action="Index">Notification</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Package" asp-action="Index">Package</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Booking" asp-action="Index">Booking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Review" asp-action="Index">Review</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="WishForm" asp-action="Index">WishForm</a>
+                        </li>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Coordinator" asp-action="Index">Coordinator</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Coupon" asp-action="Index">Coupon</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Destination" asp-action="Index">Destination</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" 
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                    Manage
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" asp-controller="Administration"
+                                       asp-action="ListUsers">Users</a>
+                                    <a class="dropdown-item" asp-controller="Administration"
+                                       asp-action="ListRoles">Roles</a>
+                                </ul>
+                            </li>
+                        }
                     </ul>
-
                     <!-- Right elements -->
                     <ul class="navbar-nav ml-auto">
                         @* If the user is signed-in, display Logout link *@
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuAvatar" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle me-2" height="25"
-                                         alt="Avatar" loading="lazy" />
-                                    @User?.Identity?.Name
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-                                    <li>
-                                        <form method="post" asp-controller="Account" asp-action="Logout">
-                                            <button type="submit" class="dropdown-item">
-                                                Logout
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul>
+                            <li class="nav-item">
+                                <form method="post" asp-controller="account" asp-action="logout">
+                                    <button type="submit" style="width:auto" class="nav-link btn btn-link py-0">
+                                        Logout @User?.Identity?.Name
+                                    </button>
+                                </form>
                             </li>
                         }
                         else
                         {
                             @* Display Register and Login links for users who are not signed in *@
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="Register">
+                                <a class="nav-link" asp-controller="account" asp-action="register">
                                     Register
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="Login">
+                                <a class="nav-link" asp-controller="account" asp-action="login">
                                     Login
                                 </a>
                             </li>

@@ -25,7 +25,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Review
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> Index()
         {
              var reviews = await _context.Reviews
@@ -59,12 +59,9 @@ namespace TransportMVC.Controllers
 
         // GET: Review/Create
         [Authorize]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(Guid? packageId)
         {
-            // Fetch the list of packages from the database
-            var packages = await _context.Packages.ToListAsync();
-            
-            ViewBag.Packages = packages;
+            ViewBag.Package = packageId;
 
             return View();
         }
@@ -75,49 +72,35 @@ namespace TransportMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Text,Rating,AssociatedPackageId")] Review review)
+        public async Task<IActionResult> Create(Review review, Guid associatedPackageId)
         {
             if (!ModelState.IsValid)
             {
-                // Print validation errors to the console
-                foreach (var state in ModelState.Values)
-                {
-                    foreach (var error in state.Errors)
-                    {
-                        var errorMessage = error.ErrorMessage;
-                        Console.WriteLine(errorMessage);
-                    }
-                }
-                
                 return View(review);
             }
-            if (ModelState.IsValid)
+
+            // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            if (currentUser == null)
             {
-                // Set the CreatedBy and LastModifiedBy properties to the currently logged-in user
-                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
-                // Ensure that the current user is not null
-                if (currentUser == null)
-                {
-                    // Handle the case where the current user is not found
-                    return RedirectToAction(nameof(Index));
-                }
-
-                review.CreatedBy = currentUser;
-                review.LastModifiedBy = currentUser;
-
-                var associatedPackage = await _context.Packages
-                    .FirstOrDefaultAsync(p => p.Id == review.AssociatedPackageId);
-
-                if (associatedPackage != null)
-                {
-                    review.AssociatedPackage = associatedPackage;
-                }
-
-                _context.Add(review);
-                await _context.SaveChangesAsync();
+                // Handle the case where the current user is not found
                 return RedirectToAction(nameof(Index));
             }
-            return View(review);
+
+            review.CreatedBy = currentUser;
+            review.LastModifiedBy = currentUser;
+
+            var associatedPackage = await _context.Packages
+                .FirstOrDefaultAsync(p => p.Id == associatedPackageId);
+
+            if (associatedPackage != null)
+            {
+                review.AssociatedPackage = associatedPackage;
+            }
+
+            _context.Add(review);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Review/Edit/5

@@ -25,7 +25,7 @@ namespace TransportMVC.Controllers
         }
 
         // GET: Notification
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Notifications.ToListAsync());

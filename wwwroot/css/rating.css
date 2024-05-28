@@ -1,0 +1,39 @@
+.ratings{
+    margin-right:10px;
+  }
+  
+  .ratings i{
+    
+    color:#cecece;
+    font-size:32px;
+  }
+  
+  .rating-color{
+    color:#fbc634 !important;
+  }
+  
+  .star-rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: center;
+  }
+  .star-rating input[type="radio"] {
+    display: none;
+  }
+  .star-rating label {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    font-size: 30px;
+    color: #ccc;
+    cursor: pointer;
+  }
+  .star-rating label:before {
+    content: '\2605';
+  }
+  .star-rating input[type="radio"]:checked ~ label {
+    color: #ffcc00;
+  }
+  

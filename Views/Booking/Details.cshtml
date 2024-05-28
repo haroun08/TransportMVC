@@ -1,78 +1,156 @@
-@model Booking
+@model BookingReviewViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<style>
+    .img-center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 120%;
+    }
+</style>
 
-<div>
-    <h4>Booking</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AssociatedPackage.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AssociatedPackage.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.State)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.State)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NumberOfTravellers)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NumberOfTravellers)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class="col-sm-2">
-            Created By
-        </dt>
-        <dd class="col-sm-10">
-            @Model.CreatedBy?.UserName
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsPaid)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsPaid)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PaymentMethod)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PaymentMethod)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastModifiedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastModifiedAt)
-        </dd>
-        <dt class="col-sm-2">
-            Last modified By
-        </dt>
-        <dd class="col-sm-10">
-            @Model.LastModifiedBy?.UserName
-        </dd>
-        <dt class="col-sm-2">
-            Total Amount
-        </dt>
-        <dd class="col-sm-10">
-            @Model.TotalAmount
-        </dd>
-    </dl>
+<div class="container py-4">
+    <a asp-action="Index" class="btn btn-outline-primary"><i class="fas fa-arrow-left"></i> Back</a>
+    <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+    <div class="card mb-4 shadow">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4>Booking</h4>
+            <a href="@Url.Action("Edit", "Booking", new { id = Model.Booking.Id })" class="btn btn-primary">Edit</a>   
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <img src="@Model.Booking.AssociatedPackage.Destination?.ImageUrl" class="img-fluid rounded img-center" alt="Destination Image">
+                </div>
+
+                <div class="col-md-8">
+                    <dl class="row">
+                        <dt class="col-sm-4">Package Name</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.AssociatedPackage.Name)</dd>
+                        <dt class="col-sm-4">State</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.State)</dd>
+                        <dt class="col-sm-4">Number Of Travellers</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.NumberOfTravellers)</dd>
+                        <dt class="col-sm-4">Payed</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.IsPaid)</dd>
+                        <dt class="col-sm-4">Payment Method</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.PaymentMethod)</dd>
+                        <dt class="col-sm-4">Total Amount</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.TotalAmount) DT</dd>
+                        <dt class="col-sm-4">Duration</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.AssociatedPackage.Duration)</dd>
+                        <dt class="col-sm-4">Transport Option</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.AssociatedPackage.TransportOption)</dd>
+                        <dt class="col-sm-4">Transport Company</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.AssociatedPackage.TransportCompany)</dd>
+                        <dt class="col-sm-4">Category</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.AssociatedPackage.Category)</dd>
+
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <dt class="col-sm-4">Created At</dt>
+                            <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.CreatedAt)</dd>
+                            <dt class="col-sm-4">Created By</dt>
+                            <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.CreatedBy.UserName)</dd>
+                            <dt class="col-sm-4">Last Modified At</dt>
+                            <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.LastModifiedAt)</dd>
+                            <dt class="col-sm-4">Last Modified By</dt>
+                            <dd class="col-sm-8">@Html.DisplayFor(model => model.Booking.LastModifiedBy.UserName)</dd>
+                        }
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="card mb-4 shadow">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4>Reviews</h4>
+    </div>
+    <div class="card-body">
+        <table class="table">
+                <tbody>
+                    @if (Model.Booking.AssociatedPackage.Reviews != null && Model.Booking.AssociatedPackage.Reviews.Any())
+                    {
+                        @foreach (var review in Model.Booking.AssociatedPackage.Reviews)
+                        {
+                            <tr>
+                                <td style="width: 20%;">
+                                    <strong>@review.CreatedBy?.UserName</strong><br>@review.Date
+                                </td>
+                                <td style="width: 20%;">
+                                    <div class="ratings">
+                                        @for (var i = 1; i <= 5; i++)
+                                        {
+                                            <span class="fa fa-star@(i <= review.Rating ? " rating-color" : "")"></span>
+                                        }
+                                    </div>
+                                </td>
+                                <td style="width: 60%;">
+                                    @review.Text<br>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="2">No reviews available for this package.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="col-md-10 offset-md-1">
+            <form asp-controller="Review" asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <input type="hidden" name="associatedPackageId" value="@Model.Booking.AssociatedPackageId" />
+
+                
+                <div class="form-group">
+                    <label asp-for="Review.Text" class="control-label"></label>
+                    <textarea asp-for="Review.Text" class="form-control"></textarea>
+                    <span asp-validation-for="Review.Text" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Review.Rating" class="control-label"></label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="Review.Rating" value="5" />
+                        <label for="star5" title="5 stars"></label>
+                        <input type="radio" id="star4" name="Review.Rating" value="4" />
+                        <label for="star4" title="4 stars"></label>
+                        <input type="radio" id="star3" name="Review.Rating" value="3" />
+                        <label for="star3" title="3 stars"></label>
+                        <input type="radio" id="star2" name="Review.Rating" value="2" />
+                        <label for="star2" title="2 stars"></label>
+                        <input type="radio" id="star1" name="Review.Rating" value="1" />
+                        <label for="star1" title="1 star"></label>
+                    </div>
+                    <span asp-validation-for="Review.Rating" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Send" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+
+    
+    </div>
+    
+
 </div>

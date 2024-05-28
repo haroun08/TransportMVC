@@ -12,20 +12,13 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="AssociatedPackageId" class="control-label"></label>
-                <select asp-for="AssociatedPackageId" class="form-control">
-                    <option value="">Select a package</option>
-                    @if (ViewBag.Packages != null)
-                    {
-                        foreach (var package in ViewBag.Packages)
-                        {
-                            <option value="@package.Id">@package.Name</option>
-                        }
-                    }
-                </select>
-                <span asp-validation-for="AssociatedPackageId" class="text-danger"></span>
-            </div>
+            <div class="form-group" hidden>
+                    <label class="form-label" asp-for="AssociatedPackageId">Package</label>
+                    <select asp-for="AssociatedPackageId" class="form-control">
+                        <option value="@ViewBag.Package">Selected package</option>
+                    </select>
+                    <span asp-validation-for="AssociatedPackageId" class="text-danger"></span>
+                </div>
             <div class="form-group">
                 <label asp-for="Text" class="control-label"></label>
                 <textarea asp-for="Text" class="form-control"></textarea>
@@ -34,9 +27,21 @@
 
             <div class="form-group">
                 <label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5" />
+                    <label for="star5" title="5 stars"></label>
+                    <input type="radio" id="star4" name="rating" value="4" />
+                    <label for="star4" title="4 stars"></label>
+                    <input type="radio" id="star3" name="rating" value="3" />
+                    <label for="star3" title="3 stars"></label>
+                    <input type="radio" id="star2" name="rating" value="2" />
+                    <label for="star2" title="2 stars"></label>
+                    <input type="radio" id="star1" name="rating" value="1" />
+                    <label for="star1" title="1 star"></label>
+                </div>
                 <span asp-validation-for="Rating" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

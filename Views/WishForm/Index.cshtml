@@ -7,7 +7,8 @@
     ViewData["Title"] = "Index";
     var currentUser = await UserManager.GetUserAsync(User);
     var isAdmin = User.IsInRole("Admin");
-    var userWishForms = isAdmin ? Model : Model.Where(w => w.CreatedBy.Id == currentUser.Id);
+    var IsSignedIn = SignInManager.IsSignedIn(User);
+    var userWishForms = !IsSignedIn ? [] : (isAdmin ? Model : Model.Where(w => w.CreatedBy.Id == currentUser.Id));
 }
 
 <h1>Index</h1>

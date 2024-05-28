@@ -28,7 +28,14 @@ namespace TransportMVC.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Packages.ToListAsync());
+            var package = await _context.Packages
+                .Include(d => d.Coupons)
+                .Include(d => d.Reviews)
+                .Include(d => d.Coordinator)
+                .Include(d => d.Destination)
+                .ToListAsync();
+
+            return View(package);
         }
 
         // GET: Package/Details/5
@@ -46,6 +53,7 @@ namespace TransportMVC.Controllers
                 .Include(d => d.Coupons)
                 .Include(d => d.Reviews)
                 .Include(d => d.Coordinator)
+                .Include(d => d.Destination)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (package == null)
             {
@@ -79,7 +87,7 @@ namespace TransportMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Name,Budget,Duration,Services,TransportOption,TransportCompany,Category,DestinationId,CoordinatorId")] Package package)
+        public async Task<IActionResult> Create([Bind("Name,StartDate,Budget,Duration,Services,TransportOption,TransportCompany,Category,DestinationId,CoordinatorId")] Package package)
         {
             if (!ModelState.IsValid)
             {
@@ -168,7 +176,7 @@ namespace TransportMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Budget,Duration,Services,TransportOption,TransportCompany,Category,DestinationId,CoordinatorId")] Package package)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,StartDate,Budget,Duration,Services,TransportOption,TransportCompany,Category,DestinationId,CoordinatorId")] Package package)
         {
             if (id != package.Id)
             {

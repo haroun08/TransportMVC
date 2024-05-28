@@ -6,152 +6,147 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<style>
+    .img-center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 120%;
+    }
+</style>
 
-<div>
-    <h4>Package</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Budget)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Budget)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Duration)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Duration)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Services)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Services)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TransportOption)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TransportOption)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TransportCompany)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TransportCompany)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category)
-        </dd>
+<div class="container py-4">
+    <a asp-action="Index" class="btn btn-outline-primary"><i class="fas fa-arrow-left"></i> Back</a>
+    <h1 class="text-center mb-4">@ViewData["Title"]</h1>
 
-        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-        {
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.CreatedAt)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.LastModifiedAt)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.LastModifiedAt)
-            </dd>
-        }
-    </dl>
+    <div class="card mb-4 shadow">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4>Package</h4>
+            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                <a href="@Url.Action("Edit", "Package", new { id = Model.Id })" class="btn btn-primary">Edit</a>
+            }
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <img src="@Model.Destination?.ImageUrl" class="img-fluid rounded img-center" alt="Destination Image">
+                </div>
+
+                <div class="col-md-8">
+                    <dl class="row">
+                        <dt class="col-sm-4">Name</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Name)</dd>
+                        <dt class="col-sm-4">Start Date</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.StartDate)</dd>
+                        <dt class="col-sm-4">Budget</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Budget)</dd>
+                        <dt class="col-sm-4">Duration</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Duration)</dd>
+                        <dt class="col-sm-4">Services</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Services)</dd>
+                        <dt class="col-sm-4">Transport Option</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.TransportOption)</dd>
+                        <dt class="col-sm-4">Transport Company</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.TransportCompany)</dd>
+                        <dt class="col-sm-4">Category</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Category)</dd>
+
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <dt class="col-sm-4">Created At</dt>
+                            <dd class="col-sm-8">@Html.DisplayFor(model => model.CreatedAt)</dd>
+                            <dt class="col-sm-4">Created By</dt>
+                            <dd class="col-sm-8">@Html.DisplayFor(model => model.CreatedBy.UserName)</dd>
+                            <dt class="col-sm-4">Last Modified At</dt>
+                            <dd class="col-sm-8">@Html.DisplayFor(model => model.LastModifiedAt)</dd>
+                            <dt class="col-sm-4">Last Modified By</dt>
+                            <dd class="col-sm-8">@Html.DisplayFor(model => model.LastModifiedBy.UserName)</dd>
+                        }
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
-     @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
     {
-    <div>
-        <h4>Coupons</h4>
-        <hr />
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Discount Amount</th>
-                    <th>Expiration Date</th>
-                    <!-- Add more columns if needed -->
-                </tr>
-            </thead>
-            <tbody>
+        <div class="card mb-4 shadow">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4>Coupons</h4>
+                <a href="@Url.Action("Create", "Coupon", new { packageId = Model.Id })" class="btn btn-primary">Create New Coupon</a>
+            </div>
+            <div class="card-body">
                 @if (Model.Coupons != null && Model.Coupons.Any())
                 {
-                    foreach (var coupon in Model.Coupons)
+                   @foreach (var coupon in Model.Coupons)
                     {
-                        <tr>
-                            <td>@coupon.Code</td>
-                            <td>@coupon.DiscountAmount</td>
-                            <td>@coupon.ExpirationDate</td>
-                            <!-- Add more columns if needed -->
-                        </tr>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Code : @coupon.Code</h5>
+                                <p class="card-text">Discount Amount: @coupon.DiscountAmount.ToString("F3") DT</p>
+                                <p class="card-text">Expiration Date: @coupon.ExpirationDate.ToString("MMM dd, yyyy")</p>
+                                <div class="d-flex justify-content-end">
+                                    <a href="@Url.Action("Edit", "Coupon", new { id = coupon.Id })" class="btn btn-primary me-2">Edit</a>
+                                    <a href="@Url.Action("Delete", "Coupon", new { id = coupon.Id })" class="btn btn-danger me-2">Delete</a>
+                                </div>
+                            </div>
+                        </div>
                     }
+
                 }
                 else
                 {
-                    <tr>
-                        <td colspan="3">No coupons available for this package.</td>
-                    </tr>
+                    <p>No coupons available for this package.</p>
                 }
-            </tbody>
-        </table>
-    </div>
+            </div>
+        </div>
     }
-<div>
-    <h4>Reviews</h4>
-    <hr />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>User</th>
-                <th>Text</th>
-                <th>Rating</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Reviews != null && Model.Reviews.Any())
-            {
-                foreach (var review in Model.Reviews)
-                {
-                    <tr>
-                        <td>@review.CreatedBy?.UserName</td>
-                        <td>@review.Text</td>
-                        <td>@review.Rating</td>
-                        <td>@review.Date</td>
-                    </tr>
-                }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="3">No Reviews available for this package.</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-<div>
-     @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-        {<a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>} |
-    <a asp-action="Index">Back to List</a>
+
+
+
+<div class="card mb-4 shadow">
+    <div class="card-header">
+        <h4>Reviews</h4>
+    </div>
+    <div class="card-body">
+        <table class="table">
+                <tbody>
+                    @if (Model.Reviews != null && Model.Reviews.Any())
+                    {
+                        @foreach (var review in Model.Reviews)
+                        {
+                            <tr>
+                                <td style="width: 20%;">
+                                    <strong>@review.CreatedBy?.UserName</strong><br>@review.Date
+                                </td>
+                                <td style="width: 20%;">
+                                    <div class="ratings">
+                                        @for (var i = 1; i <= 5; i++)
+                                        {
+                                            <span class="fa fa-star@(i <= review.Rating ? " rating-color" : "")"></span>
+                                        }
+                                    </div>
+                                </td>
+                                <td style="width: 60%;">
+                                    @review.Text<br>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="2">No reviews available for this package.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
 </div>

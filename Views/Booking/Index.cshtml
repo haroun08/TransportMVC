@@ -4,94 +4,89 @@
 @inject UserManager<User> UserManager
 
 @{
-    ViewData["Title"] = "Index";
-    var currentUser = await UserManager.GetUserAsync(User);
+    ViewData["Title"] = "Bookings";
     var isAdmin = User.IsInRole("Admin");
+    var currentUser = await UserManager.GetUserAsync(User);
     var userBookings = isAdmin ? Model : Model.Where(b => b.CreatedBy.Id == currentUser.Id);
 }
 
-<style>
-    /* Apply a minimum height of 100vh to ensure the table takes at least the viewport height */
-    .table-container {
-        min-height: 100vh;
-    }
-</style>
+<div class="container py-4">
+    <h1 class="text-center mb-4">@ViewData["Title"]</h1>
 
-<div class="table-container">
-    <h1>Index</h1>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="col">
+        <div class="card h-100 shadow add-new-booking-card">
+            <a asp-action="Create" asp-controller="Booking" class="d-flex justify-content-center align-items-center h-100 text-decoration-none">
+                <div class="text-center">
+                    <i class="fas fa-plus fa-2x"></i>
+                    <p class="mt-2">Add New Booking</p>
+                </div>
+            </a>
+        </div>
+    </div>
 
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Associated Package Name
-                </th>
-                <th>
-                    State
-                </th>
-                <th>
-                    Number Of Travellers
-                </th>
-                <th>
-                    Created At
-                </th>
-                <th>
-                    Is Paid
-                </th>
-                <th>
-                    Payment Method
-                </th>
-                <th>
-                    Last Modified At
-                </th>
-                <th>
-                    Total Amount
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in userBookings)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AssociatedPackage.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.State)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberOfTravellers)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedAt)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsPaid)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PaymentMethod)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastModifiedAt)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalAmount)
-                    </td>
-                    <td>
-                        @if (SignInManager.IsSignedIn(User) && isAdmin)
+        @foreach (var item in userBookings)
+        {
+            <div class="col">
+                <div class="card h-100 shadow">
+                    <a href="@Url.Action("Details", new { id = item.Id })" class="position-relative">
+                        <img src="@item.AssociatedPackage?.Destination?.ImageUrl" class="card-img-top" alt="@item.AssociatedPackage?.Destination?.Name">
+                        <div class="category-box bg-success text-white position-absolute">
+                            @item.AssociatedPackage?.Category
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <h2 class="card-title"><a asp-action="Details" asp-route-id="@item.Id">@item.AssociatedPackage?.Name</a></h2>
+                        <table class="table table-sm table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th scope="row"><i class="fas fa-calendar-alt me-2"></i>Start Date</th>
+                                    <td>@item.AssociatedPackage?.StartDate.ToString("MMM dd, yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><i class="fas fa-money-bill-alt me-2"></i>Total</th>
+                                    <td>
+                                        @if (item.TotalAmount.HasValue)
+                                        {
+                                            @($"{item.TotalAmount.Value:F3} DT")
+                                        }
+                                        else
+                                        {
+                                            <text>N/A</text>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><i class="fas fa-clock me-2"></i>Duration</th>
+                                    <td>@item.AssociatedPackage?.Duration</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><i class="fas fa-location-arrow me-2"></i>Destination</th>
+                                    <td>@item.AssociatedPackage?.Destination?.Name</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><i class="fas fa-users me-2"></i>Travellers</th>
+                                    <td>@item.NumberOfTravellers</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><i class="fas fa-cash-register me-2"></i>Payment</th>
+                                    <td>@item.PaymentMethod</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><i class="fas fa-info-circle me-2"></i>Status</th>
+                                    <td>@item.State</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a asp-action="Create" asp-route-packageId="@item.AssociatedPackage.Id" asp-controller="Review" class="btn btn-primary">Review</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Remove</a>
+                        @if (isAdmin)
                         {
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
                         }
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
