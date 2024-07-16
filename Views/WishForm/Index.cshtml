@@ -1,0 +1,79 @@
+@model IEnumerable<WishForm>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+    var currentUser = await UserManager.GetUserAsync(User);
+    var isAdmin = User.IsInRole("Admin");
+    var userWishForms = isAdmin ? Model : Model.Where(w => w.CreatedBy.Id == currentUser.Id);
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Destination
+            </th>
+            <th>
+                Departure Date
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                Budget
+            </th>
+            <th>
+                Interests
+            </th>
+            <th>
+                Additional Notes
+            </th>
+            <th>
+                Submission Date
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in userWishForms)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Destination)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartureDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Budget)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Interests)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdditionalNotes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubmissionDate)
+                </td>
+                <td>
+                   @if (SignInManager.IsSignedIn(User) && isAdmin){
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>}
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

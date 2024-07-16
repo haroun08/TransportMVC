@@ -1,0 +1,97 @@
+@model IEnumerable<Booking>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+    var currentUser = await UserManager.GetUserAsync(User);
+    var isAdmin = User.IsInRole("Admin");
+    var userBookings = isAdmin ? Model : Model.Where(b => b.CreatedBy.Id == currentUser.Id);
+}
+
+<style>
+    /* Apply a minimum height of 100vh to ensure the table takes at least the viewport height */
+    .table-container {
+        min-height: 100vh;
+    }
+</style>
+
+<div class="table-container">
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Associated Package Name
+                </th>
+                <th>
+                    State
+                </th>
+                <th>
+                    Number Of Travellers
+                </th>
+                <th>
+                    Created At
+                </th>
+                <th>
+                    Is Paid
+                </th>
+                <th>
+                    Payment Method
+                </th>
+                <th>
+                    Last Modified At
+                </th>
+                <th>
+                    Total Amount
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in userBookings)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AssociatedPackage.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfTravellers)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsPaid)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaymentMethod)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastModifiedAt)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalAmount)
+                    </td>
+                    <td>
+                        @if (SignInManager.IsSignedIn(User) && isAdmin)
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

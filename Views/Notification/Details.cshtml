@@ -1,0 +1,60 @@
+@model Notification
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Notification</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SentDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SentDate)
+        </dd>
+        <dt class="col-sm-2">
+           Sent By
+        </dt>
+        <dd class="col-sm-10">
+            @Model.CreatedBy?.UserName
+        </dd>
+        <dt class="col-sm-2">
+           Sent To
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Receiver?.UserName
+        </dd>
+
+        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.LastModifiedAt)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.LastModifiedAt)
+            </dd>
+            <dt class="col-sm-2">
+                Last modified By
+            </dt>
+            <dd class="col-sm-10">
+                @Model.LastModifiedBy?.UserName
+            </dd>
+        }  
+    </dl>
+</div>
+<div>
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin")){<a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>} |
+    <a asp-action="Index">Back to List</a>
+</div>
